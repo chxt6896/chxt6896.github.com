@@ -1,0 +1,63 @@
+---
+layout: post
+title: Windows 7 自带 VPN 连接设置
+category: vpn
+---
+
+h2. 必要条件
+ 
+* PPTP VPN 服务器 [示例：Contoso.com 或 157.54.0.1 或 3ffe:1234::1111]
+
+* 登录服务器用户名
+
+* 登录服务器密码
+
+h2. Step1
+
+打开"控制面板"-"网络和Internet"-"网络和共享中心"
+
+!/images/vpn/vpn-pptp-1.jpg!
+
+h2. Step2
+
+点击"设置新的连接或网络"
+
+!/images/vpn/vpn-pptp-2.jpg!
+
+h2. Step3
+
+选择"连接到工作区"
+
+!/images/vpn/vpn-pptp-3.jpg!
+
+h2. Step4
+
+如果已经存在其他连接，则在这一步选择"否，创建新连接"；如果没有，则这一步将被跳过（可能不会出现）
+
+!/images/vpn/vpn-pptp-4.jpg!
+
+h2. Step5
+
+选择"使用我的 Internet 连接（VPN）"
+
+!/images/vpn/vpn-pptp-5.jpg!
+
+h2. Step6
+
+"Internet地址"栏填 PPTP VPN 服务器地址
+
+!/images/vpn/vpn-pptp-6.jpg!
+
+h2. Step7
+
+填写你已注册过的用户名和密码，点击"连接"
+
+!/images/vpn/vpn-pptp-7.jpg!
+
+连接成功，你将在任务栏右侧系统托盘的 Internet 状态中看到：
+
+!/images/vpn/vpn-pptp-8.jpg!
+
+至此大功告成，尽情使用你的 VPN 吧 ^^
+
+

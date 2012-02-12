@@ -1,0 +1,38 @@
+{% for post in site.posts %}
+	{% capture the_year %}
+		{{ post.date|date:"%Y" }}
+	{% endcapture %}
+	{% capture page_year %}
+		{{ page.name }}
+	{% endcapture %}
+
+	{% if the_year == page_year %}
+		{% capture the_month %}
+			{{ post.date|date:"%B" }}
+		{% endcapture %}
+		{% capture previous_month %}
+			{{ previous_post.date|date:"%B" }}
+		{% endcapture %}
+		
+		{% if the_month != previous_month %}
+      {% assign month_changed = true %}
+    {% else %}
+      {% assign month_changed = false %}
+    {% endif %}
+		<dt>
+			{% if month_changed %}
+        <h3>{{ the_month }} {{ page.name }}</h3><br />
+      {% endif %}
+    </dt>
+		<dd>
+			<div class="posts">
+				<h2><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+				<span style="float:right">{{ post.date | date:"%d" }}</span>
+				<div class="entry">
+					<p class="postmetadata"></p>
+				</div><br />
+			</div>
+		</dd>
+		{% assign previous_post = post %}
+	{% endif %}
+{% endfor %}

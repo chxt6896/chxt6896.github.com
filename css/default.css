@@ -1,0 +1,416 @@
+/*  
+
+*****************************************************
+-----------------------------------------------------
+
+Theme Name: Simplixity
+Description: A simple, two-column layout. Simplixity is entirely web-standards compliant.
+Version: 0.3
+Author: James Barclay
+Author URI: http://everythingisgray.com/
+Tags: two-columns, fixed-width, right-sidebar, tan
+
+    Simplixity by James Barclay
+    http://everythingisgray.com/
+
+    The XHTML, CSS, PHP, and images included in this theme are released under the GPL:
+    http://www.opensource.org/licenses/gpl-license.php
+
+-----------------------------------------------------
+*****************************************************
+
+
+
+********************
+--------------------
+      Contents
+--------------------
+********************
+
+ 
+	* General
+	* Layout
+		- Header
+		- Container
+	* Content	(Includes items in the main content area)
+		- Post headers
+		- Posts
+    * Navigation    (Includes items in the navigation menu)
+        - Navigation
+	* Sidebar	(Includes items in the sidebar)
+		- General
+		- Sidebar headers
+		- Wordpress calendar
+	* Footer   (Includes items in the footer)
+	* Misc.    (Includes miscellaneous items)
+
+*/
+
+/*******************
+ **    General    **
+ *******************/
+
+body, h1, h2, h3, h4, h5, h6, blockquote, p, form{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-size: 0.85em;
+    vertical-align: top;
+    color: #555;
+    background-image: url("/images/header_bg.png");
+}
+img{
+    border: 0;
+}
+h1{
+    padding: 0 0 10px 0;
+    background: url("/images/header.png") no-repeat;
+    width: 299px;
+    height: 41px;
+}
+#header h1 a{
+    text-indent: -9000px;
+    width: 299px;
+    height: 41px;
+    display: block;
+}
+h2 a{
+    color: #5b5b5b;
+}
+h2 a:hover{
+    text-decoration: none;
+    color: #333333;
+}
+a:link, a:visited{
+    text-decoration: none;
+    color: #a52713;
+}
+a:hover{
+    text-decoration: underline;
+    color: #a52713;
+}
+p{
+    padding: 10px 0 0 0;
+}
+
+
+/*******************
+ **    Layout     **
+ *******************/
+
+
+#header_wrapper{
+    margin: 0 auto;
+    width: 100%;
+}
+#header{
+    margin: 0 auto;
+    position: relative;
+    width: 750px;
+    height: 80px;
+    padding: 30px 0 25px 0;
+}
+#background_container{
+    background-color: #eae9e4;
+    width: 100%;
+    border-bottom: 10px solid #cccccc;
+    border-top: 10px solid #cccccc;
+}
+#content_container{
+    margin: 0 auto;
+    width: 750px;
+    position: relative;
+}
+#container{
+    margin: 0 auto;
+    padding: 20px 0 20px 0;
+    float: left;
+		width: 500px;
+}
+
+/*******************
+ **    Content    **
+ *******************/
+
+
+.post{
+    padding: 10px 0 10px 0;
+    float: left;
+    clear: both;
+}
+.post h2{
+    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-size: 2.6em;
+}
+.post h2 a{
+    color: #5b5b5b;
+}
+.post h2 a:hover{
+    color: #333333;
+}
+.entry{
+    line-height: 18px;
+}
+.entry h2{
+		background:none repeat scroll 0 0 #DDDDDD;
+		color: #005ECF;
+		font-family: 'Microsoft YaHei';
+		font-size: 16px;
+		margin: 20px -20px 0px -20px;
+		padding: 10px 20px;
+}
+.entry h3{
+		font-family: 'Microsoft YaHei';
+		color: #356035;
+		font-size: 14px;
+		margin: 10px 0px 0px 0px;
+}
+.entry h4{
+		margin:10px 0px 0px 0px;
+		padding:5px 5px 0px 5px;
+}
+/*.entry img{
+    padding: 0 10px 10px 0;
+}*/
+p.postmetadata{
+    border-top: 1px solid #ccc;
+    margin: 10px 0 0 0;
+    font-size: 0.85em;
+    clear: both;
+}
+p.postmetadata a{
+    color: #a52713;
+}
+
+.highlight{
+		background-color: #111111;
+		font-size: 14px;
+		overflow: auto;
+}
+
+#archive_posts ul li{
+    list-style-type: none;
+    margin: 3px;
+}
+
+/*******************
+ **  Navigation   **
+ *******************/
+ 
+#navigation{
+		margin: 0 auto;
+    padding: 5px 0;
+    font-size: 1.2em;
+    width: 750px;
+}
+#navigation ul{
+    list-style: none;
+    margin: 0 auto
+}
+#navigation ul li{
+    margin-left: -37px;
+}
+#navigation li a{
+		padding: 0 25px 0 0;
+		color: #dddddd;
+}
+#navigation a:hover{
+    color: #222222;
+    text-decoration: none;
+    text-shadow: #aaa 0 1px 2px;
+}
+#nav_background{
+    background-color: #888888;
+    width: 100%;
+    height: 25px;
+    vertical-align: top;
+    border-bottom: 4px solid #444444;
+}
+
+/*******************
+ **    Sidebar    **
+ *******************/
+ 
+.sidebar{
+    margin: 0 auto;
+    padding: 60px 0 20px 25px;
+    float: left;
+    width: 225px;
+    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-size: 0.85em;
+    display: inline;
+}
+.sidebar ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0 10px 0 10px;
+}
+.sidebar ul li{
+    padding: 10px 0 10px 0;
+}
+.sidebar h2{
+    font-family: Georgia, sans-serif;
+    font-size: 1.3em;
+    padding: 10px 0 10px 0;
+}
+.sidebar ul ul li{
+    padding: 0;
+    line-height: 20px;
+}
+.sidebar a{
+    color: #5b5b5b;
+}
+.sidebar a:hover{
+    color: #a52713;
+}
+#wp-calendar{
+    width: 100%;
+}
+#wp-calendar a{
+    color: #a52713;
+}
+#wp-calendar tbody tr td{
+		background-color: #ccc;
+		text-align: center;
+}
+#wp-calendar tbody tr td.pad{
+		background-color: #eae9e4;
+}
+#wp-calendar caption{
+		padding-bottom: 8px;
+		font-size: 11px;
+}
+
+/*******************
+ **     Search    **
+ *******************/
+
+#searchform div{
+    padding: 0;
+}
+#searchsubmit{
+    background: url("/images/go_button.png") no-repeat;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    cursor: pointer;
+    vertical-align: top;
+}
+#s{
+    color: #5b5b5b;
+    border: 4px solid #CCC;
+    background-color: #FFF;
+    width: 166px;
+}
+.hidden{
+    display: none;
+}
+
+/*******************
+ **   Comments    **
+ *******************/
+
+.comments-template{
+	margin: 10px 0 0;
+	border-top: 1px solid #ccc;
+	padding: 10px 0 0;
+}
+
+.comments-template ol{
+	margin: 0;
+	padding: 0 0 15px;
+	list-style: none;
+}
+
+.comments-template ol li{
+	margin: 10px 0 0;
+	line-height: 18px;
+	padding: 0 0 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.comments-template h2, .comments-template h3{
+	font-family: Georgia, Sans-serif;
+	font-size: 1em;
+}
+
+.commentmetadata{
+	font-size: 0.75em;
+}
+
+.comments-template p.nocomments{
+	padding: 0;
+}
+
+.comments-template textarea{
+	font-family: Arial, Helvetica, Georgia, Sans-serif;
+	font-size: 0.75em;
+}
+
+/*******************
+ **     Footer    **
+ *******************/
+
+#footer{
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+    width: 750px;
+    height: 100px;
+}
+#footer p{
+    line-height: 18px;
+    padding: 10px 0 10px 0;
+}
+#footer a{
+    color: #a52713;
+}
+#footer .legal{
+    float: left;
+}
+#footer .credit{
+    float: right;
+}
+
+/*******************
+ **     Misc.     **
+ *******************/
+
+.clear_float{
+    clear: both;
+}
+img.avatar{
+    float:left;
+    margin-right:5px;
+}
+.aligncenter{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.alignleft{
+    float: left;
+}
+.alignright{
+    float: right;
+}
+.wp-caption{
+    border: 1px solid #ddd;
+    text-align: center;
+    background-color: #f3f3f3;
+    padding-top: 4px;
+    margin: 10px;
+    border-radius: 3px;
+}
+.wp-caption img{
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+}
+.wp-caption-dd{
+    font-size: 0.69em;
+    line-height: 17px;
+    padding: 0 4px 5px;
+    margin: 0;
+}

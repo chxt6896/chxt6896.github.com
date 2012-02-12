@@ -1,0 +1,58 @@
+---
+layout: post
+title: Search 站内搜索
+category: blog
+---
+
+h3. 作为一个标准的博客，应该有属于自己的站内搜索，这样你就可以更查找所需要的关键词
+
+h2. 方案
+
+* "百度搜索":http://baidu.com/search/freecode.html ， "雅虎搜索":http://search.help.cn.yahoo.com/site_search.html ，但这些是全网搜索，pass
+* Google custom 搜索，为客户提供的一种不含广告的站内搜索，需付费，不过网上有人提供免费的 uid
+
+{% highlight html+evoque linenos %} 
+<form method="get" action="http://www.google.com/custom" target="google_window">
+	<label class="hidden" for="s">Search...</label>
+	<div>	
+		<input type="text" value="Search..." name="q" />
+		<input type="submit" name=”btnG” id="searchsubmit" value="Search" />
+	</div>
+	<input type="hidden" name="client" value="pub-6112370237241325" />
+	<input type="hidden" name="forid" value="1" />
+	<input type="hidden" name="ie" value="UTF-8" />
+	<input type="hidden" name="oe" value="UTF-8" />
+	<input type="hidden" name="hl" value="zh-CN" />
+	<!-- 这里只需把"http://chxt6896.github.com"替换成你所要搜索的站 -->
+	<input type="hidden" name="domains" value="http://chxt6896.github.com" />
+	<input type="hidden" name="sitesearch" value="http://chxt6896.github.com" />
+</form>
+{% endhighlight %}
+
+* Google search 搜索，谷歌提供给所有用户的免费站内搜索，相当于使用了关键词的站内搜索技巧（如：python site:http://chxt6896.github.com 即搜索站内的 python 关键词），页面即是正常的谷歌搜索
+
+{% highlight html+evoque linenos %}
+<form method="get" action="http://www.google.com/search" target="google_window">
+	<label class="hidden" for="s">Search...</label>
+	<div>	
+		<input type="text" value="Search..." name="q" />
+		<input type="submit" name=”btnG” id="searchsubmit" value="Search" />
+	</div>
+	<input type="hidden" name="ie" value="UTF-8" />
+	<input type="hidden" name="oe" value="UTF-8" />
+	<input type="hidden" name="hl" value="zh-CN" />
+	<!-- 这里只需把"http://chxt6896.github.com"替换成你所要搜索的站 -->
+	<input type="hidden" name="domains" value="http://chxt6896.github.com" />
+	<input type="hidden" name="sitesearch" value="http://chxt6896.github.com" />
+</form>
+{% endhighlight %}
+
+* "Google 自定义搜索":http://www.google.com/cse/?hl=zh-CN ，这个还是 beta 版，是 js 代码内嵌式的，异步调动，只要拥有谷歌的帐号就可以申请，还可以自定义样式（猛人可以直接修改 css 代码），没有广告很清爽
+
+h2. 选择 & 建议
+
+* 如果你想要内嵌搜索，选择 Google 自定义搜索
+
+* 如果你想要自己设计站标，不使用谷歌的样式，选择 Google custom 搜索 
+
+* 如果你只想要有个搜索，想省懒事儿，并且十分喜爱谷歌的搜索页面，选择 Google search 搜索（我的选择）

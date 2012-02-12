@@ -1,0 +1,26 @@
+---
+layout: default
+title: chxt6896
+---
+	{% for post in paginator.posts %}
+	<div class="posts">
+		<h2><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+		<span style="float:right">{{ post.date | date_to_string }}</span>
+		<div class="entry">
+			{{ post.content }}
+			<p class="postmetadata"><a href="{{ post.url }}#disqus_thread"></a><br /><br /></p>
+		</div><br />
+	  </div>
+	  {% endfor %}
+	
+	{% if paginator.total_pages > 1 %}
+		<div class="navigation">
+        {% for page in (1..paginator.total_pages) %}
+          {% if page == paginator.page %}
+          	<span class="num">{{ page }}</span>
+          {% else %}
+          	<a class="num" href="/{%if page > 1 %}page{{ page }}/{% endif %}">{{ page }}</a>
+          {% endif %}
+        {% endfor %}
+		</div>
+  {% endif %}

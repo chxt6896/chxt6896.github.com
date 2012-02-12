@@ -1,0 +1,27 @@
+---
+layout: post
+title: Liquid 逻辑语言
+category: blog
+---
+
+h2. Textile & Markdown
+
+h3. 为避免直接编写html代码，编写文章时，内容需要加入标记信息，即Textile，Markdown
+
+* 标记语言有很多种，如Textile，Markdown（我选用的是Textile）
+* 这些标记语言会被标记引擎转换，输出成相应的目标格式（大部分情况是输出成html）
+* 引擎也有很多种，不同的编程语言有不同的实现，ruby常用的引擎有RedCloth
+
+h2. <a href="http://liquidmarkup.org/">Liquid</a>
+
+Liquid is a Ruby library for rendering safe templates which cannot affect the security of the server they are rendered on.
+
+h3. Blog中都是需要经过处理的，比如逻辑判断处理、循环处理，Jekyll使用Liquid模板语言来进行处理。
+
+* 简单来说，凡是看到{{ "{{" }} }}或者{{ "{%" }} %}包含的内容都是会被Liquid引擎处理的。比如“将日期格式化”的liquid语句：{{ "{{ post.date | date_to_string" }} }}
+
+* 除了标准的Liquid语法外，jekyll还扩展出了几个便利的方法～
+
+<a href="https://github.com/shopify/liquid/wiki/liquid-for-designers"> >>>标准Liquid标记和过滤器</a>
+<a href="https://github.com/mojombo/jekyll/wiki/liquid-extensions"> >>>Jekyll liquid扩展</a>
+

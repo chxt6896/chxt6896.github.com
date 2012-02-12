@@ -1,0 +1,156 @@
+---
+layout: post
+title: Beautiful Soup-Quick Start
+category: python
+---
+
+<b>Beautiful Soup 是一个处理Python HTML/XML的模块</b>
+Beautiful Soup的官方页面：http://www.crummy.com/software/BeautifulSoup/
+
+<b>（一）Beautiful Soup 下载与安装</b>
+下载地址：http://www.crummy.com/software/BeautifulSoup/
+安装其实很简单，Beautiful Soup只有一个文件BeautifulSoup.py，只要把这个文件拷到你的工作目录，就可以了。
+from BeautifulSoup import BeautifulSoup           # For processing HTML
+from BeautifulSoup import BeautifulStoneSoup 			# For processing XML
+import BeautifulSoup                              # To get everything
+
+<b>（二）创建 Beautiful Soup 对象</b>
+BeautifulSoup对象需要一段html文本就可以创建了。
+下面的代码就创建了一个BeautifulSoup对象：
+
+{% highlight python linenos %} 
+from BeautifulSoup import BeautifulSoup
+doc = ['<html><head><title>PythonClub.org</title></head>',
+       '<body><p id="firstpara" align="center">This is paragraph one',
+       '<p id="secondpara" align="blah">This is paragraph two',
+       '</html>']
+soup = BeautifulSoup(''.join(doc))
+print soup.prettify()
+# <title>PythonClub.org</title>
+# <html>
+#  <head>
+#   <title>
+#    PythonClub.org
+#   </title>
+#  </head>
+#  <body>
+#   <p id="firstpara" align="center">
+#    This is paragraph
+#    <b>
+#     one
+#    </b>
+#    of ptyhonclub.org.
+#   </p>
+#   <p id="secondpara" align="blah">
+#    This is paragraph
+#    <b>
+#     two
+#    </b>
+#    of pythonclub.org.
+#   </p>
+#  </body>
+# </html>
+{% endhighlight %}
+
+navigate soup的一些方法: 
+ 
+{% highlight pycon linenos %} 
+>>> soup.contents[0].name
+u'html'
+>>> soup.contents[0].contents[0].name
+u'head'
+>>> head = soup.contents[0].contents[0]
+>>> head.parent.name
+u'html'
+>>> head.next
+<title>Page title</title>
+>>> head.nextSibling.name
+u'body'
+>>> head.nextSibling.contents[0]
+<p id="firstpara" align="center">This is paragraph <b>one</b>.</p>
+>>> head.nextSibling.contents[0].nextSibling
+<p id="secondpara" align="blah">This is paragraph <b>two</b>.</p>
+{% endhighlight %}
+
+下面是一些方法搜索soup，获得特定标签或有着特定属性的标签：
+
+{% highlight pycon linenos %} 
+>>> titleTag = soup.html.head.titletitleTag
+<title>Page title</title>
+>>> titleTag.string
+u'Page title'
+>>> len(soup('p'))
+2
+>>> soup.findAll('p', align="center")
+[<p id="firstpara" align="center">This is paragraph <b>one</b>. </p>]
+>>> soup.find('p', align="center")
+<p id="firstpara" align="center">This is paragraph <b>one</b>. </p>
+>>> soup('p', align="center")[0]['id']
+u'firstpara'
+>>> soup.find('p', align=re.compile('^b.*'))['id']
+u'secondpara'
+>>> soup.find('p').b.string
+u'one'
+>>> soup('p')[1].b.string
+u'two'
+{% endhighlight %}
+
+修改soup也很简单：
+
+{% highlight pycon linenos %} 
+>>> titleTag['id'] = 'theTitle'
+>>> titleTag.contents[0].replaceWith("New title")
+>>> soup.html.head
+<head><title id="theTitle">New title</title></head>
+>>> soup.p.extract()
+>>> soup.prettify()
+# <html>
+#  <head>
+#   <title id="theTitle">
+#    New title
+#   </title>
+#  </head>
+#  <body>
+#   <p id="secondpara" align="blah">
+#    This is paragraph
+#    <b>
+#     two
+#    </b>
+#     .
+#   </p>
+#  </body>
+# </html>
+>>> soup.p.replaceWith(soup.b)
+# <html>
+#  <head>
+#   <title id="theTitle">
+#    New title
+#   </title>
+#  </head>
+#  <body>
+#   <b>
+#    two
+#   </b>
+#  </body>
+# </html>
+>>> soup.body.insert(0, "This page used to have ")
+>>> soup.body.insert(2, " &lt;p&gt; tags!")
+>>> soup.body# <body>This page used to have <b>two</b> &lt;p&gt; tags!</body>
+{% endhighlight %}
+
+一个实际例子，用于抓取 ICC Commercial Crime Services weekly piracy report页面, 使用Beautiful Soup剖析并获得发生的盗版事件:
+
+{% highlight python linenos %}
+import urllib2
+from BeautifulSoup import BeautifulSoup
+page = urllib2.urlopen("http://www.icc-ccs.org/prc/piracyreport.php")
+soup = BeautifulSoup(page)
+for incident in soup('td', width="90%"):
+    where, linebreak, what = incident.contents[:3]
+    print where.strip()
+    print what.strip()
+    print
+{% endhighlight %}
+
+更多可查看官方中文教程:)
+"http://www.crummy.com/software/BeautifulSoup/documentation.zh.html":http://www.crummy.com/software/BeautifulSoup/documentation.zh.html

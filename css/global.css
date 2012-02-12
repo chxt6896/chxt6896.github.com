@@ -1,0 +1,56 @@
+﻿/* 返回顶部 */
+
+a#gotop{
+    background-color: #ccc;
+    border-radius: 10px 10px 10px 10px;
+    bottom: 10px;
+    display: block;
+    font-family: Arial;
+    right: 10px;
+    line-height: 46px;
+    margin-right: 0;
+    padding: 10px 0;
+    position: fixed;
+    text-align: center;
+    width: 60px;
+    _position:absolute;
+    _bottom:auto;
+    _top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)) - 10);
+}
+a#gotop:hover{
+/*    background-color: #eee;*/
+}
+a#gotop:hover em{
+    color: #fff;
+}
+a#gotop span{
+    cursor: pointer;
+    display: block;
+    height: 40px;
+    padding: 0 0 0 10px;
+}
+a#gotop em{
+    color: #eee;
+}
+a#gotop em.tr{
+    display: block;
+    font-size: 74px;
+    height: 27px;
+    margin: 0 0 0 2px;
+    *margin-left:-8px;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
+    width: 40px;
+}
+a#gotop .tube{
+    display: block;
+    font-size: 30px;
+    height: 20px;
+    margin: -10px 0 0 5px;
+    *margin-left:-2px;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
+    width: 40px;
+}

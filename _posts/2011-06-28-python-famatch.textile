@@ -1,0 +1,22 @@
+---
+layout: post
+title: Python-fnmatch模块
+category: python
+---
+
+fnmatch模块实现了shell patterns表匹配字符串文件名
+
+最吸引我的是它有一个translate(pat)函数：可以将pat转换成正则表达式：）
+
+{% highlight pycon linenos %} 
+>>> import fnmatch
+>>> fnmatch.translate('I Love You!')
+'I\\ Love\\ You\\!\\Z(?ms)'
+{% endhighlight %}
+
+还有一些其他函数：
+fnmatch(name, pattern):测试name是否匹配pattern，匹配返回true，否则返回false
+
+filter(names, pat):实现列表特殊字符的过滤或筛选，返回符合匹配模式的字符列表
+
+fnmatchcase(name, pat):和fnmatch()功能类似，但强制区分大小写匹配，不管文件系是否区分

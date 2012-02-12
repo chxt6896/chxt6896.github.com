@@ -1,0 +1,11 @@
+---
+layout: post
+title: Python-docs
+category: python
+---
+
+pydoc -p 8000
+
+然后再浏览器中打开http://localhost:8000/ 即可使用python-docs
+
+幸福ING~~~

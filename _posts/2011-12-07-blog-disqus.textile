@@ -1,0 +1,75 @@
+---
+layout: post
+title: Disqus 我的评论我做主
+category: blog
+---
+
+h2. 为什么使用 Disqus
+
+* Disqus 提供免费服务，作为一个初涉Blog的虾米，再适合不过了～
+
+* 它可以统一管理很多个网站的评论，还可以做一些统计
+
+* 对于那些痛恨的 spam ，DisQus 也可以拦截
+
+h2. Step1
+
+<a href="http://disqus.com">注册 Disqus 帐号</a>，用邮箱注册下就可以了，注册需要填写：Site URL，Site Name，Site Shortname
+
+h3. 注意：这3个都是必须要填写的，而且，短域名将会在最后的 install 中使用到
+
+h2. Step2
+
+接下来会有一些简单的设置，比如语言；如果你有一些社交化工具，例如 twitter，也可以填上；还有一些评论的选项，例如过滤垃圾评论，回调评论等
+
+h2. Step3
+
+安装，因为没有用到插件安装，所以选择最下面的 <a href="http://docs.disqus.com/developers/universal/">Universal Code</a> ～所谓安装，其实就是将一段 js 代码嵌入到你的博客源代码里面
+
+在开始之前，你需要确认：
+
+1. 已经注册了 Disqus
+2. 有权限编辑网站上的代码
+3. 获取你的短域名，就是上面说的那个 Shortname
+
+h2. Step4
+
+获取 js 代码。DisQus 已经为我们生成了这样的一段代码：
+
+{% highlight js linenos %} 
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'example'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+{% endhighlight %}
+
+只需按照代码中的提示将 'example' 替换为你的 Shortname ，然后将它嵌入到所需页面中，通常是 /layout/post.html ，自此成功^..^
+
+h2. 扩展
+
+DisQus 还有其他功能的：
+
+* 可以手动配置你的评论
+
+* 可以将评论计数加到你的博客里面去。就如同上面一样，也是添加一段 js
+
+h2. 添加评论计数到首页
+
+首先，同样添加上面的 js 代码到首页模板（default.html）
+
+然后，在首页需要添加评论的地方，写一个链接，href 的属性值为 {{"{{ post.url"}} }}#disqus_thread，Disqus 将会通过 URL 获取评论数
+
+<a href="http://disqus.com/api/docs/"> >>The Disqus Web API</a>
+
+
+

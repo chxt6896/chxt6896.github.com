@@ -1,0 +1,80 @@
+---
+layout: post
+title: Pygments 代码高亮
+category: blog
+---
+
+h2. <a href="https://github.com/mojombo/jekyll/wiki/install">安装 Pygments</a> 
+
+下面详细说明一下在 Windows 环境下安装 Pygments ~~ Linux 系统下的直接看教程就好了
+
+h2. Step1
+
+<a href="http://www.python.org/getit/">安装 Python 2.6 或以上版本</a>
+
+h2. Step2
+
+在 Linux 模拟环境下（Cygwin/MyGit），使用 easy_install 安装：
+
+{% highlight bash linenos %} 
+# On Win7 安装
+$ easy_install Pygments
+{% endhighlight %}
+
+<a href="http://chxt6896.github.com/python/2011/12/03/python-setuptools-easyinstall.html"> >>>easy_install 的安装使用</a>
+
+h2. 使用
+
+h2. Step1 
+
+h3. 生成高亮显示的 css 文件
+
+在<a href="http://pygments.org/"> Pygments 官网</a>上传自己的代码或者使用现有的 demo 选择自己喜欢的样式，记下名称
+
+!/images/blog/pygments.jpg!
+
+我选择的是 fruity style，作为 pygmentize 命令 style 的参数值
+
+{% highlight bash linenos %} 
+# 生成相应的css，并在需要的页面中引入该css
+$ pygmentize -S fruity -f html > css/syntax.css
+{% endhighlight %}
+
+<a href="http://pygments.org/docs/quickstart/"> >>>参考 pygments Command line usage </a>
+
+h2. Step2
+
+在 _config.yml 中添加：
+
+pygments:	true
+markdown: redcloth
+
+h2. Step3
+
+在 post 博文中内嵌高亮的代码段：
+
+<pre>
+{{"{% highlight python linenos"}} %}
+def foo
+  puts 'foo'
+end
+{{"{% endhighlight"}} %}
+</pre>
+
+* highlight 后面第一个参数为 language，如 python，也可以是 ruby 控制台 irb，更多 lanuages 可以查询 <a href="http://pygments.org/docs/lexers/">这里</a>～
+* 第二个参数显示行号
+
+h2. 注意
+
+h3. 1. 第一个参数为必填，不填会导致 _site 目录生成不了相应的 html 文件
+
+h3. 2. 高亮代码段上下都必须留出一行空白，否则会导致乱码
+
+h3. 3. 有的代码会很长，建议使用左右滚轮，在主题 css 中添加 .highlight{ overflow: auto; } 即可
+
+下面就开始属于你的高亮写作吧^..^
+
+
+
+
+

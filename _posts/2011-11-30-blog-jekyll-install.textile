@@ -1,0 +1,54 @@
+---
+layout: post
+title: Jekyll 非你莫属
+category: blog
+---
+
+Jekyll is a simple, blog aware, static site generator. It takes a template directory (representing the raw form of a website), runs it through Textile or Markdown and Liquid converters, and spits out a complete, static website suitable for serving with Apache or your favorite web server. This is also the engine behind GitHub Pages, which you can use to host your project’s page or blog right here from GitHub.
+
+h2. <a href="http://wiki.github.com/mojombo/jekyll/install">安装 Jekyll</a>
+
+下面详细说明一下在Windows环境下安装Jekyll~~Linux系统下的直接看教程就好了
+
+h2. Step1
+ 
+首先你需要有一个Windows下的Linux模拟环境，可以安装<a href="http://www.cygwin.com/">Cygwin</a>，或者使用MyGit。
+
+Jekyll是用Ruby编写的。最好的安装方式是通过<a href="http://rubyforge.org/frs/?group_id=126">RubyGems</a>:
+		
+{% highlight bash linenos %} 
+$ gem install jekyll
+{% endhighlight %}
+
+在Windows无法直接安装RubyGems，因为Cygwin等客户端不能使用make, gcc, sh来进行编译。教程上给出If you encounter errors like Failed to build gem native extension on Windows you may need to install <a href="https://github.com/oneclick/rubyinstaller/wiki/development-kit">RubyInstaller DevKit</a>。
+
+DevKit 是windows平台下编译和使用本地C/C++扩展包的工具。它就是用来模拟Linux平台下的make, gcc, sh来进行编译。但是这个方法目前仅支持通过RubyInstaller安装的Ruby。
+
+h2. Step2
+
+下载最新的<a href="http://rubyforge.org/frs/?group_id=167">RubyInstaller</a>（我使用的是rubyinstaller-1.9.3-p0.exe），安装
+
+下载最新的<a href="https://github.com/oneclick/rubyinstaller/downloads/">DevKit</a>（我使用的是DevKit-tdm-32-4.5.2-20110712-1620-sfx.exe），安装
+
+h2. Step3
+
+在模拟环境Cygwin或者MyGit中：gem install jekyll
+
+安装会附带自动安装所需要的 directory_watcher, liquid, open4, maruku and classifier
+
+h2. Step4
+
+测试一下是否安装成功，在Cygwin或者MyGit中输入：
+
+{% highlight bash linenos %}  
+$ jekyll --version
+Jekyll 0.11.0
+{% endhighlight %}
+
+若要在本地测试完再上传，可以在文件根目录下执行：jekyll，会在根目录下生成_site文件夹，然后访问 http://localhost:40 即可~..~
+
+h2. 问题
+
+h3. 如果运行Jekyll遇到错误"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"，参考<a href="https://github.com/mojombo/jekyll/issues/388">这里</a>
+
+

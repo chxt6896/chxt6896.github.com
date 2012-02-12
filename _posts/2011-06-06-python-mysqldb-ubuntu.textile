@@ -1,0 +1,203 @@
+---
+layout: post
+title: mysqldb安装心路Ubuntu 
+category: python
+---
+
+<b>正在学习web.py，看到了数据库部分。</b>
+
+引用原文“注意:在你开始使用数据库之前，确保你已经安装了合适的数据库访问库。比如对于MySQL数据库，使用 MySQLdb，对于Postgres数据库使用psycopg2。”Postgres没听说过，故还是选择MySQL。
+
+根据链接去下载了MySQL-python-1.2.3，打开README，好长的安装前提条件，，，
+
+Prerequisites
+
++ Python 2.3.4 or higher
+
+  * http://www.python.org/
+
+  * Versions lower than 2.3 WON'T WORK.
+
+  * 2.4 is the primary test environment.
+
+  * Red Hat Linux:
+
+    - Make sure you have the Python development headers and libraries
+      (python-devel).
+
++ setuptools
+
+  * http://pypi.python.org/pypi/setuptools
+
++ MySQL 3.23.32 or higher
+
+  * http://www.mysql.com/downloads/
+
+  * Versions lower than 3.22 definitely WON'T WORK.
+
+  * Versions lower than 3.22.19 might not work.
+
+  * MySQL-3.22 might work but isn't supported anymore. It's very old.
+
+  * MySQL-3.23 ought to work, but it's pretty elderly.
+
+  * MySQL-4.0 is supported, but not tested and slightly discouraged.
+
+  * MySQL-4.1 is supported. The prepared statements API is not
+    supported, and won't be until MySQLdb-1.3 or 2.0, if ever.
+
+  * MySQL-5.0 is supported and tested, including stored procedures.
+
+  * MySQL-5.1 is supported (currently a release candidate) but untested.
+    It should work.
+
+  * MySQL-6.0 is sorta-kinda-supported (currently alpha) but untested.
+    It should work.
+
+  * Drizzle <https://launchpad.net/drizzle> is a fork of MySQL. So far
+    the C API looks really similar except everything is renamed.
+    Drizzle support probably won't happen in 1.2. There may be have to
+    be an entirely different module, but still using DB-API.
+
+  * MaxDB, formerly known as SAP DB (and maybe Adabas D?), is a
+    completely different animal. Use the sapdb.sql module that comes
+    with MaxDB.
+
+  * Red Hat Linux packages:
+
+    - mysql-devel to compile
+
+    - mysql and/or mysql-devel to run
+
+  * MySQL.com RPM packages:
+
+    - MySQL-devel to compile
+
+    - MySQL-shared if you want to use their shared
+      library. Otherwise you'll get a statically-linked module,
+      which may or may not be what you want.
+
+    - MySQL-shared to run if you compiled with MySQL-shared installed
+
+  * Transactions (particularly InnoDB tables) are supported for
+    MySQL-3.23 and up. You may need a special package from your vendor
+    with this support turned on.
+
++  zlib
+
+   * Required for MySQL-3.23 and newer.
+
+   * Red Hat Linux
+
+     - zlib-devel to compile
+
+     - zlib to run
+
++ openssl
+
+  * May be needed for MySQL-4.0 or newer, depending on compilation
+    options. If you need it, you probably already have it.
+
+    - you may need openssl-devel on some platforms
+
++ C compiler
+
+  * Most free software-based systems already have this, usually gcc.
+
+  * Most commercial UNIX platforms also come with a C compiler, or
+    you can also use gcc.
+
+  * If you have some Windows flavor, you usually have to pay extra
+    for this, or you can use Cygwin_.
+
+.. _Cygwin: http://www.cygwin.com/
+
+
+
+<b>重点在安装setuptools和MySQL</b>
+
+<b>1.安装MySQL：</b>
+
+  去官网上下载了包包，结果最后还是选择了用新立得安装
+
+  sudo apt-get install mysql-server mysql-client
+
+  sudo start mysql #手动的话这样启动
+
+  sudo stop mysql #手动停止
+
+  当你修改了配置文件後，你需要重启 mysqld 才能使这些修改生效。
+
+  要想检查 mysqld 进程是否已经开启，可以使用下面的命令：
+
+  pgrep mysqld
+
+  如果进程开启，这个命令将会返回该进程的 id。
+
+  "http://2010.siteserver.cn/itwebsite/contents/2060/5969.html":http://2010.siteserver.cn/itwebsite/contents/2060/5969.html
+
+  "http://2goo.info/blog/panjj/other/2010/10/22/134":http://2goo.info/blog/panjj/other/2010/10/22/134
+
+
+
+<b>2.安装setuptools：</b>
+
+从新立得可以安装
+
+
+
+
+
+<b>##下面进入主题mysqldb的安装：</b>
+
+  $ tar xfz MySQL-python-1.2.1.tar.gz
+  $ cd MySQL-python-1.2.1
+  $ # edit site.cfg if necessary
+  $ python setup.py build
+  $ sudo python setup.py install # or su first
+
+
+
+<b>最后一步安装会遇到的问题：</b>
+
+<b>1.没有mysql_config文件</b>
+
+mysql_config是属于MySQL开发用的文件，而使用apt-get安装的MySQL是没有这个文件的，于是在包安装器里面寻找
+
+libmysqld-dev
+
+libmysqlclient-dev
+
+这两个包安装后问题即可解决
+
+
+
+<b>2.EnvironmentError: mysql_config not found</b>
+
+root@vpser:~# cd MySQL-python-1.2.3
+root@vpser:~/MySQL-python-1.2.3# python setup.py install
+sh: mysql_config: not found
+Traceback (most recent call last):
+  File "setup.py", line 15, in <module>
+    metadata, options = get_config()
+  File "/root/MySQL-python-1.2.3/setup_posix.py", line 43, in get_config
+    libs = mysql_config("libs_r")
+  File "/root/MySQL-python-1.2.3/setup_posix.py", line 24, in mysql_config
+    raise EnvironmentError("%s not found" % (mysql_config.path,))
+EnvironmentError: mysql_config not found
+
+首先查找mysql_config的位置，使用find / -name mysql_config ，比如我的在/usr/local/mysql/bin/mysql_config
+
+修改setup_posix.py文件，在26行：
+mysql_config.path = "mysql_config" 修改为：
+mysql_config.path = "/usr/local/mysql/bin/mysql_config"
+修改完成后保存，再执行
+
+$ python setup.py build
+$ sudo python setup.py install # or su first
+
+
+
+<b>说到这里其实非常的麻烦了，继续看README文档，下面其实有说明可以直接用新立得安装，尴尬，，，。。。</b>
+
+sudo apt-get install python-mysqldb

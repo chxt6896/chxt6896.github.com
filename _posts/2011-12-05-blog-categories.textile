@@ -1,0 +1,27 @@
+---
+layout: post
+title: Categories 分类
+category: blog
+---
+
+想显示你的分类效果吗？跟我来吧～源代码 Fork 我就能看到
+
+h2. Step1
+
+在每一篇 post 博文里添加 yaml 语句，以明确这篇博文属于哪个分类，比如：category: blog
+
+h2. Step2
+
+在导航页面安排自己的分类跳转页面，比如：http://chxt6896.github.com/category/blog/blog.html，即我跳到了根目录下的 /category/blog/blog.html
+
+h2. Step3
+
+编写自己相应的跳转页面，我使用了引用页面，比如：我创建的 /category/blog/blog.html 里面只有一句引用 {{"{% include category.html"}} %}
+
+h2. Step4
+
+最关键的是编写引用页面 category.html，它被放在了根目录下的 /include/category.html
+
+Jekyll 模板引擎里面提供了 categories 数组，直接使用 site.categories[name] 即可调用，参数 name 即你的分类名称，返回的是该分类所有博文的集合
+
+至此分类结束，就这么简单，一般人我不告诉她哦^..^

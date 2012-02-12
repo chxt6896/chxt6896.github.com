@@ -1,0 +1,48 @@
+{% capture testDay %}01 {{ site.time|date:"%B" }} {{ site.time|date:"%Y" }}{% endcapture %}
+<div id="calendar_wrap">
+	<table id="wp-calendar">
+		<caption>{{ site.time|date:"%B" }} {{ site.time|date:"%Y" }}</caption>
+		<thead>
+			<tr>
+				<th scope="col" title="Sunday">S</th>
+				<th scope="col" title="Monday">M</th>
+				<th scope="col" title="Tuesday">T</th>
+				<th scope="col" title="Wednesday">W</th>
+				<th scope="col" title="Thursday">T</th>
+				<th scope="col" title="Friday">F</th>
+				<th scope="col" title="Saturday">S</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			{% capture column %}0{% endcapture %}
+			{% capture blanks %}{{ testDay|date:"%w" }}{% endcapture %}
+			{% capture nDays %}{{ site.Dec }}{% endcapture %}
+			{% capture thisDay %}{{ site.time|date:"%d" }}{% endcapture %}
+			<tr>			
+			{% for i in (1..blanks) %}
+				<td colspan="1" class="pad">&nbsp;</td>
+				{% capture column %}{{ column | plus:1 }}{% endcapture %}
+			{% endfor %}
+			
+			{% for j in (1..nDays) %}
+				{% capture day %}{{ j }}{% endcapture %}
+				{% if thisDay == day %}
+					<td title="today" style="color:#005ECF"><b>{{ j }}</b></td>
+				{% else %}
+					<td>{{ j }}</td>
+				{% endif %}
+				
+				{% capture column %}{{ column | plus:1 }}{% endcapture %}
+				{% if column == '7' %}
+					</tr><tr>
+					{% capture column %}0{% endcapture %}
+				{% endif %}
+			{% endfor %}
+			</tr>
+		</tbody>
+		
+		<tfoot>
+		</tfoot>
+	</table>
+</div>

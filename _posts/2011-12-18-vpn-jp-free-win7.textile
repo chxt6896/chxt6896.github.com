@@ -1,0 +1,47 @@
+---
+layout: post
+title: Free vpn in Japan, Run!!
+category: vpn
+---
+
+h2. VPN 爆破
+
+据悉，这个 VPN 是日本公司专门为到中国旅行的日本人提供，由于中国网络的特殊状况，这对来华旅游、经商的外籍人士不能通过 Facebook，Twitter 来联络朋友感到非常​不便。所以 VPN 不仅对中国人来说是上网必备的东西，而且对外国人也是如此。
+
+网站主页在 <a href="http://49.212.48.199/index.html">这里</a>，这个 VPN 是完全免费的 ^^
+
+h2. 注册
+
+首先需要注册一个免费账号，虽然网站是日文的，但注册流程很简单，使用邮箱注册，流程如下图：
+
+!/images/vpn/vpn-jp-free-1.jpg!
+
+!/images/vpn/vpn-jp-free-2.jpg!
+
+之后会有一封激活邮件，点击激活
+
+!/images/vpn/vpn-jp-free-3.jpg!
+
+最后会有一封注册完成邮件，里面是用户名和密码
+
+!/images/vpn/vpn-jp-free-4.jpg!
+
+h2. 设置
+
+PPTP VPN 服务器：49.212.48.199
+
+用户名：注册的邮件地址
+
+密码：邮件中
+
+如果不会新建 VPN 服务器，请参考下列博文：
+
+* <a href="http://chxt6896.github.com/vpn/2011/12/18/vpn-pptp-win7.html">Windows 7 自带 VPN 连接设置</a>
+
+* <a href="http://chxt6896.github.com/vpn/2011/12/18/vpn-pptp-winxp.html">Windows XP 自带 VPN 连接设置</a>
+
+* <a href="http://chxt6896.github.com/vpn/2011/12/18/vpn-pptp-mac.html">Mac 自带 VPN 连接设置</a>
+
+下面就开始你的 Free vpn 之旅吧 ^^ 千万不要跟小日本客气哦
+
+<a href="http://allinfa.com/"> >>> 美博园（need FQ）</a>

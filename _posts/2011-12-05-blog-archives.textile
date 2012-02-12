@@ -1,0 +1,40 @@
+---
+layout: post
+title: Archives 存档
+category: blog
+---
+
+存档兮，时间兮～存档即按照年份、月份将博文进行分类
+
+h2. Step1
+
+在导航页面安排自己的分类跳转页面，比如我的2011年存档：http://chxt6896.github.com/archive/2011/2011.html，即我跳到了根目录下的 /archive/2011/2011.html
+
+h2. Step2
+
+编写自己相应的跳转页面，我使用了引用页面，比如：我创建的 /archive/2011/2011.html 里面只有一句引用 {{"{% include archive.html"}} %}
+
+h2. Step3
+
+最关键的是编写引用页面 archive.html，它被放在了根目录下的 /include/archive.html
+
+使用 Liquid 模板语言的 capture 标签生成变量，对比博文的年份 {{"{{post.date|date:'%Y'"}}}} 和月份 {{"{{post.date|date:'%B'"}}}}，具体看源码
+
+h2. 对比 assign 标签和 capture 标签
+
+h3. assign 标签
+
+声明变量存储简单数据：
+
+{{"{% assign name = 'freestyle'"}} %}
+
+h3. capture 标签
+
+声明变量存储复杂的由几个字符串组合而成的字符串数组：
+
+{{"{% capture attribute_name"}} %} 
+
+{{"{{ item.title | handleize"}} }}-{{"{{ i"}} }}-color 
+
+{{"{% endcapture"}} %}
+

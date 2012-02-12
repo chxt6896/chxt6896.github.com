@@ -1,0 +1,35 @@
+---
+layout: post
+title: 合作开发 Blog 指南
+category: blog
+---
+
+h2. 必要条件
+
+* 注册<a href="https://github.com/"> Github </a>，且已经上手
+
+* 热爱开源，想要贡献自己博文的力量
+
+h2. 致合作者
+
+既然是合作，那就是要以合作者 Collaborators 的身份加入，首先要先向第一写作者（就是我啦）提交申请，发送邮件到 <b>chxt6896@gmail.com</b>，用你的真诚打动我，附上你的 Github 用户名。
+
+具体的方式请详细阅读<a href="http://www.ossxp.com/doc/gotgithub/04-work-with-others/020-shared-repo.html">这篇文章</a>，采用的是变基推送。
+
+h2. 参考资料
+
+1. git 入门：<a href="http://www.linuxsir.org/main/doc/git/gittutorcn.htm">Git 中文教程（need FQ）</a>
+
+2. git 的完整介绍：<a href="http://gitbook.liuhui998.com/index.html">Git Community Book 中文版</a>
+
+3. git 协作：
+
+* <a href="http://blog.leezhong.com/tech/2011/02/25/git-workflow-with-blog-demo.html">git 多人协作开发流程（以blog为例）<a>
+
+* <a href="http://ihower.tw/blog/archives/5140">Git flow 開發流程</a>
+
+3. github 入门：<a href="http://www.ossxp.com/doc/gotgithub/index.html">GotGitHub</a>
+
+4. github 官方帮助：<a href="http://help.github.com">http://help.github.com</a> 
+
+5. github 的使用： <a href="http://qbaty.iteye.com/blog/865368">github上 常用的两种工作模式</a> (算是官方帮助的简化版吧)

@@ -1,0 +1,26 @@
+---
+layout: post
+title: Pagination 分页
+category: blog
+---
+
+有 Web 的地方，就一定会有分页，无论是 MySql 的 limit 语句，还是 js 脚本，对分页的讨论就是两个词"速度、简单"。
+
+h2. Step1
+                  
+在 _config.yml 中添加：
+
+paginate: 5
+
+确定一页显示的博文数，此处设定为5篇
+
+h2. Step2
+
+通过 paginator.total_pages 即可获取总页数，然后循环输出页码
+
+当前博文的下一篇可以通过 page.next 调用，上一篇可以通过 page.previous 调用
+           
+ 
+  
+   
+  
