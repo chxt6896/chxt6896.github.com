@@ -51,8 +51,4 @@ Jekyll 0.11.0
 
 若要在本地测试完再上传，可以在文件根目录下执行：jekyll --server --auto，会在根目录下生成_site文件夹，然后访问 http://localhost:4000 即可~..~
 
-h2. 问题
-
-h3. 如果运行Jekyll遇到错误"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"，参考<a href="https://github.com/mojombo/jekyll/issues/388">这里</a>
-
-
+更多请参考博文 "Jekyll 本地调试之若干问题":http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html

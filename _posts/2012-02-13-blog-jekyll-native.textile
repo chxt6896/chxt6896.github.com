@@ -64,7 +64,7 @@ task :runwindows do
     `jekyll --server --auto`
 end
 </code></pre>
-参考：
+
 <a href="https://github.com/mojombo/jekyll/issues/188"> >>>Ruby 1.9 character encoding changes</a>
 <a href="http://ruby-taiwan.org/topics/46"> >>>octopress在windows下出现的字符集错误</a>
 <a href="http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/"> >>>Solving UTF problem with Jekyll on Windows</a>
@@ -103,5 +103,17 @@ end
 
 在 _config.yml 可以找到对 lsi 的设置，直接删掉即可，默认是 lsi:false
 
-参考：
 <a href="http://bristolrb.org/2009/01/22/latent-semantic-indexing.html"> >>>Latent semantic indexing</a>
+
+h2. Problem5 "Liquid error: undefined method `join’for ......"
+
+这好像是 Liquid 2.3.0 的一个 bug，通过还原2.2.2版本即可解决：
+
+{% highlight bash linenos %}
+$ gem uninstall liquid
+$ gem install liquid --version '2.2.2'
+{% endhighlight %}
+
+<a href="http://stackoverflow.com/questions/7801197/syntax-highlighting-with-pygments-is-failing-via-liquid-templates-string-error"> >>>Syntax Highlighting with Pygments is failing via Liquid Templates String Error</a>
+
+h2. Problem4 "Liquid error: No such file or directory – pygmentize"
