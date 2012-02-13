@@ -32,7 +32,11 @@ h2. Step2
 
 h2. Step3
 
-在模拟环境Cygwin或者MyGit中：gem install jekyll
+在模拟环境Cygwin或者MyGit中：
+
+{% highlight bash linenos %} 
+gem install jekyll
+{% endhighlight %}
 
 安装会附带自动安装所需要的 directory_watcher, liquid, open4, maruku and classifier
 
@@ -45,7 +49,7 @@ $ jekyll --version
 Jekyll 0.11.0
 {% endhighlight %}
 
-若要在本地测试完再上传，可以在文件根目录下执行：jekyll，会在根目录下生成_site文件夹，然后访问 http://localhost:40 即可~..~
+若要在本地测试完再上传，可以在文件根目录下执行：jekyll --server --auto，会在根目录下生成_site文件夹，然后访问 http://localhost:4000 即可~..~
 
 h2. 问题
 
