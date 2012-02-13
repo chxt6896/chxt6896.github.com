@@ -8,4 +8,18 @@ h3. 没有看似简单的事，简单的开头后面往往都九曲十弯
 
 为什么要用本地调试？其实应该反问自己，如果不用本地调试，将会多么麻烦，每每有改动想要调试着看看效果，都至少要 add, commit, push 三条命令上传到 github 服务器，说白了就两个字“麻烦”。
 
-是
+编译 Jekyll 编辑网站只需在根目录执行 jekyll 命令，下面的命令是 GitHub 更新网站所使用的默认指令。
+
+{% highlight bash linenos %}
+$ jekyll --pygments --safe
+{% endhighlight %}
+
+现在执行这条命令，就会将整个网站创建在目录 _site 下。
+
+如果没有安装 Apache 等 Web服务器，还可以使用 Jekyll 的内置 Web服务器。
+
+{% highlight bash linenos %}
+$ jekyll --server --auto
+{% endhighlight %}
+
+默认在端口4000开启 Web服务器，访问 http://localhost:4000 即可。
