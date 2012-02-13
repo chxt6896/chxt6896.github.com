@@ -1,0 +1,7 @@
+---
+layout: post
+title: Jekyll 本地调试之若干问题
+category: blog
+---
+
+h3. 没有看似简单的事，简单的开头后面往往都九曲十弯
