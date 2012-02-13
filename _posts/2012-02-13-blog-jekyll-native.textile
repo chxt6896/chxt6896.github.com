@@ -68,3 +68,40 @@ end
 <a href="https://github.com/mojombo/jekyll/issues/188"> >>>Ruby 1.9 character encoding changes</a>
 <a href="http://ruby-taiwan.org/topics/46"> >>>octopress在windows下出现的字符集错误</a>
 <a href="http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/"> >>>Solving UTF problem with Jekyll on Windows</a>
+
+h2. Problem3 卡在"Running the classifier...this could take a while"，无法即时调试
+
+若要解释清楚此怪，还得从 Related posts 说起，这个相关博文的定位源于下面这个函数：
+
+{% highlight ruby linenos %}
+# Calculate related posts.
+#
+# Returns [<Post>]
+def related_posts(posts)
+  return [] unless posts.size > 1
+  
+  if Jekyll.lsi
+    self.class.lsi ||= begin
+      puts "Running the classifier... this could take a while."
+      lsi = Classifier::LSI.new
+      posts.each { |x| $stdout.print(".");$stdout.flush;lsi.add_item(x) }
+      puts ""
+      lsi
+    end
+
+    related = self.class.lsi.find_related(self.content, 11)
+    related - [self]
+  else
+    (posts - [self])[0..9]
+  end
+end
+{% endhighlight %}
+
+相信你已经发现了，这句"Running the classifier... this could take a while."就产自这里，分类器一直在工作，分出哪些是相关的博文，所以当你的博文数量很多的时候，这个分类的时间就会很长，可能永远处于Running状态（只限于本地调试的时间）。
+
+注意上面紧接着出现了一个关键词 *lsi* ， "Jekyll Configuration":https://github.com/mojombo/jekyll/wiki/configuration 里面有对其的描述 "Produces an index for related posts(产生相关博文的索引)"，至此就知道了只要把 lsi 功能关掉即可。
+
+在 _config.yml 可以找到对 lsi 的设置，直接删掉即可，默认是 lsi:false
+
+参考：
+<a href="http://bristolrb.org/2009/01/22/latent-semantic-indexing.html"> >>>Latent semantic indexing</a>
