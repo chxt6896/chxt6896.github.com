@@ -35,7 +35,7 @@ h2. Step3
 在模拟环境Cygwin或者MyGit中：
 
 {% highlight bash linenos %} 
-gem install jekyll
+$ gem install jekyll
 {% endhighlight %}
 
 安装会附带自动安装所需要的 directory_watcher, liquid, open4, maruku and classifier
