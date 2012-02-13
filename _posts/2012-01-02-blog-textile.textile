@@ -45,6 +45,6 @@ markdown: redcloth
 
 h2. 使用方法
 
-可以学习官方的 <a href="http://redcloth.org/hobix.com/textile/"> >>Textile Quick Reference</a>
+可以学习官方的 <a href="http://redcloth.org/hobix.com/textile/"> >>>Textile Quick Reference</a>
 
-也可以使用轻量级的 <a href="http://www.textism.com/tools/textile/index.php"> >>Textism</a>
+也可以使用轻量级的 <a href="http://www.textism.com/tools/textile/index.php"> >>>Textism</a>

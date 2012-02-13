@@ -23,3 +23,48 @@ $ jekyll --server --auto
 {% endhighlight %}
 
 默认在端口4000开启 Web服务器，访问 http://localhost:4000 即可。
+
+h3. 下面是一些在 jekyll 运行时可能会出现的一些问题及解决方案：
+
+h2. Problem1 <a href="https://github.com/mojombo/jekyll/issues/388">"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"</a>
+
+在 lib/jekyll/post.rb 中补充上 name 即可。
+
+h2. Problem2 "Liquid error: incompatible character encodings: UTF-8 and IBM437"
+
+这个问题是在 Windows 下出现的，英文博文没问题，中文博文就会报错，原因是你所使用的控制台并不能工作 UTF-8。
+
+<h3>1. MyGit 控制台解决方案</h3>
+* 临时：在执行 jekyll 命令前，将当前控制台的代码格式转为 UTF-8:
+
+{% highlight bash linenos %}
+$ export LC_ALL=en_US.UTF-8
+$ export LANG=en_US.UTF-8
+$ jekyll --server --auto
+{% endhighlight %}
+
+* 永久：添加两对用户自定义的环境变量，LC_ALL=en_US.UTF-8 和 LANG=en_US.UTF-8
+
+
+
+<h3>2. cmd 控制台解决方案</h3>
+* 临时：在执行 jekyll 命令前，将当前控制台的代码格式转为 UTF-8:
+
+{% highlight bash linenos %}
+chcp 65001
+jekyll --server --auto
+{% endhighlight %}
+
+* 永久：将 chcp 命令和 jekyll 命令合并成一个 rake 任务，文件名就叫 rakefile，在 cmd 控制台执行 rake runwindows 即可。
+<pre><code>
+task :runwindows do
+    puts '* Changing the codepage'
+    `chcp 65001`
+    puts '* Running Jekyll'
+    `jekyll --server --auto`
+end
+</code></pre>
+参考：
+<a href="https://github.com/mojombo/jekyll/issues/188"> >>>Ruby 1.9 character encoding changes</a>
+<a href="http://ruby-taiwan.org/topics/46"> >>>octopress在windows下出现的字符集错误</a>
+<a href="http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/"> >>>Solving UTF problem with Jekyll on Windows</a>
