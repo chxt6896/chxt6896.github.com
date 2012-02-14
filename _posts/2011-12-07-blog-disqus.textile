@@ -55,21 +55,24 @@ h2. Step4
 
 只需按照代码中的提示将 'example' 替换为你的 Shortname ，然后将它嵌入到所需页面中，通常是 /layout/post.html ，自此成功^..^
 
-h2. 扩展
-
-DisQus 还有其他功能的：
-
-* 可以手动配置你的评论
-
-* 可以将评论计数加到你的博客里面去。就如同上面一样，也是添加一段 js
-
 h2. 添加评论计数到首页
 
 首先，同样添加上面的 js 代码到首页模板（default.html）
 
 然后，在首页需要添加评论的地方，写一个链接，href 的属性值为 {{"{{ post.url"}} }}#disqus_thread，Disqus 将会通过 URL 获取评论数
 
-<a href="http://disqus.com/api/docs/"> >>The Disqus Web API</a>
+<a href="http://disqus.com/api/docs/"> >>>The Disqus Web API</a>
 
+h2. 添加最近评论到首页
 
+登录到你的Disqus，选择 Admin -> Tools -> code，提供了几种 Widgets 插件:
+* Combination（组合式）
+* Recent Comments（近期评论）
+* Popular Threads（热门话题）
+* Top Commenters（最近评论人）
 
+该工具可以根据用户设置的参数生成代码，然后粘贴到首页即可。
+
+!/images/blog/disqus.png!
+
+<a href="http://disqus.rubyforge.org/classes/Disqus/Widget.html"> >>>Disqus Widget</a>
