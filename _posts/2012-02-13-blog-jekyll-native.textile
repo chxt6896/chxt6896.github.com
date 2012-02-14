@@ -105,7 +105,7 @@ end
 
 <a href="http://bristolrb.org/2009/01/22/latent-semantic-indexing.html"> >>>Latent semantic indexing</a>
 
-h2. Problem5 "Liquid error: undefined method `join’for ......"
+h2. Problem4 "Liquid error: undefined method `join’for ......"
 
 这好像是 Liquid 2.3.0 的一个 bug，通过还原2.2.2版本即可解决：
 
@@ -116,4 +116,4 @@ $ gem install liquid --version '2.2.2'
 
 <a href="http://stackoverflow.com/questions/7801197/syntax-highlighting-with-pygments-is-failing-via-liquid-templates-string-error"> >>>Syntax Highlighting with Pygments is failing via Liquid Templates String Error</a>
 
-h2. Problem4 "Liquid error: No such file or directory – pygmentize"
+h2. Problem5 "Liquid error: No such file or directory – pygmentize"
