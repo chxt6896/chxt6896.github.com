@@ -13,7 +13,7 @@ title: chxt6896
 	  </div>
 	  {% endfor %}
 	
-	{% if paginator.total_pages > 1 %}
+	<!--{% if paginator.total_pages > 1 %}
 		<div class="navigation">
         {% for page in (1..paginator.total_pages) %}
           {% if page == paginator.page %}
@@ -23,4 +23,15 @@ title: chxt6896
           {% endif %}
         {% endfor %}
 		</div>
+  {% endif %}-->
+  
+  {% if paginator.previous_page %}
+  	{% if paginator.page == 2 %}
+  		<a href="/" rel="bookmark"> << Previous Page</a>
+  	{% else %}
+  		<a href="/page{{ paginator.previous_page }}" rel="bookmark"> << Previous Page</a>
+  	{% endif %}
+  {% endif %}
+  {% if paginator.next_page %}
+  	<a href="/page{{ paginator.next_page }}" rel="bookmark" style="float:right">Next Page >></a>
   {% endif %}

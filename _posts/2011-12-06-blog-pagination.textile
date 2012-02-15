@@ -12,7 +12,7 @@ h2. Step1
 
 paginate: 5
 
-确定一页显示的博文数，此处设定为5篇
+确定一页显示的博文数，此处设定为5篇，同时 site 会生成一个变量 paginator 用于分页显示。
 
 h2. Step2
 
@@ -20,7 +20,11 @@ h2. Step2
 
 当前博文的下一篇可以通过 page.next 调用，上一篇可以通过 page.previous 调用
            
+h2. 升级分页（2012.2.15）
+
+当文章逐渐增多，总是以数字来呈现分页就不那么美观了，一个简单的解决方案就是使用相对分页：
+
+当前页 paginator.page，前一页 paginator.previous_page，后一页 paginator.next_page 
  
-  
-   
+特别要注意路径，第一页直接是根目录 /，从第二页开始都是 /pageX 的形式   
   
