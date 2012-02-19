@@ -1,5 +1,5 @@
 ---
-author: chxt6896
+author: 浩宇啸天
 desc: 浩宇啸天想吃武昌鱼
 ---
 
@@ -7,8 +7,16 @@ desc: 浩宇啸天想吃武昌鱼
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
-   	<title>{{ page.title }}</title>
-   	<meta name="author" content="浩宇啸天" />
+   	<title>
+   		{% if page.title %}
+          {{ page.title }}
+      {% else %}
+          {{ site.title }}
+      {% endif %}    
+		</title>  	
+   	<meta name="generator" content="Jekyll" />
+    <meta name="author" content="{{ page.author }}" />
+    <meta name="description" content="{{ page.desc }}" />
 		
 		<link href="http://feeds.feedburner.com/tom-preston-werner" rel="alternate" title="Tom Preston-Werner" type="application/atom+xml" />
    	<link rel="stylesheet" href="/css/syntax.css" type="text/css" media="screen" />	
@@ -17,7 +25,7 @@ desc: 浩宇啸天想吃武昌鱼
 			
 		<script type="text/javascript" src="/js/yahoo.js"></script>
 		<script type="text/javascript" src="/js/global.js"></script>	
-		<script type="text/javascript" src="/js/calendar.js"></script>		
+		<script type="text/javascript" src="/js/calendar.js"></script>	
 	</head>
 
 	<body>
@@ -31,7 +39,7 @@ desc: 浩宇啸天想吃武昌鱼
 				<div class="clear_float"></div>
 			</div>
 			<div id="header">
-				<h1><a href="#">浩宇啸天要吃武昌鱼</a></h1>
+				<h1><a href="#">{{ page.desc }}</a></h1>
 				浩宇啸天 MISS 武昌鱼
 				{% include follow.html %}
 			</div>
@@ -65,6 +73,7 @@ desc: 浩宇啸天想吃武昌鱼
 								<input type="hidden" name="domains" value="http://chxt6896.github.com" />
 								<input type="hidden" name="sitesearch" value="http://chxt6896.github.com" />
 							</form>
+							<g:plusone size="small"></g:plusone>
 							<h2>Calendar</h2>
 								<script language="javascript" type="text/javascript">
 									calendar();
@@ -163,6 +172,15 @@ desc: 浩宇啸天想吃武昌鱼
 	        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
 	        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
 	    }());
+	</script>
+	<script type="text/javascript">
+	  window.___gcfg = {lang: 'zh-CN'};
+	
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
 	</script>
 	</body>
 </html>
