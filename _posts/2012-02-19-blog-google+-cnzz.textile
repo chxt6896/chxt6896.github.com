@@ -1,0 +1,39 @@
+---
+layout: post
+title: Google+ 按钮添加 & CNZZ 站长统计
+category: blog
+---
+
+h2. Google+
+
+想必你已经在很多网站上面见到过 Google+1 的按钮了，下面就在你的博客中也加入吧:
+
+首先登录 <a href="http://www.google.com/webmasters/+1/button/index.html" rel="nofollow">Google+1 按钮页面</a>，然后按照提示选择样式和设定高级功能，最后将代码粘贴到指定位置即可。
+
+h2. Problem
+
+使用 Google+1 后网站打开速度变慢了，Google+1 按钮总要等上数秒甚至是数十秒才能读取完毕出现在页面里，下面是 Aaron Peters 给出的优化意见：
+
+* 一定不要把那段 Javascript 代码放在 <code><head></code> 标签里，这样会拖慢整个网页的打开速度。最好是将其放在 <code></body></code> 之前，这样页面可以完全打开，之后再等待+1按钮慢慢读取。其实 Google 如果再上心点，做成类似 AdSens e和 Google Analytics 那种非阻塞形式的JS代码就更快了。
+
+* Aaron 发现 Google 的 Javascript 代码只允许浏览器缓存6分钟，这其实也导致了我们再次打开网页时候速度依然快不起来。 Aaron 还发现 Google 提供的代码有个小瑕疵，其中的 http://apis.google.com/js/plusone.js 应该改成 https 链接，否则浏览器会做一次自动跳转，又耽误了一点时间。
+
+* Aaron 建议在 Google 改进之前，这么来写 Google +1 的代码能快一点:
+<pre><code>
+<!-- Place this tag just before your close body tag -->
+<script>
+    (function(d, t) {
+    var g = d.createElement(t),
+    s = d.getElementsByTagName(t)[0];
+    g.async = true;
+    g.src = 'https://apis.google.com/js/plusone.js';
+    s.parentNode.insertBefore(g, s);
+    })(document, 'script');
+</script>
+<!-- Place this tag where you want the +1 button to render -->
+    <g:plusone></g:plusone>
+</code></pre>
+
+h2. CNZZ
+
+每天打开博客，发现都是静悄悄的，除了通过评论来引起你的注意外，一切都是浮云。因此，CNZZ站长统计的必要性就体现出来了，<a href="http://www.cnzz.com/" rel="nofollow">注册</a>并添加网址，操作非常简单。

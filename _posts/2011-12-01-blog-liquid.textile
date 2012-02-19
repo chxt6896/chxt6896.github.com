@@ -12,7 +12,7 @@ h3. 为避免直接编写html代码，编写文章时，内容需要加入标记
 * 这些标记语言会被标记引擎转换，输出成相应的目标格式（大部分情况是输出成html）
 * 引擎也有很多种，不同的编程语言有不同的实现，ruby常用的引擎有RedCloth
 
-h2. <a href="http://liquidmarkup.org/">Liquid</a>
+h2. <a href="http://liquidmarkup.org/" rel="nofollow">Liquid</a>
 
 Liquid is a Ruby library for rendering safe templates which cannot affect the security of the server they are rendered on.
 
@@ -22,6 +22,6 @@ h3. Blog中都是需要经过处理的，比如逻辑判断处理、循环处理
 
 * 除了标准的Liquid语法外，jekyll还扩展出了几个便利的方法～
 
-<a href="https://github.com/shopify/liquid/wiki/liquid-for-designers"> >>>标准Liquid标记和过滤器</a>
-<a href="https://github.com/mojombo/jekyll/wiki/liquid-extensions"> >>>Jekyll liquid扩展</a>
+<a href="https://github.com/shopify/liquid/wiki/liquid-for-designers" rel="nofollow"> >>>标准Liquid标记和过滤器</a>
+<a href="https://github.com/mojombo/jekyll/wiki/liquid-extensions" rel="nofollow"> >>>Jekyll liquid扩展</a>
 
