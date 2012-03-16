@@ -1,0 +1,17 @@
+---
+layout: post
+title: Jekyll in Windows
+category: blog
+---
+
+h2. Install MinGW
+
+* "sf.net/projects/mingw/files/Installer/mingw-get-inst":http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/
+* C Compiler
+* MSYS Basic System
+
+{% highlight bash linenos %}
+# Install dependencies
+$ mingw-get install msys-patch
+$ mingw-get install msys-wget
+{% endhighlight %}
