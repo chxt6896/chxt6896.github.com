@@ -41,9 +41,3 @@ $ ./ez_setup.py
 # Pygments
 $ easy_install Pygments
 {% endhighlight %}
-
-h2. Install Jekyll
-
-{% highlight bash linenos %}
-$ gem install jekyll --no-ri --no-rdoc
-{% endhighlight %}
