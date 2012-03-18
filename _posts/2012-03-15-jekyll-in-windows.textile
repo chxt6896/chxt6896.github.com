@@ -47,3 +47,35 @@ h2. Install Jekyll
 {% highlight bash linenos %}
 $ gem install jekyll --no-ri --no-rdoc
 {% endhighlight %}
+
+h2. Install GSL libraries
+
+{% highlight bash linenos %}
+$ wget 'ftp.gnu.org/gnu/gsl/gsl-1.15.tar.gz'
+$ tar xf gsl*
+$ cd gsl*
+$ ./configure
+# Warning, make takes about 7 min.
+$ make
+$ make install
+{% endhighlight %}
+
+* github.com/mojombo/jekyll/issues/376
+* github.com/romanbsd/rb-gsl/issues/2
+
+h2. Install Ruby/GSL
+
+{% highlight bash linenos %}
+# "gem install gsl" does not work. If you try it you are going to need to
+# delete from "Ruby193/lib/ruby/gems/1.9.1/gems" before you can continue.
+# rb-gsl.rubyforge.org version has to be patched to support GSL 1.15.
+$ wget --content-disposition --no-check-certificate \
+$ github.com/romanbsd/rb-gsl/tarball/master
+$ tar xf romanbsd-rb-gsl*
+$ cd romanbsd-rb-gsl*
+$ ruby setup.rb config
+$ ruby setup.rb setup
+$ ruby setup.rb install
+{% endhighlight %}
+
+* github.com/romanbsd/rb-gsl
