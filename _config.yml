@@ -5,6 +5,7 @@ server_port: 4000
 pygments:    true
 markdown:    redcloth
 permalink:   date
+lsi:         true 
 
 paginate:    5
 
