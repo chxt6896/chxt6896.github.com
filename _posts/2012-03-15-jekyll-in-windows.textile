@@ -4,17 +4,11 @@ title: Jekyll in Windows
 category: blog
 ---
 
-h2. Install MinGW
+h2. Install "msysGit":http://msysgit.github.com/
 
-* "sf.net/projects/mingw/files/Installer/mingw-get-inst":http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/
-* C Compiler
-* MSYS Basic System
+h2. Download "Wget":http://users.ugent.be/~bpuype/wget/ for Windows
 
-{% highlight bash linenos %}
-# Install dependencies
-$ mingw-get install msys-patch
-$ mingw-get install msys-wget
-{% endhighlight %}
+Wget("World Wide Web"和"Get"的结合)是一个在网络上进行下载的简单而强大的自由软件，此为 Windows版本，只需下载 wget.exe 文件后放在 C://windows 下即可在任何位置调用命令
 
 h2. Install Ruby
 
@@ -42,10 +36,16 @@ $ ./ez_setup.py
 $ easy_install Pygments
 {% endhighlight %}
 
+h2. Install RedCloth
+
+{% highlight bash linenos %}
+$ gem install RedCloth
+{% endhighlight %}
+
 h2. Install Jekyll
 
 {% highlight bash linenos %}
-$ gem install jekyll --no-ri --no-rdoc
+$ gem install jekyll
 {% endhighlight %}
 
 h2. Install GSL libraries
