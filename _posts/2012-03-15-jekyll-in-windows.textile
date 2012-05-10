@@ -4,7 +4,7 @@ title: Jekyll in Windows
 category: blog
 ---
 
-h2. Install "msysGit":http://msysgit.github.com/
+h2. Install "msysGit":http://msysgit.github.com/ 
 
 h2. Download "Wget":http://users.ugent.be/~bpuype/wget/ for Windows
 
