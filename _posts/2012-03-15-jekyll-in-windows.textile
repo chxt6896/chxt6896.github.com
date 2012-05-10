@@ -12,7 +12,7 @@ Wget("World Wide Web"和"Get"的结合)是一个在网络上进行下载的简�
 
 h2. Install Ruby
 
-Jekyll requires Ruby 1.9.1 or higher
+Jekyll requires Ruby 1.9.1 or higher 
 
 * "github.com/mojombo/jekyll/wiki/install":https://github.com/mojombo/jekyll/wiki/install
 * "rubyinstaller.org":http://rubyinstaller.org/
