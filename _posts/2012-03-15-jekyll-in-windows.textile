@@ -1,4 +1,4 @@
----
+ï»¿---
 layout: post
 title: Jekyll in Windows
 category: blog
@@ -8,7 +8,7 @@ h2. Install "msysGit":http://msysgit.github.com/
 
 h2. Download "Wget":http://users.ugent.be/~bpuype/wget/ for Windows
 
-Wget("World Wide Web"ºÍ"Get"µÄ½áºÏ)ÊÇÒ»¸öÔÚÍøÂçÉÏ½øĞĞÏÂÔØµÄ¼òµ¥¶øÇ¿´óµÄ×ÔÓÉÈí¼ş£¬´ËÎª Windows°æ±¾£¬Ö»ĞèÏÂÔØ wget.exe ÎÄ¼şºó·ÅÔÚ C://windows ÏÂ¼´¿ÉÔÚÈÎºÎÎ»ÖÃµ÷ÓÃÃüÁî
+Wget("World Wide Web"å’Œ"Get"çš„ç»“åˆ)æ˜¯ä¸€ä¸ªåœ¨ç½‘ç»œä¸Šè¿›è¡Œä¸‹è½½çš„ç®€å•è€Œå¼ºå¤§çš„è‡ªç”±è½¯ä»¶ï¼Œæ­¤ä¸º Windowsç‰ˆæœ¬ï¼Œåªéœ€ä¸‹è½½ wget.exe æ–‡ä»¶åæ”¾åœ¨ C://windows ä¸‹å³å¯åœ¨ä»»ä½•ä½ç½®è°ƒç”¨å‘½ä»¤
 
 h2. Install Ruby
 
@@ -29,7 +29,7 @@ $ msiexec -qn -i python-2.7.2.amd64.msi ADDLOCAL="DefaultFeature"
 h2. Install Pygments
 
 {% highlight bash linenos %}
-# Install setuptools
+# Install setuptools 
 $ wget -nc peak.telecommunity.com/dist/ez_setup.py
 $ ./ez_setup.py
 # Pygments
