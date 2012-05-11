@@ -76,7 +76,7 @@ h2. Problem3 &quot;Ruby193/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/con
 将 convertible.rb 的第29行改为：
 self.content = File.read(File.join(base, name), :encoding => &quot;utf-8&quot;)
 
-&quot;>>>windows下git bash中执行jekyll --server出错，编码问题&quot;:http://www.oschina.net/question/129471_37163
+<a href="http://www.oschina.net/question/129471_37163"> >>>windows下git bash中执行jekyll --server出错，编码问题</a>
 
 h2. Problem4 卡在"Running the classifier...this could take a while"，无法即时调试
 
