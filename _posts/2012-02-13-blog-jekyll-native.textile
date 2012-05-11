@@ -26,11 +26,11 @@ $ jekyll --server --auto
 
 h3. 下面是一些在 jekyll 运行时可能会出现的一些问题及解决方案：
 
-h2. Problem1 <a href="https://github.com/mojombo/jekyll/issues/388">"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"</a>
+h2. Problem1 <a href=&quot;https://github.com/mojombo/jekyll/issues/388&quot;>&quot;When a Liquid exception is thrown by a post, the error-handling cannot call self.name&quot;</a>
 
 在 lib/jekyll/post.rb 中补充上 name 即可。
 
-h2. Problem2 "Liquid error: incompatible character encodings: UTF-8 and IBM437"
+h2. Problem2 &quot;Liquid error: incompatible character encodings: UTF-8 and IBM437&quot;
 
 这个问题是在 Windows 下出现的，英文博文没问题，中文博文就会报错，原因是你所使用的控制台并不能工作 UTF-8。
 
@@ -65,20 +65,20 @@ task :runwindows do
 end
 </code></pre>
 
-<a href="https://github.com/mojombo/jekyll/issues/188"> >>>Ruby 1.9 character encoding changes</a>
-<a href="http://ruby-taiwan.org/topics/46"> >>>octopress在windows下出现的字符集错误</a>
-<a href="http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/"> >>>Solving UTF problem with Jekyll on Windows</a>
+<a href=&quot;https://github.com/mojombo/jekyll/issues/188&quot;> >>>Ruby 1.9 character encoding changes</a>
+<a href=&quot;http://ruby-taiwan.org/topics/46&quot;> >>>octopress在windows下出现的字符集错误</a>
+<a href=&quot;http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/&quot;> >>>Solving UTF problem with Jekyll on Windows</a>
 
-h2. Problem3 "Ruby193/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in 'read_yaml': invalid byte sequence in GBK (ArgumentError)"
+h2. Problem3 &quot;Ruby193/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in 'read_yaml': invalid byte sequence in GBK (ArgumentError)&quot;
 
 貌似是 jekyll 的一个 bug
 
 将 convertible.rb 的第29行改为：
-<b>self.content = File.read(File.join(base, name), :encoding => "utf-8")</b>
+<b>self.content = File.read(File.join(base, name), :encoding => &quot;utf-8&quot;)</b>
 
-<a href="http://www.oschina.net/question/129471_37163"> >>>windows下git bash中执行jekyll --server出错，编码问题</a>
+<a href=&quot;http://www.oschina.net/question/129471_37163&quot;> >>>windows下git bash中执行jekyll --server出错，编码问题</a>
 
-h2. Problem4 卡在"Running the classifier...this could take a while"，无法即时调试
+h2. Problem4 卡在&quot;Running the classifier...this could take a while&quot;，无法即时调试
 
 若要解释清楚此怪，还得从 Related posts 说起，这个相关博文的定位源于下面这个函数：
 
@@ -91,10 +91,10 @@ def related_posts(posts)
   
   if Jekyll.lsi
     self.class.lsi ||= begin
-      puts "Running the classifier... this could take a while."
+      puts &quot;Running the classifier... this could take a while.&quot;
       lsi = Classifier::LSI.new
-      posts.each { |x| $stdout.print(".");$stdout.flush;lsi.add_item(x) }
-      puts ""
+      posts.each { |x| $stdout.print(&quot;.&quot;);$stdout.flush;lsi.add_item(x) }
+      puts &quot;&quot;
       lsi
     end
 
@@ -106,15 +106,15 @@ def related_posts(posts)
 end
 {% endhighlight %}
 
-相信你已经发现了，这句"Running the classifier... this could take a while."就产自这里，分类器一直在工作，分出哪些是相关的博文，所以当你的博文数量很多的时候，这个分类的时间就会很长，可能永远处于Running状态（只限于本地调试的时间）。
+相信你已经发现了，这句&quot;Running the classifier... this could take a while.&quot;就产自这里，分类器一直在工作，分出哪些是相关的博文，所以当你的博文数量很多的时候，这个分类的时间就会很长，可能永远处于Running状态（只限于本地调试的时间）。
 
-注意上面紧接着出现了一个关键词 *lsi* ， "Jekyll Configuration":https://github.com/mojombo/jekyll/wiki/configuration 里面有对其的描述 "Produces an index for related posts(产生相关博文的索引)"，至此就知道了只要把 lsi 功能关掉即可。
+注意上面紧接着出现了一个关键词 *lsi* ， &quot;Jekyll Configuration&quot;:https://github.com/mojombo/jekyll/wiki/configuration 里面有对其的描述 &quot;Produces an index for related posts(产生相关博文的索引)&quot;，至此就知道了只要把 lsi 功能关掉即可。
 
 在 _config.yml 可以找到对 lsi 的设置，直接删掉即可，默认是 lsi:false
 
-<a href="http://bristolrb.org/2009/01/22/latent-semantic-indexing.html"> >>>Latent semantic indexing</a>
+<a href=&quot;http://bristolrb.org/2009/01/22/latent-semantic-indexing.html&quot;> >>>Latent semantic indexing</a>
 
-h2. Problem5 "Liquid error: undefined method `join’for ......"
+h2. Problem5 &quot;Liquid error: undefined method `join’for ......&quot;
 
 这好像是 Liquid 2.3.0 的一个 bug，通过还原2.2.2版本即可解决：
 
@@ -123,6 +123,6 @@ $ gem uninstall liquid
 $ gem install liquid --version '2.2.2'
 {% endhighlight %}
 
-<a href="http://stackoverflow.com/questions/7801197/syntax-highlighting-with-pygments-is-failing-via-liquid-templates-string-error"> >>>Syntax Highlighting with Pygments is failing via Liquid Templates String Error</a>
+<a href=&quot;http://stackoverflow.com/questions/7801197/syntax-highlighting-with-pygments-is-failing-via-liquid-templates-string-error&quot;> >>>Syntax Highlighting with Pygments is failing via Liquid Templates String Error</a>
 
-h2. Problem6 "Liquid error: No such file or directory – pygmentize"
+h2. Problem6 &quot;Liquid error: No such file or directory – pygmentize&quot;
