@@ -108,7 +108,7 @@ end
 
 相信你已经发现了，这句&quot;Running the classifier... this could take a while.&quot;就产自这里，分类器一直在工作，分出哪些是相关的博文，所以当你的博文数量很多的时候，这个分类的时间就会很长，可能永远处于Running状态（只限于本地调试的时间）。
 
-注意上面紧接着出现了一个关键词 *lsi* ， &quot;Jekyll Configuration&quot;:https://github.com/mojombo/jekyll/wiki/configuration 里面有对其的描述 &quot;Produces an index for related posts(产生相关博文的索引)&quot;，至此就知道了只要把 lsi 功能关掉即可。
+注意上面紧接着出现了一个关键词 *lsi* ， <a href="https://github.com/mojombo/jekyll/wiki/configuration">Jekyll Configuration</a> 里面有对其的描述 &quot;Produces an index for related posts(产生相关博文的索引)&quot;，至此就知道了只要把 lsi 功能关掉即可。
 
 在 _config.yml 可以找到对 lsi 的设置，直接删掉即可，默认是 lsi:false
 
