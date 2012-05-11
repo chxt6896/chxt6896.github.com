@@ -26,11 +26,11 @@ $ jekyll --server --auto
 
 h3. 下面是一些在 jekyll 运行时可能会出现的一些问题及解决方案：
 
-h2. Problem1 <a href="https://github.com/mojombo/jekyll/issues/388">&quot;When a Liquid exception is thrown by a post, the error-handling cannot call self.name&quot;</a>
+h2. Problem1 <a href="https://github.com/mojombo/jekyll/issues/388">"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"</a>
 
 在 lib/jekyll/post.rb 中补充上 name 即可。
 
-h2. Problem2 &quot;Liquid error: incompatible character encodings: UTF-8 and IBM437&quot;
+h2. Problem2 "Liquid error: incompatible character encodings: UTF-8 and IBM437"
 
 这个问题是在 Windows 下出现的，英文博文没问题，中文博文就会报错，原因是你所使用的控制台并不能工作 UTF-8。
 
@@ -69,12 +69,12 @@ end
 <a href="http://ruby-taiwan.org/topics/46"> >>>octopress在windows下出现的字符集错误</a>
 <a href="http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/"> >>>Solving UTF problem with Jekyll on Windows</a>
 
-h2. Problem3 &quot;Ruby193/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in 'read_yaml': invalid byte sequence in GBK (ArgumentError)&quot;
+h2. Problem3 "Ruby193/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in 'read_yaml': invalid byte sequence in GBK (ArgumentError)"
 
 貌似是 jekyll 的一个 bug
 
 将 convertible.rb 的第29行改为：
-<b>self.content = File.read(File.join(base, name), :encoding => &quot;utf-8&quot;)</b>
+<b>self.content = File.read(File.join(base, name), :encoding => "utf-8")</b>
 
 <a href="http://www.oschina.net/question/129471_37163"> >>>windows下git bash中执行jekyll --server出错，编码问题</a>
 
