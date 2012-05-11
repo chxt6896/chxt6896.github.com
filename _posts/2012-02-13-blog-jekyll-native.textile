@@ -26,7 +26,7 @@ $ jekyll --server --auto
 
 h3. 下面是一些在 jekyll 运行时可能会出现的一些问题及解决方案：
 
-h2. Problem1 <a href=&quot;https://github.com/mojombo/jekyll/issues/388&quot;>&quot;When a Liquid exception is thrown by a post, the error-handling cannot call self.name&quot;</a>
+h2. Problem1 <a href="https://github.com/mojombo/jekyll/issues/388">"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"</a>
 
 在 lib/jekyll/post.rb 中补充上 name 即可。
 
