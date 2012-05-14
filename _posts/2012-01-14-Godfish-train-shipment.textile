@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 将火车托运进行到底
-category: God & fish
+category: Godfish
 ---
 
 h2. 引子

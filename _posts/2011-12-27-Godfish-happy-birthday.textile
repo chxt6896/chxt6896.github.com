@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 写给武昌鱼的一封信
-category: God & fish
+category: Godfish
 ---
 
 h2. 引子
