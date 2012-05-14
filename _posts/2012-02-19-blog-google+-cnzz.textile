@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Google+ 按钮添加 & CNZZ 站长统计
+title: Google+ 按钮添加 and CNZZ 站长统计
 category: blog
 ---
 
