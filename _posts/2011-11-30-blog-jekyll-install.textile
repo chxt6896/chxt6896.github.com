@@ -53,5 +53,5 @@ Jekyll 0.11.0
 
 更多请参考博文： 
 
-"Jekyll in Windows":http://chxt6896.github.com/blog/2012/03/15/jekyll-in-windows.html
+"Jekyll in Windows 终极奥义":http://chxt6896.github.com/blog/2012/03/15/jekyll-in-windows.html
 "Jekyll 本地调试之若干问题":http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html
