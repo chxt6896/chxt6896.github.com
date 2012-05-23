@@ -30,5 +30,5 @@ GitHub for Windows is the easiest way to manage your repositories on GitHub.com.
 
 We provide a *no questions asked* install experience and silent, automated updates that install in the background.
 
-" >>原文出处":https://github.com/blog/1127-github-for-windows
-" >>下载地址":http://windows.github.com/ （安装需要 .Net Framework 4, 在线下载）
+<a href="https://github.com/blog/1127-github-for-windows"> >>原文出处</a>
+<a href="http://windows.github.com/"> >>下载地址</a> （安装需要 .Net Framework 4, 在线下载）
