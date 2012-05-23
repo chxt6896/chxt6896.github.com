@@ -1,0 +1,9 @@
+---
+layout: post
+title: GitHub for Windows
+category: blog
+---
+
+h3. 经历了太多的等待，GitHub 终于诞下了 Windows 版，欢喜^^ 
+
+GitHub for Windows 是一个100%的本地应用，可以运行在 Windows XP, Vista, 7, pre-release Windows 8。应用中包括完整的 "https://github.com/msysgit/msysgit":msysGit 安装，使其成为在 Windows 上的不二选择。
