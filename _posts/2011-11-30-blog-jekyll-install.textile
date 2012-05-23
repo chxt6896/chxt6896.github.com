@@ -12,7 +12,7 @@ h2. <a href="http://wiki.github.com/mojombo/jekyll/install" rel="nofollow">安�
 
 h2. Step1
  
-首先你需要有一个Windows下的Linux模拟环境，可以安装<a href="http://www.cygwin.com/" rel="nofollow">Cygwin</a>，或者使用MyGit。
+首先你需要有一个Windows下的Linux模拟环境，可以安装<a href="http://www.cygwin.com/" rel="nofollow">Cygwin</a>，或者使用MsysGit。
 
 Jekyll是用Ruby编写的。最好的安装方式是通过<a href="http://rubyforge.org/frs/?group_id=126" rel="nofollow">RubyGems</a>:
 		
@@ -32,7 +32,7 @@ h2. Step2
 
 h2. Step3
 
-在模拟环境Cygwin或者MyGit中：
+在模拟环境Cygwin或者MsysGit中：
 
 {% highlight bash linenos %} 
 $ gem install jekyll
@@ -42,7 +42,7 @@ $ gem install jekyll
 
 h2. Step4
 
-测试一下是否安装成功，在Cygwin或者MyGit中输入：
+测试一下是否安装成功，在Cygwin或者MsysGit中输入：
 
 {% highlight bash linenos %}  
 $ jekyll --version
@@ -51,4 +51,7 @@ Jekyll 0.11.0
 
 若要在本地测试完再上传，可以在文件根目录下执行：jekyll --server --auto，会在根目录下生成_site文件夹，然后访问 http://localhost:4000 即可~..~
 
-更多请参考博文 "Jekyll 本地调试之若干问题":http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html
+更多请参考博文： 
+
+"Jekyll in Windows":http://chxt6896.github.com/blog/2012/03/15/jekyll-in-windows.html
+"Jekyll 本地调试之若干问题":http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html
