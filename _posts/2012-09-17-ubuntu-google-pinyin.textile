@@ -4,4 +4,8 @@ title: Ubuntu下的谷歌拼音输入法
 category: ubuntu
 ---
 
-h3. 经历了太多的等待，GitHub 终于诞下了 Windows 版，有平板触摸的感觉，欢喜^^ 
+h3. 最近研究基于Hadoop的全网爬虫，又用回到了Ubuntu系统下。实验室统一要用长期稳定版，由于不习惯于12.04的结构，故还是选择了10.04（好古老的），而输入法自然是最最要优先解决的
+
+h2. <a href="http://code.google.com/p/libgooglepinyin/">libgooglepinyin</a>
+
+推荐使用libgooglepinyin项目，它支持IBus下添加Google Pinyin输入法

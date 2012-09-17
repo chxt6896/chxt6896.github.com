@@ -1,0 +1,7 @@
+---
+layout: post
+title: Hadoop记录
+category: hadoop
+---
+
+h3. 准备更新
