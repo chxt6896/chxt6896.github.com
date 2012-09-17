@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ubuntu下的谷歌拼音输入法
-category: blog
+category: ubuntu
 ---
 
 h3. 经历了太多的等待，GitHub 终于诞下了 Windows 版，有平板触摸的感觉，欢喜^^ 
