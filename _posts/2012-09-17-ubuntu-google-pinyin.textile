@@ -4,8 +4,46 @@ title: Ubuntu下的谷歌拼音输入法
 category: ubuntu
 ---
 
-h3. 最近研究基于Hadoop的全网爬虫，又用回到了Ubuntu系统下。实验室统一要用长期稳定版，由于不习惯于12.04的结构，故还是选择了10.04（好古老的），而输入法自然是最最要优先解决的
+h3. 最近研究基于Hadoop的全网爬虫，又用回到了Ubuntu系统下。实验室统一要用长期稳定版，由于不习惯于12.04的结构，故还是选择了10.04（好古老的），而输入法自然是最最要优先解决的，爱GooglePinyin就看这里
 
-h2. <a href="http://code.google.com/p/libgooglepinyin/">libgooglepinyin</a>
+h2. libgooglepinyin
 
-推荐使用libgooglepinyin项目，它支持IBus下添加Google Pinyin输入法
+推荐使用<a href="http://code.google.com/p/libgooglepinyin/">libgooglepinyin</a>项目，它支持IBus下添加GooglePinyin输入法
+
+h2. Step1 安装依赖
+
+{% highlight bash linenos %}
+$ sudo apt-get install cmake build-essential opencc mercurial ibus
+{% endhighlight %}
+
+h2. Step2 安装libgooglepinyin库
+
+{% highlight bash linenos %}
+$ hg clone http://code.google.com/p/libgooglepinyin/
+
+$ cd libgooglepinyin
+
+$ mkdir build; cd build
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+
+$ make
+$ sudo make install
+{% endhighlight %}
+
+h2. Step3 安装ibus-googlepinyin外壳
+
+{% highlight bash linenos %}
+$ hg clone http://code.google.com/p/libgooglepinyin.ibus-wrapper/ ibus-googlepinyin
+
+$ cd ibus-googlepinyin
+
+$ mkdir build; cd build
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+
+$ make
+$ sudo make install
+{% endhighlight %}
+
+h2. Step4 启用IBus
+
+在“语言支持”中切换到ibus并重启，打开IBUS设置->输入法->选择输入法->汉语->GooglePinyin，然后将其上升到顶。亲切的GooglePinyin就会在Ctrl+Space的切换下出现了
