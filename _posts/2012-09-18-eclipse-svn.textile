@@ -1,0 +1,28 @@
+---
+layout: post
+title: Ubuntu+Eclipse+SVN 解密
+category: eclipse
+---
+
+h2. Subclipse or Subversive
+
+Eclipse 下连接 SVN 库有两种插件 —— Subclipse 与 Subversive ，可以说这两种插件都是非常优秀的插件，而对于使用者来说，选择使用哪种插件确实是个挺头疼的选择。
+
+"Subclipse":http://subclipse.tigris.org/ ，与"SVN":http://subversion.tigris.org/ 联系紧密，我们可以称之为 SVN 官方的 eclipse 插件。而"Subversive":http://www.eclipse.org/subversive 则是 eclipse 官方的 SVN 插件。
+
+Subclipse 是 SVN 直接支持的项目，在很早的时候就已经出现了。而 Subversive 最先是由一个第三方公司 Polarion 开发的。早先有传闻 Subclipse 将会成为 Eclipse Foundation 成员的传闻，可是最后却出现了令人大跌眼镜的结果，Subversive 率先成为了 Eclipse 的子项目。这中间到底出现什么情况，我们就不得而知了。或许 Eclipse 与 SVN 两个都非常成功的开源项目间，某些协议出现一些争议了吧。
+
+不管是 Subclipse 还是 Subversive ，它们使用的 SVN 连接器不外乎这两种，JavaHL 和 "SVNKit":http://svnkit.com/ ，SVNKit 是 Subversion 的纯 Java 连接库版本，整个连接底层都是由 Java 实现的，不需要额外的支持。而 JavaHL 则使用的是 Subversion 原生的连接库，加上了 Java 调用库。这两种连接库给人表征的感觉应该是 JavaHL 在连接稳定性和速度上应该占优，而 SVNKit 则应该更省事，适用性更广。如果非要推荐一个的话，我还是建议先选择 JavaHL，如果 JavaHL 无法在你的系统中正常工作，再选择 SVNKit 。
+
+如果非要来比较两种插件的话，只能以难分高下来做评判。说实在的，Google 过很多次两者比较这方面的文章，希望能让我有个很明确的抉择，就使用 Subclipse 或 Subversive ，其实最后得到的结果都是两者差不多的。写这篇文章的主要目的，不是告诉你它们两者难分高下，随便选一个就可以了，而是想总结一下自己使用它们的经验，而能指导一下应该偏向于选择哪个。
+
+Subclipse vs. Subversive
+从两个插件使用的易用性上来说，只能真的说是难分高下。相对来说，Subversive 可能是属于 Eclipse 官方的缘故，似乎与 Eclipse 整合方面做得更加出色，相对来说在 Eclipse 中的操作会更让人感觉舒服一些，比如项目分支布局等等。而 Subclipse 则相对来说和 Subversion 联系更加紧密，Subversion 的更新、特有功能等等这方面的支持则远远超出了 Subversive 。比如，前些天 Subversion 1.6.0 正式版本发布了，Subclipse 马上跟进了对 SVN 1.6.x 的支持，而 Subversive 却连一个能与 SVN 1.6.x 兼容的 Alpha 版本都没有放出。呵呵，其实要不是因为 SVN 1.6.x 关系，我也不会重新再关注 Subclipse 了，因为毕竟 Subversive 已经用得挺顺手了，也没出现什么问题。这次关注，又让我觉得新奇的是，Subclipse 还支持了版本分支图的查看。
+
+h3. 如何选择？可以从这几方面考虑：
+
+Eclipse 是否是你操作 SVN 的唯一途径？如果是，偏向于选择 Subversive；如果不是，比如还要经常使用 TortoiseSVN ，则偏向与选择 Subclipse 。Subclipse 的操作更倾向于与 TortoiseSVN 习惯，而 Subversive 的操作更倾向于 Eclipse 习惯操作。
+SVN是否是你的唯一版本管理系统（或最重要的管理系统），你是否对 SVN 的新功能、新特性比较感兴趣？如果是，偏向于选择 Subclipse ；否则，偏向于选择 Subversive。
+
+你的 SVN 操作是否会比较简单？比如你是否仅仅使用的仅仅是简单的检出/提交，等等操作，也不愿意把时间花费在研究 SVN 的高级特性上。如果是，偏向于选择 Subversive，如果否，则建议选择 Subclipse 。
+以上几点是否可以对你选择那个插件有所帮助呢？其实这两个插件都很不错，对于我们日常使用来说，哪个都能很好完成我们的任务，如果你还是不能确定，就别再费神在这上面花工夫了，也不用再在网上寻找两者比较了，随便选一个就行了。

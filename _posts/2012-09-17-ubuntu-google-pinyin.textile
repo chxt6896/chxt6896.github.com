@@ -4,11 +4,11 @@ title: Ubuntu下的谷歌拼音输入法
 category: ubuntu
 ---
 
-h3. 最近研究基于Hadoop的全网爬虫，又用回到了Ubuntu系统下。实验室统一要用长期稳定版，由于不习惯于12.04的结构，故还是选择了10.04（好古老的），而输入法自然是最最要优先解决的，爱GooglePinyin就看这里
+h3. 最近研究基于 Hadoop 的全网爬虫，又用回到了 Ubuntu 系统下。实验室统一要用长期稳定版，由于不习惯于12.04的结构，故还是选择了10.04（好古老的），而输入法自然是最最要优先解决的，爱 GooglePinyin 就看这里
 
 h2. libgooglepinyin
 
-推荐使用<a href="http://code.google.com/p/libgooglepinyin/">libgooglepinyin</a>项目，它支持IBus下添加GooglePinyin输入法
+推荐使用 <a href="http://code.google.com/p/libgooglepinyin/">libgooglepinyin</a> 项目，它支持IBus下添加 GooglePinyin 输入法
 
 h2. Step1 安装依赖
 
@@ -16,7 +16,7 @@ h2. Step1 安装依赖
 $ sudo apt-get install cmake build-essential opencc mercurial ibus
 {% endhighlight %}
 
-h2. Step2 安装libgooglepinyin库
+h2. Step2 安装 libgooglepinyin 库
 
 {% highlight bash linenos %}
 $ hg clone http://code.google.com/p/libgooglepinyin/
@@ -30,7 +30,7 @@ $ make
 $ sudo make install
 {% endhighlight %}
 
-h2. Step3 安装ibus-googlepinyin外壳
+h2. Step3 安装 ibus-googlepinyin 外壳
 
 {% highlight bash linenos %}
 $ hg clone http://code.google.com/p/libgooglepinyin.ibus-wrapper/ ibus-googlepinyin
@@ -44,6 +44,13 @@ $ make
 $ sudo make install
 {% endhighlight %}
 
-h2. Step4 启用IBus
+h2. Step4 启用 IBus
 
-在“语言支持”中切换到ibus并重启，打开IBUS设置->输入法->选择输入法->汉语->GooglePinyin，然后将其上升到顶。亲切的GooglePinyin就会在Ctrl+Space的切换下出现了
+在“语言支持”中切换到 ibus 并重启，打开 IBUS设置->输入法->选择输入法->汉语->GooglePinyin，然后将其上升到顶。亲切的 GooglePinyin 就会在 Ctrl+Space 的切换下现出原形了
+
+h2. 补充
+
+h3. SCIM 下也有 GooglePinyin，但稳定性不高
+
+在 Ubuntu10.04 系统 Eclipse 中输入双引号或者分号等，会出现键盘失效，无法输入字符的问题，但是在别的地方又能输入，点击一下别的地方再回到 Eclipse 中又能动，很快就又死了，原因是 Eclipse 选择的当前输入法( input method )与用户自行安装的输入法兼容性问题。解决方法如下：
+*在 Eclipse 的工作区 右键–> Input Method –> SCIM Input Method 即可。*
