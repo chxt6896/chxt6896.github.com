@@ -17,6 +17,7 @@ Subclipse 是 SVN 直接支持的项目，在很早的时候就已经出现了�
 如果非要来比较两种插件的话，只能以难分高下来做评判。说实在的，Google 过很多次两者比较这方面的文章，希望能让我有个很明确的抉择，就使用 Subclipse 或 Subversive ，其实最后得到的结果都是两者差不多的。写这篇文章的主要目的，不是告诉你它们两者难分高下，随便选一个就可以了，而是想总结一下自己使用它们的经验，而能指导一下应该偏向于选择哪个。
 
 h3. Subclipse vs Subversive
+
 从两个插件使用的易用性上来说，只能真的说是难分高下。相对来说，Subversive 可能是属于 Eclipse 官方的缘故，似乎与 Eclipse 整合方面做得更加出色，相对来说在 Eclipse 中的操作会更让人感觉舒服一些，比如项目分支布局等等。而 Subclipse 则相对来说和 Subversion 联系更加紧密，Subversion 的更新、特有功能等等这方面的支持则远远超出了 Subversive 。
 
 h3. 如何选择？可以从这几方面考虑：
@@ -38,3 +39,6 @@ h2. Step1
 h2. Step2
 
 在 SVNKit "官网下载":http://svnkit.com/download.php 上查找相应的 Eclipse 更新网站地址，我使用的是 *http://eclipse.svnkit.com/1.7.x*，然后在 Eclipse 里安装
+
+<a href="http://www.linuxany.com/archives/1244.html"> >>>Eclipse SVN插件比较 Subclipse vs Subversive</a>
+<a href="http://hi.baidu.com/dillisbest/item/0ae215de8eec77e4795daad3"> >>>eclipse配置svn客户端</a>
