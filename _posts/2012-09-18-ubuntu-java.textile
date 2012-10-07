@@ -6,8 +6,51 @@ category: eclipse
 
 h2. 转生
 
-因为 Oracle 收购了 SUN 公司，Java 也随之嫁到了 Oracle。Ubuntu 下有一个自带的 OpenJDK，但是不怎么好用，一般都还是会安装 JDK
+Ubuntu 下有一个自带的 OpenJDK，但是不怎么好用，一般都还是会安装 JDK，因为 Oracle 收购了 SUN 公司，Java 也随之嫁到了 Oracle。故下面的这条命令不能用了：
 
+{% highlight bash linenos %}
+$ sudo apt-get install sun-java6-jdk
+{% endhighlight %}
 
+只能从 "Orcale Java 官网":http://www.oracle.com/technetwork/java/javase/downloads/jdk7u7-downloads-1836413.html 上下载相应的压缩包
+
+h2. Step1
+
+将下载好的文件 jdk1.7.03 解压在自己的文件下，比如 /home/chxt/java
+
+h2. Step2 
+
+{% highlight bash linenos %}
+$ sudo gedit /etc/environment
+{% endhighlight %}
+
+在文件最后添加：
+
+h3. export JAVA_HOME=/home/chxt/java/jdk1.7.03
+export JRE_HOME=/home/chxt/java/jdk1.7.03/jre
+export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+
+h2. Step3	
+
+{% highlight bash linenos %}
+$ sudo gedit /etc/profile
+{% endhighlight %}
+
+在文件最后添加：
+
+h3. export JAVA_HOME=/home/chxt/java/jdk1.7.03
+export JRE_HOME=/home/chxt	/java/jdk1.7.03/jre
+export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin
+
+h3. Step4
+
+注销用户，然后在终端中输入：
+
+{% highlight bash linenos %}
+$ java -version
+{% endhighlight %}
+
+看到版本号证明已经安装成功
 
 <a href="http://www.linuxidc.com/Linux/2012-04/59413.htm"> >>Ubuntu下安装JDK,Eclipse和Android SDK</a>
