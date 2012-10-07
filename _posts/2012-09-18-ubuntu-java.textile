@@ -1,0 +1,13 @@
+---
+layout: post
+title: Ubuntu+Java7 转生
+category: eclipse
+---
+
+h2. 转生
+
+因为 Oracle 收购了 SUN 公司，Java 也随之嫁到了 Oracle。Ubuntu 下有一个自带的 OpenJDK，但是不怎么好用，一般都还是会安装 JDK
+
+
+
+<a href="http://www.linuxidc.com/Linux/2012-04/59413.htm"> >>Ubuntu下安装JDK,Eclipse和Android SDK</a>
