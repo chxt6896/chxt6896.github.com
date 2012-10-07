@@ -26,7 +26,7 @@ $ sudo gedit /etc/environment
 
 在文件最后添加：
 
-h3. export JAVA_HOME=/home/chxt/java/jdk1.7.03
+export JAVA_HOME=/home/chxt/java/jdk1.7.03
 export JRE_HOME=/home/chxt/java/jdk1.7.03/jre
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
 
@@ -38,8 +38,8 @@ $ sudo gedit /etc/profile
 
 在文件最后添加：
 
-h3. export JAVA_HOME=/home/chxt/java/jdk1.7.03
-export JRE_HOME=/home/chxt	/java/jdk1.7.03/jre
+export JAVA_HOME=/home/chxt/java/jdk1.7.03
+export JRE_HOME=/home/chxt/java/jdk1.7.03/jre
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin
 
