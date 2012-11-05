@@ -1,0 +1,27 @@
+---
+layout: post
+title: Ubuntu Server 镜像制作过程
+category: ubuntu
+---
+
+h2. 引出
+
+最近要将爬虫部署到集群上，故先在虚拟机上配置好一个系统镜像，再批量安装到集群上
+
+h2. 软件环境
+
+* Windows 7
+* VMware 7
+* Ubuntu Server 12.04
+* JDK 7
+* Hadoop 0.20.2
+
+
+
+h2. 转生
+
+Ubuntu 下有一个自带的 OpenJDK，但是不怎么好用，一般都还是会安装 JDK，因为 Oracle 收购了 SUN 公司，Java 也随之嫁到了 Oracle。故下面的这条命令不能用了：
+
+{% highlight bash linenos %}
+$ sudo apt-get install sun-java6-jdk
+{% endhighlight %}
