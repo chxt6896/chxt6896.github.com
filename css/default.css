@@ -266,6 +266,7 @@ p.postmetadata a{
     color: #a52713;
 }
 #wp-calendar{
+		font-size: 14px;
     width: 100%;
 }
 #wp-calendar a{
@@ -280,7 +281,6 @@ p.postmetadata a{
 }
 #wp-calendar caption{
 		padding-bottom: 8px;
-		font-size: 11px;
 }
 
 /*******************
@@ -356,7 +356,7 @@ p.postmetadata a{
 #footer{
     margin: 0 auto;
     padding: 10px 0 0 0;
-    width: 750px;
+    width: 900px;
     height: 100px;
 }
 #footer p{
