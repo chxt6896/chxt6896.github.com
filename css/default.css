@@ -120,14 +120,14 @@ p{
 }
 #content_container{
     margin: 0 auto;
-    width: 750px;
+    width: 875px;
     position: relative;
 }
 #container{
     margin: 0 auto;
     padding: 20px 0 20px 0;
     float: left;
-		width: 700px;
+		width: 650px;
 }
 
 /*******************

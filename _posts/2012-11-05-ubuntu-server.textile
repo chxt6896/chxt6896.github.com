@@ -55,7 +55,7 @@ h2. Step2-1
 
 在你安装上了虚拟机后要确保你也安装了桥接的协议，在“网络连接”可以看到有两个虚拟出来的网络：VMnet1、VMnet8
 
-
+!/images/ubuntu/vmware1.jpg!
 
 h2. 转生
 
