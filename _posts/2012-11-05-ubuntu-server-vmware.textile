@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ubuntu Server 镜像制作过程
+title: Win7+VMware+Ubuntu Server 配置过程
 category: ubuntu
 ---
 
@@ -56,6 +56,24 @@ h2. Step2-1
 在你安装上了虚拟机后要确保你也安装了桥接的协议，在“网络连接”可以看到有两个虚拟出来的网络：VMnet1、VMnet8
 
 !/images/ubuntu/vmware1.jpg!
+
+h2. Step2-2
+
+在“VMware Network Adapter VMnet1”属性中选择“VMware Bridge Protocol”协议
+
+!/images/ubuntu/vmware2.jpg!
+
+h2. Step2-3
+
+在虚拟机中的网络适配器(Network Adapter)中选择桥接(Bridged)的方式
+
+!/images/ubuntu/vmware3.jpg!
+
+!/images/ubuntu/vmware4.jpg!
+
+!/images/ubuntu/vmware5.jpg!
+
+到此虚拟机上的一些配置就完成了。下面开始配置 Ubuntu Server：
 
 h2. 转生
 
