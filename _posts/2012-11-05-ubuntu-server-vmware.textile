@@ -75,10 +75,32 @@ h2. Step2-3
 
 到此虚拟机上的一些配置就完成了。下面开始配置 Ubuntu Server：
 
-h2. 转生
+h2. Step2-4 配置静态 IP 地址
 
-Ubuntu 下有一个自带的 OpenJDK，但是不怎么好用，一般都还是会安装 JDK，因为 Oracle 收购了 SUN 公司，Java 也随之嫁到了 Oracle。故下面的这条命令不能用了：
+首先在 Ubuntu 中的 /etc/network/interfaces 文件配置静态的 IP 地址，在使用桥接时，要把虚拟机中的 IP 地址配置成和主机在一个网段中，这样也就相当于占用了一个独立的 IP 地址。
 
 {% highlight bash linenos %}
-$ sudo apt-get install sun-java6-jdk
+$ sudo vim /etc/network/interfaces
 {% endhighlight %}
+
+!/images/ubuntu/vmware6.jpg!
+
+重新载入设置：
+
+{% highlight bash linenos %}
+$ sudo /etc/init.d/networking restart
+{% endhighlight %}
+
+h2. Step2-5 配置DNS
+
+打开/etc/resolv.conf
+
+!/images/ubuntu/vmware7.jpg!
+
+内容是一段警告：说这个文件是 resolvconf 程序动态创建的，不要直接手动编辑，修改将被覆盖。
+
+果不其然，修改后重启就失效了，下面有两个解决方案：
+
+h3. 方法一
+
+ 

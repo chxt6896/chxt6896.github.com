@@ -21,7 +21,7 @@ h2. Step1
 h2. Step2 
 
 {% highlight bash linenos %}
-$ sudo gedit /etc/environment
+$ sudo vim /etc/environment
 {% endhighlight %}
 
 在文件最后添加：
@@ -33,7 +33,7 @@ export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
 h2. Step3	
 
 {% highlight bash linenos %}
-$ sudo gedit /etc/profile
+$ sudo vim /etc/profile
 {% endhighlight %}
 
 在文件最后添加：
@@ -43,14 +43,31 @@ export JRE_HOME=/home/chxt/java/jdk1.7.03/jre
 export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin
 
-h3. Step4
-
-注销用户，然后在终端中输入：
+h2. Step4
 
 {% highlight bash linenos %}
+$ source /etc/environment
+$ source /etc/profile
 $ java -version
 {% endhighlight %}
 
 看到版本号证明已经安装成功
+
+h2. 另一种配置方案（对当前使用用户）
+
+{% highlight bash linenos %}
+$ vim ~/.bashrc
+{% endhighlight %}
+
+在文件最后添加：
+
+export JAVA_HOME=/home/chxt/java/jdk1.7.03
+export JRE_HOME=/home/chxt/java/jdk1.7.03/jre
+export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin
+
+{% highlight bash linenos %}
+$ source ~/.bashrc
+{% endhighlight %}
 
 <a href="http://www.linuxidc.com/Linux/2012-04/59413.htm"> >>Ubuntu下安装JDK,Eclipse和Android SDK</a>

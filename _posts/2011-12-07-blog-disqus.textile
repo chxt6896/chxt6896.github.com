@@ -78,7 +78,7 @@ h2. 添加评论计数到首页
 
 <a href="http://disqus.com/api/docs/"> >>>The Disqus Web API</a>
 
-h2. 添加最近评论到首页
+h2. 添加最近评论到首页（新版上面找不到了）
 
 登录到你的Disqus，选择 Admin -> Tools -> code，提供了几种 Widgets 插件:
 * Combination（组合式）
