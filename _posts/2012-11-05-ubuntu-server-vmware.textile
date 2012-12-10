@@ -142,7 +142,7 @@ $ cat /etc/resolv.conf
 nameserver 8.8.8.8 
 {% endhighlight %}
 
-">>Ubuntu下修改DNS重启也能用的方法":http://yubosun.akcms.com/tech/ubntu-dns-reset.htm
+<a href="http://yubosun.akcms.com/tech/ubntu-dns-reset.htm"> >>Ubuntu下修改DNS重启也能用的方法</a>
 
 h2. Step2-6 修改时区(中国上海)
 
