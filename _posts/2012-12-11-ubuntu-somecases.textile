@@ -12,7 +12,12 @@ Ubuntu 12.04 ssh 登录很慢，半天才提示输入密码。ssh -v user@ip 跟
 
 # 更改 ssh 的配置参数：
 在 /etc/ssh/ssh_config 文件中修改 GSSAPIAuthentication yes(在倒数第二行) 为 GSSAPIAuthentication no
+
 # 重启 ssh 服务：
 {% highlight bash linenos %}
 $ sudo /etc/init.d/ssh restart
 {% endhighlight %}
+
+h2. Case2 
+
+
