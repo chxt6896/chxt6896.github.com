@@ -74,7 +74,8 @@ $HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆�
 	<property>   
 		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
 		<name>fs.default.name</name>   
-		<value>hdfs://192.168.1.111:9000</value> 
+		<value>hdfs://192.168.1.111:9000</value>
+	</property> 
 </configuration> 
 {% endhighlight %} 
 
@@ -84,10 +85,20 @@ $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-
 
 {% highlight bash linenos %}
 <configuration>  
-	<property>   
-		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
-		<name>fs.default.name</name>   
-		<value>hdfs://192.168.1.111:9000</value> 
+	<property>    
+		<name>dfs.replication</name>   
+		<value>2</value> 
+	</property>
+	
+	<property>
+		<name>hadoop.tmp.dir</name>
+		<value>/home/hadoop/cluster/data</value>
+	</property>
+	
+	<property>
+		<name>dfs.data.dir</name>
+		<value>${hadoop.tmp.dir}/dfs/data</value>
+	</property>
 </configuration> 
 {% endhighlight %} 
 
