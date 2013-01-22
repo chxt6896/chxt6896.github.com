@@ -15,7 +15,7 @@ h2. 平台环境
 ** 192.168.1.112 node112
 ** 192.168.1.113 node113
 
-h2. Step1 Install Hadoop
+h2. Step1 安装 Hadoop
 
 h3. Hadoop 使用最新稳定版 1.0.4
 
@@ -125,3 +125,64 @@ h3. Step2-3-2 slaves 配置
 
 h3. 值得注意的是 Hadoop 集群的所有机器的配置应该保持一致，一般我们在配置完 master 后，使用 scp 将配置文件同步到集群的其它服务器上。
 
+h2. Step3 启动 Hadoop
+
+经过以上两个步骤，Hadoop 的安装和配置已经OK了，那么下面我们就来启动 Hadoop 集群。启动前我们需要做一些准备，因为集群的启动是从 NameNode 开始的，于是 DataNode 的运行需要 NameNode 的远程调用，Hadoop 使用 ssh 命令远程运行 DataNode 节点，这就是为什么 Hadoop 需要 ssh 的支持。我们可以想象一下，如果集群里有100台机器，那么我们就需要输入100遍主机的访问密码，但如果配置 ssh 使用无密码公钥认证的方式，就解决了此问题。
+
+简单的说，在 node111 上需要生成一个密钥对，即一个私钥和一个公钥。将公钥拷贝到 node112 和 node113 上，如此一来，当 node111 向 node112 发起 ssh 连接的时候，node112 上就会生成一个随机数并用 node111 的公钥对这个随机数进行加密，并且发送给 node111，node111 收到这个加密的数以后用私钥进行解密，并将解密后的数返回 node112，node112 确认解密的数无误后就允许 node111 进行连接了。这就完成了一次公钥认证过程。
+
+公钥生成的步骤如下：
+
+{% highlight bash linenos %}
+$ ssh-keygen -t rsa
+# 以下是生成一个为 id_rsa/id_rsa.pub 的无密码的公/私钥对(一路回车)
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+#会在 ~/.ssh 中生成两个文件：id_rsa, id_rsa.pub
+{% endhighlight %}
+
+然后将 id_rsa.pub 的内容复制到每个机器（也包括本机）的 ~/.ssh/authorized_keys 文件中。如果 authorized_keys 不存在，则使用 touch ~/.ssh/authorized_keys 生成一个；如果该文件已经存在，则追加内容进去就OK了，这里推荐使用如下命令：
+
+{% highlight bash linenos %}
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+# 因为 ssh 服务对文件的权限有着非常严格的限制（authorized_keys 只能拥有指定用户的写权限）于是需要进行如下处理
+$ chmod 644 ~/.ssh/authorized_keys
+{% endhighlight %}
+
+经过以上步骤，我们的无密码访问就配置好了，接下来就可以正常启动 Hadoop 集群：
+
+{% highlight bash linenos %}
+# 启动服务之前，我们需要做一件事情，非常重要，那就是格式化命名空间
+$ hadoop namenode -format
+# 启动 dfs 和 map/reduce 服务
+$ start-all.sh
+{% endhighlight %}
+
+h2. Step4 jps验证：
+
+在 master 节点：
+
+{% highlight bash linenos %}
+$ jps
+# 24480 JobTracker
+# 24396 SecondaryNameNode
+# 24094 NameNode
+# 15920 Jps
+{% endhighlight %}
+
+在 slave 节点：
+
+{% highlight bash linenos %}
+$ jps
+# 32724 TaskTracker
+# 9800 Jps
+# 32590 DataNode
+{% endhighlight %}
+
+能看到如上信息，则证明 Hadoop 集群已经配置成功了，哦耶～
+
+可以通过访问 http://192.168.1.111:50070 来查看 hdfs 的状态，访问 http://192.168.1.111:50030 来查看 map/reduce 的状态。
+
+如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
