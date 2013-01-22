@@ -8,9 +8,9 @@ h2. 平台环境
 
 * CentOS 5.X
 * ssh 
-* rsyn (yum install rsyn)
-* JDK1.7  
-* 集群使用三台机器
+* rsyn
+* JDK7  
+* 三台机器
 ** 192.168.1.111 node111
 ** 192.168.1.112 node112
 ** 192.168.1.113 node113
@@ -20,8 +20,50 @@ h2. Step1 Install Hadoop
 h3. Hadoop 使用最新稳定版 1.0.4
 
 {% highlight bash linenos %}
-# <a href="http://hadoop.apache.org/">官网</a>下载 Hadoop 项目
+# 官网 http://hadoop.apache.org/ 下载 Hadoop 项目
 $ wget http://www.apache.org/dist/hadoop/core/hadoop-1.0.4/hadoop-1.0.4.tar.gz
+# 自定义解压在 /home/hadoop/ 下
 $ tar xzvf hadoop-0.20.2.tar.gz
 $ cd hadoop-1.0.4
 {% endhighlight %}
+
+在 .bashrc 中加入环境变量：
+
+{% highlight bash linenos %}
+export JAVA_HOME="/home/hadoop/jdk1.7.0_07"
+export HADOOP_HOME="/home/hadoop/hadoop-1.0.4"
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+{% endhighlight %} 
+
+h2. Step2 配置集群
+
+根据 Hadoop 文档的描述 "The Hadoop daemons are NameNode/DataNode and JobTracker/TaskTracker." 可以看出 Hadoop 核心守护程序就是由 NameNode/DataNode 和 JobTracker/TaskTracker 这几个角色构成。
+Hadoop的DFS 需要确立 NameNode 与 DataNode 角色，一般 NameNode 会部署到一台单独的服务器上而不与 DataNode 共同同一机器。另外 Map/Reduce 服务也需要确立 JobTracker 和 TaskTracker 的角色，一般 JobTracker 与 NameNode 共用一台机器作为 master，而 TaskTracker 与 DataNode 同属于 slave。
+
+这里使用 node111 作为 NameNode 与 JobTracker ，其它两台机器作为 DataNode 和 TaskTracker
+
+h2. Step2-1 配置环境
+
+在 $HADOOP_HOME/conf/hadoop-env.sh 中定义了 Hadoop 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量:
+
+{% highlight bash linenos %}
+# The java implementation to use.  Required.
+export JAVA_HOME=/home/hadoop/jdk1.7.0_07
+{% endhighlight %} 
+
+h2. Step2-2 Hadoop 核心配置
+
+Hadoop 包括一组默认配置文件（$HADOOP_HOME/src 目录下的 core/core-default.xml, hdfs/hdfs-default.xml 和 mapred/mapred-default.xml），先好好看看并理解默认配置文件中的那些属性。虽然默认配置文件能让 Hadoop 核心程序顺利启动，但对于开发人员来说一般需要自己来设置一些常规配置以满足开发和业务的需求，所以我们需要对默认配置文件的值进行覆盖，具体方法如下：
+
+$HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 core-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
+
+{% highlight bash linenos %}
+<configuration>  
+	<property>   
+		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
+		<name>fs.default.name</name>   
+		<value>hdfs://192.168.1.111:9000</value>   
+	</property>   
+</configuration> 
+{% endhighlight %} 
+
