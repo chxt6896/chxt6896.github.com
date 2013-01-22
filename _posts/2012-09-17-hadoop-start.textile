@@ -140,7 +140,7 @@ Generating public/private rsa key pair.
 Enter file in which to save the key (/root/.ssh/id_rsa):
 Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
-#会在 ~/.ssh 中生成两个文件：id_rsa, id_rsa.pub
+# 会在 ~/.ssh 中生成两个文件：id_rsa, id_rsa.pub
 {% endhighlight %}
 
 然后将 id_rsa.pub 的内容复制到每个机器（也包括本机）的 ~/.ssh/authorized_keys 文件中。如果 authorized_keys 不存在，则使用 touch ~/.ssh/authorized_keys 生成一个；如果该文件已经存在，则追加内容进去就OK了，这里推荐使用如下命令：
