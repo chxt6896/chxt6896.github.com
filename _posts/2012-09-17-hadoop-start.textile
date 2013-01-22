@@ -27,7 +27,7 @@ $ tar xzvf hadoop-0.20.2.tar.gz
 $ cd hadoop-1.0.4
 {% endhighlight %}
 
-在 .bashrc 中加入环境变量：
+在 ~/.bashrc 中加入环境变量：
 
 {% highlight bash linenos %}
 export JAVA_HOME="/home/hadoop/jdk1.7.0_07"
@@ -35,14 +35,24 @@ export HADOOP_HOME="/home/hadoop/hadoop-1.0.4"
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
 {% endhighlight %} 
 
+在 /etc/hosts 中加入：
+
+{% highlight bash linenos %}
+192.168.1.111 node111
+192.168.1.112 node112
+192.168.1.113 node113
+{% endhighlight %}
+
+h3. 以上操作需要在每台机器上执行
+
 h2. Step2 配置集群
 
-根据 Hadoop 文档的描述 "The Hadoop daemons are NameNode/DataNode and JobTracker/TaskTracker." 可以看出 Hadoop 核心守护程序就是由 NameNode/DataNode 和 JobTracker/TaskTracker 这几个角色构成。
+	根据 Hadoop 文档的描述 "The Hadoop daemons are NameNode/DataNode and JobTracker/TaskTracker." 可以看出 Hadoop 核心守护程序就是由 NameNode/DataNode 和 JobTracker/TaskTracker 这几个角色构成。
 Hadoop的DFS 需要确立 NameNode 与 DataNode 角色，一般 NameNode 会部署到一台单独的服务器上而不与 DataNode 共同同一机器。另外 Map/Reduce 服务也需要确立 JobTracker 和 TaskTracker 的角色，一般 JobTracker 与 NameNode 共用一台机器作为 master，而 TaskTracker 与 DataNode 同属于 slave。
 
 这里使用 node111 作为 NameNode 与 JobTracker ，其它两台机器作为 DataNode 和 TaskTracker
 
-h2. Step2-1 配置环境
+h2. Step2-1 环境配置
 
 在 $HADOOP_HOME/conf/hadoop-env.sh 中定义了 Hadoop 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量:
 
