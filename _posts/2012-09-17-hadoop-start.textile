@@ -83,37 +83,13 @@ h3. Step2-2-2 hdfs-default.xml 配置
 $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
 {% highlight bash linenos %}
-<configuration>
-	<property>
-		<name>dfs.replication</name>
-		<value>2</value>
-	</property>
-	
-	<property>
-		<name>hadoop.tmp.dir</name>
-		<value>/home/hadoop/cluster/data</value>
-	</property>
-	
-	<property>
-		<name>dfs.data.dir</name>
-		<value>${hadoop.tmp.dir}/dfs/data</value>
-	</property>
-</configuration>  
+<configuration>  
+	<property>   
+		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
+		<name>fs.default.name</name>   
+		<value>hdfs://192.168.1.111:9000</value> 
+</configuration> 
 {% endhighlight %} 
-
-h3. Step2-2-3 mapred-default.xml 配置
-
-$HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆盖 mapred-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
-
-{% highlight bash linenos %}
-<configuration>
-	<property>
-		<name>mapred.job.tracker</name>
-		<value>192.168.1.111:9001</value>
-		</property>
-	</property>
-</configuration>
-{% endhighlight %}
 
 h2. Step2-3 主从配置
 
