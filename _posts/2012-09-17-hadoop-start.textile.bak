@@ -160,7 +160,7 @@ $ hadoop namenode -format
 $ start-all.sh
 {% endhighlight %}
 
-h2. Step4 jps验证
+h2. Step4 jps验证：
 
 在 master 节点：
 
