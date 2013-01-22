@@ -85,14 +85,9 @@ $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-
 
 {% highlight bash linenos %}
 <configuration>
-	<property>
-		<name>hadoop.tmp.dir</name>
-		<value>/home/hadoop/cluster/data</value>
-	</property>
-	
-	<property>
-		<name>dfs.data.dir</name>
-		<value>${hadoop.tmp.dir}/dfs/data</value>
+	<property>    
+		<name>dfs.replication</name>   
+		<value>2</value> 
 	</property>
 </configuration> 
 {% endhighlight %} 
