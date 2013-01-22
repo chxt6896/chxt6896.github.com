@@ -83,13 +83,8 @@ h3. Step2-2-2 hdfs-default.xml 配置
 
 $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
-<code>
-<configuration>  
-	<property>    
-		<name>dfs.replication</name>   
-		<value>2</value> 
-	</property>
-	
+{% highlight bash linenos %}
+<configuration>
 	<property>
 		<name>hadoop.tmp.dir</name>
 		<value>/home/hadoop/cluster/data</value>
@@ -100,7 +95,7 @@ $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-
 		<value>${hadoop.tmp.dir}/dfs/data</value>
 	</property>
 </configuration> 
-</code> 
+{% endhighlight %} 
 
 h2. Step2-3 主从配置
 
