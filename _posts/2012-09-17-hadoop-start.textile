@@ -205,4 +205,4 @@ $ jps
 
 如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
 
-"http://yymmiinngg.iteye.com/blog/706699":>>Hadoop集群安装
+<a href="http://yymmiinngg.iteye.com/blog/706699"> >>Hadoop集群安装</a>
