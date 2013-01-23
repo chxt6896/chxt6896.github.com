@@ -6,7 +6,7 @@ category: linux
 
 h2. 平台环境
 
-* CentOS 6.X （同样其他 Linux 发行版本）
+* CentOS 6.X （同样适用其他 Linux 发行版本）
 * 服务器节点 192.168.1.101
 
 h2. SVN 简介&工作原理
@@ -156,7 +156,7 @@ $ svnserve -d -r /home/hadoop/svn
 
 h3. Step2-8 测试服务器
 
-{% highlight bash linenos %}
+<pre>
 $ mkdir test
 $ cd test
 $ svn co svn://192.168.1.101/project
@@ -173,18 +173,18 @@ Password for ‘root’:
 Authentication realm: <svn://192.168.1.101:3690>
 Username: pm
 Password for ‘pm’:
-A		project/test
-A		project/server
-A		project/client
+A    project/test
+A    project/server
+A    project/client
 Checked out revision 1.  ( 测试提取成功 )
 
 $ cd project/server
 $ vim main.c
 $ svn add main.c
 $ svn commit main.c -m “test”
-Adding		main.c
+Adding    main.c
 Transmitting file data .
 Committed revision 2.  ( 测试提交成功 )
-{% endhighlight %}
+</pre>
 
       
