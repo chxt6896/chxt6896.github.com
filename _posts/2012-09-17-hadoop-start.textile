@@ -23,15 +23,15 @@ h3. Hadoop 使用最新稳定版 1.0.4
 # 官网 http://hadoop.apache.org/ 下载 Hadoop 项目
 $ wget http://www.apache.org/dist/hadoop/core/hadoop-1.0.4/hadoop-1.0.4.tar.gz
 # 自定义解压在 /home/hadoop/cluster/ 下
-$ tar xzvf hadoop-0.20.2.tar.gz
+$ tar -xzvf hadoop-0.20.2.tar.gz
 $ cd hadoop-1.0.4
 {% endhighlight %}
 
 在 ~/.bashrc 中加入环境变量：
 
 {% highlight bash linenos %}
-export JAVA_HOME="/home/hadoop/jdk1.7.0_07"
-export HADOOP_HOME="/home/hadoop/cluster/hadoop-1.0.4"
+export JAVA_HOME=/home/hadoop/jdk1.7.0_07
+export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
 {% endhighlight %} 
 
@@ -96,6 +96,20 @@ $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-
 	<property>
 		<name>dfs.data.dir</name>
 		<value>${hadoop.tmp.dir}/dfs/data</value>
+	</property>
+</configuration> 
+{% endhighlight %} 
+
+h3. Step2-2-3 mapred-site.xml 配置
+
+$HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆盖 mapred-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
+
+{% highlight bash linenos %}
+<configuration>
+	<property>  
+		<!-- 用来作 JobTracker 的节点的(一般与 NameNode 保持一致) -->    
+		<name>mapred.job.tracker</name>   
+		<value>192.168.1.111:9001</value> 
 	</property>
 </configuration> 
 {% endhighlight %} 
