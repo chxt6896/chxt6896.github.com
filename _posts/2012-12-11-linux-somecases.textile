@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ubuntu 一些问题处理方案积累
-category: ubuntu
+category: linux
 ---
 
 h2. Case1 Ubuntu 12.04 ssh 登录慢 

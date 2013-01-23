@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ubuntu下的谷歌拼音输入法
-category: ubuntu
+category: linux
 ---
 
 h3. 最近研究基于 Hadoop 的全网爬虫，又用回到了 Ubuntu 系统下。实验室统一要用长期稳定版，由于不习惯于12.04的结构，故还是选择了10.04（好古老的），而输入法自然是最最要优先解决的，爱 GooglePinyin 就看这里

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ubuntu+Java7 转生
-category: eclipse
+category: linux
 ---
 
 h2. 转生
