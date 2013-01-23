@@ -128,7 +128,7 @@ project_t = test1,test1,test1
 * =
 {% endhighlight %}
 
-h3. 以上信息表示，只有 project_p 用户组有根目录的读写权。r 表示对该目录有读权限，w 表示对该目录有写权限，rw 表示对该目录有读写权限。最后一行的 * = 表示，除了上面设置了权限的用户组之外，其他任何人都被禁止访问本目录。这个很重要，一定要加上！
+以上信息表示，只有 project_p 用户组有根目录的读写权。r 表示对该目录有读权限，w 表示对该目录有写权限，rw 表示对该目录有读写权限。最后一行的 * = 表示，除了上面设置了权限的用户组之外，其他任何人都被禁止访问本目录。这个很重要，一定要加上！
 
 h3. Step2-6 修改 svnserve.conf 文件，使用户和策略配置生效
 
@@ -144,11 +144,14 @@ h3. Step2-7 启动服务器
 
 {% highlight bash linenos %}
 $ svnserve -d -r /home/hadoop/svn
+# -d表示以 daemon 方式（后台运行）运行
+# -r 指定根目录
 {% endhighlight %}
 
 如果修改了 svn 配置，需要重启 svn 服务，步骤如下:
 
 {% highlight bash linenos %}
+# svn 服务端口号: 3690
 $ ps -aux|grep svnserve
 $ kill -9 ID号
 $ svnserve -d -r /home/hadoop/svn

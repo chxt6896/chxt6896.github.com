@@ -1,0 +1,7 @@
+---
+layout: post
+title: Vim 实用技巧积累
+category: linux
+---
+
+h2. 初级个性化配置
