@@ -132,7 +132,59 @@ h3. 以上信息表示，只有 project_p 用户组有根目录的读写权。r 
 
 h3. Step2-6 修改 svnserve.conf 文件，使用户和策略配置生效
 
+{% highlight bash linenos %}
+[general]
+anon-access = none
+auth-access = write
+password-db = /home/hadoop/svn/project/conf/passwd
+authz-db = /home/hadoop/svn/project/conf/authz
+{% endhighlight %}
 
+h3. Step2-7 启动服务器
 
+{% highlight bash linenos %}
+$ svnserve -d -r /home/hadoop/svn
+{% endhighlight %}
+
+如果修改了 svn 配置，需要重启 svn 服务，步骤如下:
+
+{% highlight bash linenos %}
+$ ps -aux|grep svnserve
+$ kill -9 ID号
+$ svnserve -d -r /home/hadoop/svn
+{% endhighlight %}
+
+h3. Step2-8 测试服务器
+
+{% highlight bash linenos %}
+$ mkdir test
+$ cd test
+$ svn co svn://192.168.1.101/project
+Authentication realm: <svn://192.168.1.101:3690>
+Password for 'root':
+Authentication realm: <svn://192.168.1.101:3690>
+Username: server_group
+Password for 'server_group':
+svn: Authorization failed ( server_group没用根目录的访问权 )
+
+$ svn co svn://192.168.1.101/project
+Authentication realm: <svn://192.168.1.101:3690>
+Password for ‘root’:
+Authentication realm: <svn://192.168.1.101:3690>
+Username: pm
+Password for ‘pm’:
+A		project/test
+A		project/server
+A		project/client
+Checked out revision 1.  ( 测试提取成功 )
+
+$ cd project/server
+$ vim main.c
+$ svn add main.c
+$ svn commit main.c -m “test”
+Adding		main.c
+Transmitting file data .
+Committed revision 2.  ( 测试提交成功 )
+{% endhighlight %}
 
       

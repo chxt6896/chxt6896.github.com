@@ -23,17 +23,10 @@ h3. Hadoop 使用最新稳定版 1.0.4
 # 官网 http://hadoop.apache.org/ 下载 Hadoop 项目
 $ wget http://www.apache.org/dist/hadoop/core/hadoop-1.0.4/hadoop-1.0.4.tar.gz
 # 自定义解压在 /home/hadoop/cluster/ 下
-$ tar -xzvf hadoop-0.20.2.tar.gz
-$ cd hadoop-1.0.4
+$ mkdir ~/cluster
+$ tar -xzvf hadoop-0.20.2.tar.gz -C ~/cluster/
+$ cd ~/cluster/hadoop-1.0.4
 {% endhighlight %}
-
-在 ~/.bashrc 中加入环境变量：
-
-{% highlight bash linenos %}
-export JAVA_HOME=/home/hadoop/jdk1.7.0_07
-export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
-export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
-{% endhighlight %} 
 
 在 /etc/hosts 中加入：
 
@@ -44,6 +37,14 @@ export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
 {% endhighlight %}
 
 h3. 以上操作需要在每台机器上执行
+
+在 ~/.bashrc 中加入环境变量：
+
+{% highlight bash linenos %}
+export JAVA_HOME=/home/hadoop/jdk1.7.0_07
+export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+{% endhighlight %} 
 
 h2. Step2 配置集群
 
@@ -74,7 +75,7 @@ $HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆�
 	<property>   
 		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
 		<name>fs.default.name</name>   
-		<value>hdfs://192.168.1.111:9000</value>
+		<value>hdfs://node111:9000</value>
 	</property> 
 </configuration> 
 {% endhighlight %} 
@@ -109,7 +110,7 @@ $HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆�
 	<property>  
 		<!-- 用来作 JobTracker 的节点的(一般与 NameNode 保持一致) -->    
 		<name>mapred.job.tracker</name>   
-		<value>192.168.1.111:9001</value> 
+		<value>node111:9001</value> 
 	</property>
 </configuration> 
 {% endhighlight %} 
@@ -123,7 +124,7 @@ h3. Step2-3-1 masters 配置
 在 masters 中加入：
 
 {% highlight bash linenos %}
-192.168.1.111
+node111
 {% endhighlight %}
 
 h3. Step2-3-2 slaves 配置
@@ -131,8 +132,9 @@ h3. Step2-3-2 slaves 配置
 在 slaves 中加入：
 
 {% highlight bash linenos %}
-192.168.1.112
-192.168.1.113
+node111
+node112
+node113
 {% endhighlight %}
 
 如果你对以上介绍的配置项做了正确的配置，那么你的 Hadoop 集群只差启动了，当然，在 $HADOOP_HOME/conf 目录下还包括其它的一些配置文件，但那些都不是必须设置的，如果有兴趣你可以自己去了解了解。
@@ -180,10 +182,12 @@ h2. Step4 jps验证
 
 {% highlight bash linenos %}
 $ jps
-# 24480 JobTracker
-# 24396 SecondaryNameNode
-# 24094 NameNode
-# 15920 Jps
+# 3000 DataNode
+# 3238 JobTracker
+# 3665 Jps
+# 3378 TaskTracker
+# 2844 NameNode
+# 3136 SecondaryNameNode
 {% endhighlight %}
 
 在 slave 节点：
