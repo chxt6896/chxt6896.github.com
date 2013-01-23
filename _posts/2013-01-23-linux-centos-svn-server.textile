@@ -156,7 +156,7 @@ $ svnserve -d -r /home/hadoop/svn
 
 h3. Step2-8 测试服务器
 
-<pre>
+{% highlight bash linenos %}
 $ mkdir test
 $ cd test
 $ svn co svn://192.168.1.101/project
@@ -185,6 +185,7 @@ $ svn commit main.c -m “test”
 Adding    main.c
 Transmitting file data .
 Committed revision 2.  ( 测试提交成功 )
-</pre>
+{% endhighlight %}
+
 
       
