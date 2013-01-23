@@ -6,19 +6,20 @@ category: linux
 
 h2. 平台环境
 
-* CentOS 5.X （同样其他 Linux 发行版本）
+* CentOS 6.X （同样其他 Linux 发行版本）
+* 服务器节点 192.168.1.101
 
 h2. SVN 简介&工作原理
 
 subversion（简称svn）是近几年崛起的版本管理软件，是 cvs 的接班人，目前绝大多数开源软件都使用 svn 作为代码版本管理软件。Subversion 支持 linux 和 windows，但较多安装在 linux 下。
 
-svn 服务器有两种运行方式：独立服务器和借助于 apache。 svn:// 或 http://
+svn 服务器有两种运行方式: 独立服务器和借助于 apache。 svn:// 或 http://
 
 svn 客户端 tortoisesvn
 
-svn 的基本工作原理： 在一台服务器上建立一个源代码库，库里可以存放许多不同项目的源程序。有源代码库管理员统一管理这些源程序。每个用户在使用源代码库之前，首先要把源代码库里的项目文件下载到本地，然后开发人员可以在本地修改，之后用 svn 命令进行提交，由源代码库统一管理修改。
+svn 的基本工作原理: 在一台服务器上建立一个源代码库，库里可以存放许多不同项目的源程序。有源代码库管理员统一管理这些源程序。每个用户在使用源代码库之前，首先要把源代码库里的项目文件下载到本地，然后开发人员可以在本地修改，之后用 svn 命令进行提交，由源代码库统一管理修改。
 
-版本控制解决了：
+版本控制解决了:
 
 * 代码管理混乱
 * 解决代码冲突困难
@@ -30,14 +31,106 @@ SVN 工作原理示意图：
 
 !/images/linux/svn.jpg!
 
-subversion目录说明：
+subversion目录说明:
 
-* dav 目录：是提供 apache 与 mod_dav_svn 使用的目录，让他们存储内部数据
-* db 目录：是所有版本控制的数据存放文件
-* hooks 目录：放置 hook 脚本文件的目录
-* locks 目录：用来放置 subversion 建库锁定数据的目录，用来追踪存取文件库的客户端
-* format 文件：是一个文本文件，里面只放了一个整数。表示当前文件库配置的版本号
-* conf 目录：是这个仓库的配置文件（仓库的用户访问账号、权限等）
+* dav 目录: 是提供 apache 与 mod_dav_svn 使用的目录，让他们存储内部数据
+* db 目录: 是所有版本控制的数据存放文件
+* hooks 目录: 放置 hook 脚本文件的目录
+* locks 目录: 用来放置 subversion 建库锁定数据的目录，用来追踪存取文件库的客户端
+* format 文件: 是一个文本文件，里面只放了一个整数。表示当前文件库配置的版本号
+* conf 目录: 是这个仓库的配置文件（仓库的用户访问账号、权限等）
+
+h2. SVN Server 详细配置
+
+h3. 系统环境: CentOS 6.3 最小化安装(关闭 iptables 和 selinux) + ssh + yum
+
+h2. Step1 安装必须软件包
+
+{% highlight bash linenos %}
+$ yum install subversion mysql-server httpd mod_dav_svn mod_perl sendmail wget gcc-c++ make unzip perl* ntsysv vim-enhanced
+{% endhighlight %}
+
+* subversion (SVN 服务器)
+* mysql-server (用于 codestriker)
+* httpd mod_dav_svn mod_perl (用于支持 WEB 方式管理 SVN 服务器)
+* sendmail (用于配置用户提交代码后发邮件提醒)
+* wget gcc-c++ make unzip perl* (必备软件包)
+* ntsysv vim-enhanced (可选)
+
+h2. Step2 SVN Server 配置
+
+h3. Step2-1 新建用于存储 SVN 文件的目录
+
+{% highlight bash linenos %}
+$ mkdir /home/hadoop/svn
+{% endhighlight %}
+
+h3. Step2-2 新建一个版本仓库
+
+{% highlight bash linenos %}
+$ svnadmin create /home/hadoop/svn/project
+{% endhighlight %}
+
+h3. Step2-3 初始化版本仓库中的目录
+
+{% highlight bash linenos %}
+# 建立临时目录
+$ mkdir project project/server project/client project/test
+$ svn import project/ file:///home/hadoop/svn/project -m “初始化SVN目录”
+# 删除临时建立的目录
+$ rm -rf project
+{% endhighlight %}
+
+h3. Step2-4 添加用户
+
+添加 SVN 用户非常简单，只需在 /home/hadoop/svn/project/conf/passwd 文件添加一个形如 "username = password" 的条目就可以了。
+
+{% highlight bash linenos %}
+[users]
+# harry = harryssecret
+# sally = sallyssecret
+pm = pm_pw
+server_group = server_pw
+client_group = client_pw
+test_group = test_pw
+{% endhighlight %}
+
+h3. Step2-5 修改用户访问策略
+
+/home/hadoop/svn/project/conf/authz 记录用户的访问策略
+
+{% highlight bash linenos %}
+[groups]
+project_p = pm
+project_s = server1,server2,server3
+project_c = client1,client2,client3
+project_t = test1,test1,test1
+
+[project:/]
+@project_p = rw
+* =
+
+[project:/server]
+@project_p = rw
+@project_s = rw
+* =
+
+[project:/client]
+@project_p = rw
+@project_c = rw
+* =
+
+[project:/doc]
+@project_p = rw
+@project_s = r
+@project_c = r
+@project_t = r
+* =
+{% endhighlight %}
+
+说明：以上信息表示，只有project_p用户组有根目录的读写权。r表示对该目录有读权限，w表示对该目录有写权限，rw表示对该目录有读写权限。最后一行的* =表示，除了上面设置了权限的用户组之外，其他任何人都被禁止访问本目录。这个很重要，一定要加上！
 
 
 
+
+      
