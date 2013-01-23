@@ -204,3 +204,5 @@ $ jps
 可以通过访问 http://192.168.1.111:50070 来查看 hdfs 的状态，访问 http://192.168.1.111:50030 来查看 map/reduce 的状态。
 
 如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
+
+"http://yymmiinngg.iteye.com/blog/706699":>>Hadoop集群安装
