@@ -7,26 +7,13 @@ category: hbase
 h2. 平台环境
 
 * CentOS 6.X
-* ssh 
-* rsyn
-* JDK7  
+* <a href="http://chxt6896.github.com/hadoop/2012/09/17/hadoop-start.html">Hadoop1.0.4 集群平台</a>  
 * 三台机器
-** 192.168.1.111 node111
-** 192.168.1.112 node112
-** 192.168.1.113 node113
+** 192.168.1.111 node111 (NameNode, SecondaryNameNode, DataNode)
+** 192.168.1.112 node112 (DataNode)
+** 192.168.1.113 node113 (DataNode)
 
-h2. Step1 安装 Hadoop
-
-h3. Hadoop 使用最新稳定版 1.0.4
-
-{% highlight bash linenos %}
-# 官网 http://hadoop.apache.org/ 下载 Hadoop 项目
-$ wget http://www.apache.org/dist/hadoop/core/hadoop-1.0.4/hadoop-1.0.4.tar.gz
-# 自定义解压在 /home/hadoop/cluster/ 下
-$ mkdir ~/cluster
-$ tar -xzvf hadoop-0.20.2.tar.gz -C ~/cluster/
-$ cd ~/cluster/hadoop-1.0.4
-{% endhighlight %}
+h2. Step1 规划集群 hosts
 
 在 /etc/hosts 中加入：
 
@@ -38,171 +25,136 @@ $ cd ~/cluster/hadoop-1.0.4
 
 h3. 以上操作需要在每台机器上执行
 
+h2. Step2 安装 HBase (master)
+
+h3. HBase 使用最新稳定版 0.94.4
+
+{% highlight bash linenos %}
+# 官网 http://hbase.apache.org/ 下载 HBase 项目
+$ wget http://apache.dataguru.cn/hbase/stable/hbase-0.94.4.tar.gz
+# 自定义解压在 /home/hadoop/cluster/ 下
+$ tar -xzvf hbase-0.94.4.tar.gz -C ~/cluster/
+$ cd ~/cluster/hbase-0.94.4
+{% endhighlight %}
+
 在 ~/.bashrc 中加入环境变量：
 
 {% highlight bash linenos %}
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
 export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
-export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
+export HBASE_HOME=/home/hadoop/cluster/hbase-0.94.4
+export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HBASE_HOME/bin
 {% endhighlight %} 
 
-h2. Step2 配置集群
+h2. Step3 配置集群
 
-根据 Hadoop 文档的描述 "The Hadoop daemons are NameNode/DataNode and JobTracker/TaskTracker." 可以看出 Hadoop 核心守护程序就是由 NameNode/DataNode 和 JobTracker/TaskTracker 这几个角色构成。
-Hadoop的DFS 需要确立 NameNode 与 DataNode 角色，一般 NameNode 会部署到一台单独的服务器上而不与 DataNode 共同同一机器。另外 Map/Reduce 服务也需要确立 JobTracker 和 TaskTracker 的角色，一般 JobTracker 与 NameNode 共用一台机器作为 master，而 TaskTracker 与 DataNode 同属于 slave。
+h2. Step3-1 环境配置
 
-这里使用 node111 作为 NameNode 与 JobTracker ，其它两台机器作为 DataNode 和 TaskTracker
-
-h2. Step2-1 环境配置
-
-在 $HADOOP_HOME/conf/hadoop-env.sh 中定义了 Hadoop 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量:
+在 $HBASE_HOME/conf/hbase-env.sh 中定义了 HBase 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量和 HBASE_CLASSPATH 变量:
 
 {% highlight bash linenos %}
 # The java implementation to use.  Required.
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
+# Extra Java CLASSPATH elements.  Optional.
+# 此处添加 Hadoop 的 conf 目录
+export HBASE_CLASSPATH=/home/hadoop/cluster/hadoop-1.0.4/conf
 {% endhighlight %} 
 
-h2. Step2-2 Hadoop 核心配置
+设置允许 HBase 管理 Zookeeper:
 
-Hadoop 包括一组默认配置文件（$HADOOP_HOME/src 目录下的 core/core-default.xml, hdfs/hdfs-default.xml 和 mapred/mapred-default.xml），先好好看看并理解默认配置文件中的那些属性。虽然默认配置文件能让 Hadoop 核心程序顺利启动，但对于开发人员来说一般需要自己来设置一些常规配置以满足开发和业务的需求，所以我们需要对默认配置文件的值进行覆盖，具体方法如下：
+{% highlight bash linenos %}
+# Tell HBase whether it should manage it's own instance of Zookeeper or not.
+export HBASE_MANAGES_ZK=true
+{% endhighlight %} 
 
-h3. Step2-2-1 core-default.xml 配置
+h2. Step3-2 HBase 核心配置
 
-$HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 core-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
+HBase 包括一个默认配置文件（$HBASE_HOME/src 目录下的 main/resources/hbase-default.xml），先好好看看并理解默认配置文件中的那些属性。虽然默认配置文件能让 HBase 核心程序顺利启动，但对于开发人员来说一般需要自己来设置一些常规配置以满足开发和业务的需求，所以我们需要对默认配置文件的值进行覆盖，具体方法如下:
+
+h3. Step3-2-1 hbase-site.xml 配置
+
+$HBASE_HOME/conf/hbase-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 hbase-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
 {% highlight bash linenos %}
 <configuration>  
 	<property>   
-		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
-		<name>fs.default.name</name>   
-		<value>hdfs://node111:9000</value>
+		<!-- hbase 的根目录 -->  
+		<name>hbase.rootdir</name>   
+		<value>hdfs://node111:9000/hbase</value>
 	</property> 
-</configuration> 
-{% endhighlight %} 
-
-h3. Step2-2-2 hdfs-default.xml 配置
-
-$HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
-
-{% highlight bash linenos %}
-<configuration>
-	<property>    
-		<name>dfs.replication</name>   
-		<value>2</value> 
+	<property>   
+		<!-- 标记 hbase 是分布式的 -->  
+		<name>hbase.cluster.distributed</name>   
+		<value>true</value>
 	</property>
-	<property>
-		<name>hadoop.tmp.dir</name>
-		<value>/home/hadoop/cluster/data</value>
+	<property>   
+		<!-- hbase 的 tmp 目录 -->  
+		<name>hbase.tmp.dir</name>   
+		<value>/home/hadoop/cluster/data/hbase-tmp</value>
 	</property>
-	<property>
-		<name>dfs.data.dir</name>
-		<value>${hadoop.tmp.dir}/dfs/data</value>
+	<property>   
+		<!-- zookeeper 运行的机器，要为奇数个，使得投票更公平 -->  
+		<name>hbase.zookeeper.quorum</name>   
+		<value>node111,node112,node113</value>
 	</property>
-</configuration> 
-{% endhighlight %} 
-
-h3. Step2-2-3 mapred-site.xml 配置
-
-$HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆盖 mapred-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
-
-{% highlight bash linenos %}
-<configuration>
-	<property>  
-		<!-- 用来作 JobTracker 的节点的(一般与 NameNode 保持一致) -->    
-		<name>mapred.job.tracker</name>   
-		<value>node111:9001</value> 
+	<property>   
+		<!-- zookeeper 的数据目录，前提需要设置 hbase 的 tmp 目录 -->  
+		<name>hbase.zookeeper.property.dataDir</name>   
+		<value>${hbase.tmp.dir}/zookeeper</value>
 	</property>
 </configuration> 
 {% endhighlight %} 
 
-h2. Step2-3 主从配置
+h2. Step3-3 主从配置
 
-在 $HADOOP_HOME/conf 目录中存在 masters 和 slaves 这两个文件，用来做 Hadoop 的主从配置。上面已经提到了 Hadoop 主要由 NameNode/DataNode 和 JobTracker/TaskTracker 构成，在主从配置里我们一般将 NameNode 和 JobTracker 列为主机，其它的共为从机，于是对于此处的配置应该是：
-
-h3. Step2-3-1 masters 配置
-
-在 masters 中加入：
+修改 $HBASE_HOME/conf/regionservers 文件，把 DataNode 添加进去
 
 {% highlight bash linenos %}
-node111
-{% endhighlight %}
-
-h3. Step2-3-2 slaves 配置
-
-在 slaves 中加入：
-
-{% highlight bash linenos %}
-node111
 node112
 node113
 {% endhighlight %}
 
-如果你对以上介绍的配置项做了正确的配置，那么你的 Hadoop 集群只差启动了，当然，在 $HADOOP_HOME/conf 目录下还包括其它的一些配置文件，但那些都不是必须设置的，如果有兴趣你可以自己去了解了解。
+如果你对以上介绍的配置项做了正确的配置，那么你的 HBase 集群只差启动了，当然，在 $HBASE_HOME/conf 目录下还包括其它的一些配置文件，但那些都不是必须设置的，如果有兴趣你可以自己去了解了解。
 
-h3. 值得注意的是 Hadoop 集群的所有机器的配置应该保持一致，一般我们在配置完 master 后，使用 scp 将配置文件同步到集群的其它服务器上。
+h3. 值得注意的是 HBase 集群的所有机器的配置应该保持一致，一般我们在配置完 master 后，使用 scp 将配置文件同步到集群的其它服务器上。
 
-h2. Step3 启动 Hadoop
+h2. Step4 启动 HBase
 
-经过以上两个步骤，Hadoop 的安装和配置已经OK了，那么下面我们就来启动 Hadoop 集群。启动前我们需要做一些准备，因为集群的启动是从 NameNode 开始的，于是 DataNode 的运行需要 NameNode 的远程调用，Hadoop 使用 ssh 命令远程运行 DataNode 节点，这就是为什么 Hadoop 需要 ssh 的支持。我们可以想象一下，如果集群里有100台机器，那么我们就需要输入100遍主机的访问密码，但如果配置 ssh 使用无密码公钥认证的方式，就解决了此问题。
-
-简单的说，在 node111 上需要生成一个密钥对，即一个私钥和一个公钥。将公钥拷贝到 node112 和 node113 上，如此一来，当 node111 向 node112 发起 ssh 连接的时候，node112 上就会生成一个随机数并用 node111 的公钥对这个随机数进行加密，并且发送给 node111，node111 收到这个加密的数以后用私钥进行解密，并将解密后的数返回 node112，node112 确认解密的数无误后就允许 node111 进行连接了。这就完成了一次公钥认证过程。
-
-公钥生成的步骤如下：
+经过以上两个步骤，HBase 的安装和配置已经OK了，那么下面我们就来启动 HBase 集群:
 
 {% highlight bash linenos %}
-$ ssh-keygen -t rsa
-# 以下是生成一个为 id_rsa/id_rsa.pub 的无密码的公/私钥对(一路回车)
-Generating public/private rsa key pair.
-Enter file in which to save the key (/root/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-# 会在 ~/.ssh 中生成两个文件：id_rsa, id_rsa.pub
+$ start-hbase.sh
 {% endhighlight %}
 
-然后将 id_rsa.pub 的内容复制到每个机器（也包括本机）的 ~/.ssh/authorized_keys 文件中。如果 authorized_keys 不存在，则使用 touch ~/.ssh/authorized_keys 生成一个；如果该文件已经存在，则追加内容进去就OK了，这里推荐使用如下命令：
-
-{% highlight bash linenos %}
-$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-# 因为 ssh 服务对文件的权限有着非常严格的限制（authorized_keys 只能拥有指定用户的写权限）于是需要进行如下处理
-$ chmod 644 ~/.ssh/authorized_keys
-{% endhighlight %}
-
-经过以上步骤，我们的无密码访问就配置好了，接下来就可以正常启动 Hadoop 集群：
-
-{% highlight bash linenos %}
-# 启动服务之前，我们需要做一件事情，非常重要，那就是格式化命名空间
-$ hadoop namenode -format
-# 启动 dfs 和 map/reduce 服务
-$ start-all.sh
-{% endhighlight %}
-
-h2. Step4 jps验证
+h2. Step5 jps验证
 
 在 master 节点：
 
 {% highlight bash linenos %}
 $ jps
-# 3000 DataNode
-# 3238 JobTracker
-# 3665 Jps
-# 3378 TaskTracker
-# 2844 NameNode
-# 3136 SecondaryNameNode
+# 23481 HMaster
+# 22925 TaskTracker
+# 22496 DataNode
+# 22345 NameNode
+# 23322 HQuorumPeer
+# 22660 SecondaryNameNode
+# 26026 Jps
+# 22772 JobTracker
 {% endhighlight %}
 
 在 slave 节点：
 
 {% highlight bash linenos %}
 $ jps
-# 32724 TaskTracker
-# 9800 Jps
-# 32590 DataNode
+# 12817 TaskTracker
+# 12920 HQuorumPeer
+# 15599 Jps
+# 13098 HRegionServer
+# 12694 DataNode
 {% endhighlight %}
 
-能看到如上信息，则证明 Hadoop 集群已经配置成功了，哦耶～
+能看到如上信息，则证明 HBase 集群已经配置成功了，哦耶～
 
-可以通过访问 http://192.168.1.111:50070 来查看 hdfs 的状态，访问 http://192.168.1.111:50030 来查看 map/reduce 的状态。
+如果出现错误或 HBase 集群未正常启动，可以查看 $HBASE_HOME/logs/ 下的日志文件。
 
-如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
-
-<a href="http://yymmiinngg.iteye.com/blog/706699"> >>Hadoop集群安装</a>
+<a href="http://f.dataguru.cn/forum.php?mod=viewthread&tid=55934&page=1&extra=#pid210319"> >>Hbase-0.94.4 on Hadoop-1.0.4-1安装向导</a>

@@ -15,7 +15,19 @@ h2. 平台环境
 ** 192.168.1.112 node112
 ** 192.168.1.113 node113
 
-h2. Step1 安装 Hadoop
+h2. Step1 规划集群 hosts
+
+在 /etc/hosts 中加入：
+
+{% highlight bash linenos %}
+192.168.1.111 node111
+192.168.1.112 node112
+192.168.1.113 node113
+{% endhighlight %}
+
+h3. 以上操作需要在每台机器上执行
+
+h2. Step2 安装 Hadoop (master)
 
 h3. Hadoop 使用最新稳定版 1.0.4
 
@@ -28,16 +40,6 @@ $ tar -xzvf hadoop-0.20.2.tar.gz -C ~/cluster/
 $ cd ~/cluster/hadoop-1.0.4
 {% endhighlight %}
 
-在 /etc/hosts 中加入：
-
-{% highlight bash linenos %}
-192.168.1.111 node111
-192.168.1.112 node112
-192.168.1.113 node113
-{% endhighlight %}
-
-h3. 以上操作需要在每台机器上执行
-
 在 /etc/profile 中加入环境变量：
 
 {% highlight bash linenos %}
@@ -46,14 +48,16 @@ export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
 {% endhighlight %} 
 
-h2. Step2 配置集群
+source /etc/profile 使其生效^
+
+h2. Step3 配置集群
 
 根据 Hadoop 文档的描述 "The Hadoop daemons are NameNode/DataNode and JobTracker/TaskTracker." 可以看出 Hadoop 核心守护程序就是由 NameNode/DataNode 和 JobTracker/TaskTracker 这几个角色构成。
 Hadoop的DFS 需要确立 NameNode 与 DataNode 角色，一般 NameNode 会部署到一台单独的服务器上而不与 DataNode 共同同一机器。另外 Map/Reduce 服务也需要确立 JobTracker 和 TaskTracker 的角色，一般 JobTracker 与 NameNode 共用一台机器作为 master，而 TaskTracker 与 DataNode 同属于 slave。
 
 这里使用 node111 作为 NameNode 与 JobTracker ，其它两台机器作为 DataNode 和 TaskTracker
 
-h2. Step2-1 环境配置
+h2. Step3-1 环境配置
 
 在 $HADOOP_HOME/conf/hadoop-env.sh 中定义了 Hadoop 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量:
 
@@ -62,11 +66,11 @@ h2. Step2-1 环境配置
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
 {% endhighlight %} 
 
-h2. Step2-2 Hadoop 核心配置
+h2. Step3-2 Hadoop 核心配置
 
 Hadoop 包括一组默认配置文件（$HADOOP_HOME/src 目录下的 core/core-default.xml, hdfs/hdfs-default.xml 和 mapred/mapred-default.xml），先好好看看并理解默认配置文件中的那些属性。虽然默认配置文件能让 Hadoop 核心程序顺利启动，但对于开发人员来说一般需要自己来设置一些常规配置以满足开发和业务的需求，所以我们需要对默认配置文件的值进行覆盖，具体方法如下：
 
-h3. Step2-2-1 core-default.xml 配置
+h3. Step3-2-1 core-site.xml 配置
 
 $HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 core-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
@@ -80,7 +84,7 @@ $HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆�
 </configuration> 
 {% endhighlight %} 
 
-h3. Step2-2-2 hdfs-default.xml 配置
+h3. Step3-2-2 hdfs-site.xml 配置
 
 $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
@@ -102,7 +106,7 @@ $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-
 </configuration> 
 {% endhighlight %} 
 
-h3. Step2-2-3 mapred-site.xml 配置
+h3. Step3-2-3 mapred-site.xml 配置
 
 $HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆盖 mapred-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
@@ -116,11 +120,11 @@ $HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆�
 </configuration> 
 {% endhighlight %} 
 
-h2. Step2-3 主从配置
+h2. Step3-3 主从配置
 
 在 $HADOOP_HOME/conf 目录中存在 masters 和 slaves 这两个文件，用来做 Hadoop 的主从配置。上面已经提到了 Hadoop 主要由 NameNode/DataNode 和 JobTracker/TaskTracker 构成，在主从配置里我们一般将 NameNode 和 JobTracker 列为主机，其它的共为从机，于是对于此处的配置应该是：
 
-h3. Step2-3-1 masters 配置
+h3. Step3-3-1 masters 配置
 
 在 masters 中加入：
 
@@ -128,7 +132,7 @@ h3. Step2-3-1 masters 配置
 node111
 {% endhighlight %}
 
-h3. Step2-3-2 slaves 配置
+h3. Step3-3-2 slaves 配置
 
 在 slaves 中加入：
 
@@ -142,7 +146,7 @@ node113
 
 h3. 值得注意的是 Hadoop 集群的所有机器的配置应该保持一致，一般我们在配置完 master 后，使用 scp 将配置文件同步到集群的其它服务器上。
 
-h2. Step3 启动 Hadoop
+h2. Step4 启动 Hadoop
 
 经过以上两个步骤，Hadoop 的安装和配置已经OK了，那么下面我们就来启动 Hadoop 集群。启动前我们需要做一些准备，因为集群的启动是从 NameNode 开始的，于是 DataNode 的运行需要 NameNode 的远程调用，Hadoop 使用 ssh 命令远程运行 DataNode 节点，这就是为什么 Hadoop 需要 ssh 的支持。我们可以想象一下，如果集群里有100台机器，那么我们就需要输入100遍主机的访问密码，但如果配置 ssh 使用无密码公钥认证的方式，就解决了此问题。
 
@@ -177,7 +181,7 @@ $ hadoop namenode -format
 $ start-all.sh
 {% endhighlight %}
 
-h2. Step4 jps验证
+h2. Step5 jps验证
 
 在 master 节点：
 
@@ -207,6 +211,7 @@ $ jps
 如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
 
 <a href="http://yymmiinngg.iteye.com/blog/706699"> >>Hadoop集群安装</a>
+<a href="http://f.dataguru.cn/thread-53478-1-1.html"> >>基于CentOS 6.3 64bit操作系统的Hadoop 1.0.4 集群部署</a>
 
 h2. Problem1 Warning: $HADOOP_HOME is deprecated. (1.x 版本以后出现的)
 
