@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Hadoop1.0.4 集群配置
-category: hadoop
+title: HBase0.94.4 集群配置
+category: hbase
 ---
 
 h2. 平台环境
@@ -38,7 +38,7 @@ $ cd ~/cluster/hadoop-1.0.4
 
 h3. 以上操作需要在每台机器上执行
 
-在 /etc/profile 中加入环境变量：
+在 ~/.bashrc 中加入环境变量：
 
 {% highlight bash linenos %}
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
@@ -95,7 +95,6 @@ $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-
 		<value>/home/hadoop/cluster/data</value>
 	</property>
 	<property>
-		<!--设置 data 节点文件位置 -->  
 		<name>dfs.data.dir</name>
 		<value>${hadoop.tmp.dir}/dfs/data</value>
 	</property>
@@ -207,22 +206,3 @@ $ jps
 如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
 
 <a href="http://yymmiinngg.iteye.com/blog/706699"> >>Hadoop集群安装</a>
-
-h2. Problem1 Warning: $HADOOP_HOME is deprecated. (1.x 版本以后出现的)
-
-安装完成之后执行 start-all.sh 脚本，总会提示一个警告: Warning: $HADOOP_HOME is deprecated.	
-
-经查原因是 Hadoop 在 bin/hadoop-config.sh 中对 HADOOP_HOME 进行了判断:
-
-{% highlight bash linenos %}
-if [ "$HADOOP_HOME_WARN_SUPPRESS" = "" ] && [ "$HADOOP_HOME" != "" ]; then
-  echo "Warning: \$HADOOP_HOME is deprecated." 1>&2
-  echo 1>&2
-fi
-{% endhighlight %}
-
-解决方案: 在 ~/.bash_profile 中添加一个全局环境变量
-
-{% highlight bash linenos %}
-export HADOOP_HOME_WARN_SUPPRESS=1
-{% endhighlight %}
