@@ -7,9 +7,23 @@ category: hadoop
 h2. 参照 "core-default.xml":http://hadoop.apache.org/docs/r1.0.4/core-default.html
 
 h3. fs.default.name
+
 预设值 : file:///
 说明 : 设定 Hadoop namenode 的 hostname 及 port，预设是 Standalone mode，如果是 Pseudo-Distributed mode 要指定为 hdfs://localhost:9000，但是这个缺点是只有在本机才能操作，从其他机器不能连。建议可直接使用 Cluster mode，指定 hdfs://hostname:9000。但是 Hadoop 是依据 hostname 去做 ip binding，所以要注意 /etc/hosts 里 hostname 不能对应到 127.0.0.1，要对应实际的 ip。
 
 h3. hadoop.tmp.dir
+
 预设值 : /tmp/hadoop-${user.name}
 说明 : Hadoop 存放暂存档案的目录，会根据 user account 在此目录下开不同的子目录。但是放在预设的 /tmp 下可能会有一个问题，一般在 Centos 会 enable tmpwatch，tmpwatch 会定期把 /tmp 下沒用到的档案砍掉，如果不希望系统做这件事，可以 disable tmpwatch 或把 hadoop.tmp.dir 指到不同的目录下。
+
+h3. fs.checkpoint.dir
+
+预设值 : ${hadoop.tmp.dir}/dfs/namesecondary
+说明 : secondary namenode 存放暂存档案的目录，如果有多个目录可用“，”隔开。设定多个目录的好处是 Hadoop 会把 temp image files 分别写到指定的多个目录，以避免其中一份资料坏掉。seconary namenode 相关的设定不一定需要，甚至在 Hadoop cluster 可以不需要起 secondary namenode。但重起 namenode 时也会做 file merge，当档案很大时，重起的时间会非常的长。为了减少 downtime，建议在 production site 都会启动 secondary namenode。而且要起在跟 namenode 不同的机器，以保证当 namenode 硬碟坏掉的時候，还可以从 secondary namenode 上把资料备份回來。
+
+h3. fs.checkpoint.period
+
+预设值 : 3600(秒)
+说明 : 控制 secondary namenode 的 checkpoint 时间间隔。如果距离上次 checkpoint 的时间大于這个参数设定的值，就会触发 checkpoint。secondary namenode 会把 namenode 的 fsimage 和 editlog 做 snapshot。如果存取 Hadoop 的次数频繁或为了减少重起 namenode 的 downtime，可以把这个值设小一点。
+
+
