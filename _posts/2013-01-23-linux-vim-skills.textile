@@ -20,7 +20,7 @@ Mac OS X 的配置文件是 /usr/share/vim/vimrc。
 
 h3. 3. vimRC 中的 RC 是什么意思？
 
-一般在运行某个软件、环境或工具之初，要初始执行的一些命令，称为 Run Commands，即 RC。根据 Wikipedia.org 的记载，RC 缩写的用法源自 MIT 的相容分时操作系统（Compatible Time-Sharing System，CTSS）[1]。所以以后如果你看到了 SystemRC 或者 ScreenRC，也就知其缘由了。
+一般在运行某个软件、环境或工具之初，要初始执行的一些命令，称为 Run Commands，即 RC。根据 Wikipedia.org 的记载，RC 缩写的用法源自 MIT 的相容分时操作系统 (Compatible Time-Sharing System，CTSS)[1]。所以以后如果你看到了 SystemRC 或者 ScreenRC，也就知其缘由了。
 
-fn1. "http://en.wikipedia.org/wiki/Run_commands":Run Commands
-fn2. The Ultimate vim Configuration(vimRC)，http://amix.dk/blog/post/19486
+fn1. "Run Commands":http://en.wikipedia.org/wiki/Run_commands
+fn2. "The Ultimate vim Configuration(vimRC)":http://amix.dk/blog/post/19486
