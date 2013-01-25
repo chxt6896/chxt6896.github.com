@@ -26,13 +26,10 @@ h3. 4. 三种基本模式
 
 在《大家来学vim》中提到 vim 有6+5种模式，但除了细分程度不同外，实际上常用的只有3种模式: Normal Mode、Insert Mode 和 Command-line Mode。
 
-从 Normal Mode 进入 Insert Mode，可以按 i、I、a、A、o、O、r、R 即可。其中 i 和 I 表示插入（Insert），r 和 R 表示替换（replace）。
-
-从 Insert Mode 进入 Normal Mode，只需要按 ESC 键即可。
-
-从 Normal Mode 进入 Command-line Mode，可以按“:”、“/”、“?”。其中“:”表示输入 vim 命令，“/”表示后面输入要向下搜索的字符串，“?”表示后面输入要向上搜索字符串。
-
-从 Command-line Mode进入 Normal Mode，只需要按 ESC 键即可了。
+* 从 Normal Mode 进入 Insert Mode，可以按 i、I、a、A、o、O、r、R 即可。其中 i 和 I 表示插入(Insert)，r 和 R 表示替换(replace)。
+* 从 Insert Mode 进入 Normal Mode，只需要按 ESC 键即可。
+* 从 Normal Mode 进入 Command-line Mode，可以按 ':'、'/'、'?'。其中 ':' 表示输入 vim 命令，'/'表示后面输入要向下搜索的字符串，'?'表示后面输入要向上搜索字符串。
+* 从 Command-line Mode进入 Normal Mode，只需要按 ESC 键即可了。
 
 你可以把 Normal Mode 理解为常态，进入其他任何一种模式，需要某种特殊方式，而从其他特殊模式回到 Normal Mode，就按 ESC 键即可。
 
@@ -44,6 +41,7 @@ h3. 5. vim 中那些最最常用的配置
 * syntax on       开启代码高亮
 * syntax off      关闭代码高亮
 * syntax enable   开启代码高亮
+
 # 搜索设置
 * set hlsearch    开启搜索高亮
 * set nohlsearch  关闭搜索高亮
