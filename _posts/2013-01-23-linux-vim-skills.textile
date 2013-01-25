@@ -5,3 +5,22 @@ category: linux
 ---
 
 h2. 初级个性化配置
+
+h3. 1. vim 是什么？
+
+vim 是 Vi IMproved，是编辑器 Vi 的一个加强版，一个极其强大并符合 IT 工程师（程序员、运维）习惯的编辑器。
+
+h3. 2. 配置文件在哪？
+
+Windows 系统的配置文件是 vim 安装目录下的 vimrc 文件。
+
+Linux 系统，RHEL 和 CentOS 的配置文件是 /etc/vimrc，Debian 和 Ubuntu 的配置文件是 /usr/share/vim/vimrc。
+
+Mac OS X 的配置文件是 /usr/share/vim/vimrc。
+
+h3. 3. vimRC 中的 RC 是什么意思？
+
+一般在运行某个软件、环境或工具之初，要初始执行的一些命令，称为 Run Commands，即 RC。根据 Wikipedia.org 的记载，RC 缩写的用法源自 MIT 的相容分时操作系统（Compatible Time-Sharing System，CTSS）[1]。所以以后如果你看到了 SystemRC 或者 ScreenRC，也就知其缘由了。
+
+fn1. "http://en.wikipedia.org/wiki/Run_commands":Run Commands
+fn2. The Ultimate vim Configuration(vimRC)，http://amix.dk/blog/post/19486
