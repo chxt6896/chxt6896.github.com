@@ -11,7 +11,21 @@ h2. 平台环境
 h2. "core-default.xml":http://hadoop.apache.org/docs/r1.0.4/core-default.html
 
 | no | name | value | description |
-| 1 | hadoop.tmp.dir | /tmp/hadoop-${user.name}| | 临时目录设定 |
-{background:#ddd}. | 2 | hadoop.native.lib| | true | 使用本地 hadoop 库标识 |
-| 3 | hadoop.http.filter.initializers |  | http服务器过滤链设置 |
-
+| 1 | hadoop.tmp.dir | /tmp/hadoop-${user.name} | A base for other temporary directories. |
+{background:#ddd}. | 2 | hadoop.native.lib | true | Should native hadoop libraries, if present, be used. |
+| 3 | hadoop.http.filter.initializers |  | A comma separated list of class names. Each class in the list must extend org.apache.hadoop.http.FilterInitializer. The corresponding Filter will be initialized. Then, the Filter will be applied to all user facing jsp and servlet web pages. The ordering of the list defines the ordering of the filters. |
+{background:#ddd}. | 4 | hadoop.security.group.mapping | org.apache.hadoop.security.ShellBasedUnixGroupsMapping | Class for user to group mapping (get groups for a given user) |
+| 5 | hadoop.security.authorization | false | Is service-level authorization enabled? |
+{background:#ddd}. | 6 | hadoop.security.authentication | simple | Possible values are simple (no authentication), and kerberos |
+| 7 | hadoop.security.token.service.use_ip | true | Controls whether tokens always use IP addresses. DNS changes will not be detected if this option is enabled. Existing client connections that break will always reconnect to the IP of the original host. New clients will connect to the host's new IP but fail to locate a token. Disabling this option will allow existing and new clients to detect an IP change and continue to locate the new host's token. |
+{background:#ddd}. | 8 | hadoop.logfile.size | 10000000 | The max size of each log file |
+| 9 | hadoop.logfile.count | 10 | The max number of log files |
+{background:#ddd}. | 10 | io.file.buffer.size | 4096 | The size of buffer for use in sequence files. The size of this buffer should probably be a multiple of hardware page size (4096 on Intel x86), and it determines how much data is buffered during read and write operations. |
+| 11 | io.bytes.per.checksum | 512 | The number of bytes per checksum. Must not be larger than io.file.buffer.size. |
+{background:#ddd}. | 12 | io.skip.checksum.errors | false | If true, when a checksum error is encountered while reading a sequence file, entries are skipped, instead of throwing an exception. |
+| 13 | io.compression.codecs | org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.BZip2Codec,org.apache.hadoop.io.compress.SnappyCodec | A list of the compression codec classes that can be used for compression/decompression. |
+{background:#ddd}. | 14 |  |  |  |
+| 15 |  |  |  |
+{background:#ddd}. | 16 |  |  |  |
+|  |  |  |  |
+{background:#ddd}. |  |  |  |  |
