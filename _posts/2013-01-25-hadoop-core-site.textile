@@ -10,8 +10,8 @@ h2. 平台环境
 
 h2. "core-default.xml":http://hadoop.apache.org/docs/r1.0.4/core-default.html
 
-|_. no |_. name |_. value |_. description |
-| 1 | hadoop.tmp.dir | /tmp/hadoop-${user.name} | 临时目录设定 |
-| 2 | hadoop.native.lib | true | 使用本地 hadoop 库标识 |
+| no | name | value | description |
+| 1 | hadoop.tmp.dir | /tmp/hadoop-${user.name}| | 临时目录设定 |
+{background:#ddd}. | 2 | hadoop.native.lib| | true | 使用本地 hadoop 库标识 |
 | 3 | hadoop.http.filter.initializers |  | http服务器过滤链设置 |
 
