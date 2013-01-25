@@ -1,0 +1,17 @@
+---
+layout: post
+title: Hadoop1.x core-site.xml 参数设定
+category: hadoop
+---
+
+h2. 平台环境
+
+* <a href="http://chxt6896.github.com/hadoop/2012/09/17/hadoop-start.html">Hadoop1.0.4 集群平台</a>
+
+h2. "core-default.xml":http://hadoop.apache.org/docs/r1.0.4/core-default.html
+
+|_. no |_. name |_. value |_. description |
+| 1 | hadoop.tmp.dir | /tmp/hadoop-${user.name} | 临时目录设定 |
+| 2 | hadoop.native.lib | true | 使用本地 hadoop 库标识 |
+| 3 | hadoop.http.filter.initializers |  | http服务器过滤链设置 |
+

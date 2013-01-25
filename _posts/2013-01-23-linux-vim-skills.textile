@@ -64,4 +64,5 @@ h3. 5. vim 中那些最最常用的配置
 ** set showmatch     显示匹配的括号
 
 fn1. "Run Commands":http://en.wikipedia.org/wiki/Run_commands
+
 fn2. "The Ultimate vim Configuration(vimRC)":http://amix.dk/blog/post/19486
