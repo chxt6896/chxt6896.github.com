@@ -10,6 +10,7 @@ h2. 平台环境
 
 h2. "core-default.xml":http://hadoop.apache.org/docs/r1.0.4/core-default.html
 
+table{width:800px}.
 | no | name | value | description |
 | 1 | hadoop.tmp.dir | /tmp/hadoop-${user.name} | A base for other temporary directories. |
 {background:#ddd}. | 2 | hadoop.native.lib | true | Should native hadoop libraries, if present, be used. |
