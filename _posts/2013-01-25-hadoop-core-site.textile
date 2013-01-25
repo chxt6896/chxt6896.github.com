@@ -6,10 +6,10 @@ category: hadoop
 
 h2. 参照 "core-default.xml":http://hadoop.apache.org/docs/r1.0.4/core-default.html
 
-h3. fs.default.name
+h2. fs.default.name
 
-预设值 : file:///
-说明 : 设定 Hadoop namenode 的 hostname 及 port，预设是 Standalone mode，如果是 Pseudo-Distributed mode 要指定为 hdfs://localhost:9000，但是这个缺点是只有在本机才能操作，从其他机器不能连。建议可直接使用 Cluster mode，指定 hdfs://hostname:9000。但是 Hadoop 是依据 hostname 去做 ip binding，所以要注意 /etc/hosts 里 hostname 不能对应到 127.0.0.1，要对应实际的 ip。
+*预设值* : file:///
+*说明* : 设定 Hadoop namenode 的 hostname 及 port，预设是 Standalone mode，如果是 Pseudo-Distributed mode 要指定为 hdfs://localhost:9000，但是这个缺点是只有在本机才能操作，从其他机器不能连。建议可直接使用 Cluster mode，指定 hdfs://hostname:9000。但是 Hadoop 是依据 hostname 去做 ip binding，所以要注意 /etc/hosts 里 hostname 不能对应到 127.0.0.1，要对应实际的 ip。
 
 h3. hadoop.tmp.dir
 
