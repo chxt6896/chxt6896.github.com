@@ -33,26 +33,32 @@ h2. fs.checkpoint.period
 *说明* : 控制 secondary namenode 的 checkpoint 时间间隔。如果距离上次 checkpoint 的时间大于這个参数设定的值，就会触发 checkpoint。secondary namenode 会把 namenode 的 fsimage 和 editlog 做 snapshot。如果存取 Hadoop 的次数频繁或为了减少重起 namenode 的 downtime，可以把这个值设小一点。
 
 h2. fs.checkpoint.size
+
 *预设值* : 67108864(byte)
 *说明* : 如果 Hadoop 非常的忙碌，editlog 可能会在短时间內长的很大，fs.checkpoint.period 的设定不见得可以完全预测这个状况，所以保险的做法会多设定这个值，以保证当档案大到超过 fs.checkpoint.size 的值也会触发 checkpoint。
 
 h2. io.file.buffer.size
+
 *预设值* : 4096(byte)
 *说明* : 这是读写 sequence file 的 buffer size, 可减少 I/O 次数。在大型的 Hadoop cluster，建议可设定为 65536 到 131072。
 
 h2. ipc.client.connection.maxidletime
+
 *预设值* : 10000(毫秒)
 *说明* : 设定 Hadoop client 连线时最大的闲置时间，预设是 10 秒。如果 Hadoop cluster 的网络连线不稳，可以把這個值設到 60000(60秒)。
 
 h2. ipc.server.tcpnodelay
+
 *预设值* : false
 *说明* : 在 Hadoop server 是否启动 Nagle’s 演算法。设 true 会 disable 这个演算法，关掉会减少延迟，但是会增加小封包的传输。server site 不太需要设定这个值。
 
 h2. ipc.client.tcpnodelay
+
 *预设值* : false
 *说明* : 在 Hadoop client 是否启动 Nagle’s 演算法。设 true 会 disable 这个演算法，关掉会减少延迟，但是会增加小封包的传输。client site 建议把这个值设 true。
 
 h2. hadoop.security.authorization
+
 *预设值* : false
 *说明* : 是不是要开启 service-level 帐号验证机制，开启之后 Hadoop 在执行任何动作之前都会先确认是否有权限。详细的权限设定会放在 hadoop-policy.xml 里。例如要让 fenriswolf 这个 account 及 mapreduce group 可以 submit M/R jobs，要设定 security.job.submission.protocol.acl。
 
@@ -64,14 +70,17 @@ h2. hadoop.security.authorization
 {% endhighlight %}
 
 h2. hadoop.security.authentication
+
 *预设值* : simple
 *说明* : simple 表示沒有 authentication，Hadoop 会用 system account 及 group 来控管权限。另外可以指定为 kerberos，这部分相对比较复杂，要有一个 kerberos server 并产生 account keytab，在执行任何操作前 client 要先用 kinit 指令对 kerberos server 认证，之后的任何操作都是以 kerberos account 来执行。
 
 h2. hadoop.kerberos.kinit.command
+
 *预设值* : N/A
 *说明* : 如果 hadoop.security.authentication 设为 kerberos 就要多设这个参数指定 Kerberos kinit 指令的路径。在 CentOS 装 krb5-workstation package 后预设安装路径为 /usr/kerberos/bin/kinit。
 
 h2. fs.trash.interval
+
 *预设值* : 0(分)
 *说明* : 清掉垃圾筒的时间。预设是不清, 所以在刪除资料时要自己执行
 
@@ -80,6 +89,7 @@ hadoop fs -rm -skipTrash 或 hadoop fs -expunge
 来清除垃圾筒的资料，但是强制用 -skipTrash 会造成误刪的资料救不回来，user 也常常会忘记做 -expunge 而造成 Hadoop 空间不会释放。建议可以设为 1440 让 Hadoop 每天清除垃圾筒。
 
 h2. topology.script.file.name
+
 *预设值* : N/A
 *说明* : 用作 Hadoop Rack Awareness 的机制，指定一个可执行档，input 会是一组 hostname 或 ip，回传值是 rack name 清单。不指定的情況下，Hadoop 会预设所有的 node 都在同一个 rack 之下。
 以下是一个 python 的范例，不过用 shell script 或其他语言写也可以
@@ -116,10 +126,12 @@ else:
 如果在 cluster 已经有资料的情况下才设定 rack topology，可以用 hadoop balancer 指令让所有的 blocks 重新分配
 
 h2. topology.script.number.args
+
 *预设值* : 100
 *说明* : 每次传給 topology.script.file.name script 的参数个数。如果 Hadoop node 个数过多，topology.script.file.name script 会被执行多次，一次传入 100 个参数
  
 
 h2. hadoop.native.lib
+
 *预设值* : true
 *说明* : 预设 Hadoop 会去找所有可用的 native libraries 并自动 load 进来使用，例如压缩类的 libraries 像 GZIP, LZO 等等。会设成 false 的原因通常是为了 debug，Hadoop 会把 native libraries 换成相对应的 java 实作方式来执行，例如 GZIP，以方便使用者检测 libraries 是否执行错误。但是 LZO 这类的 libraries 并没有 java 实作，所以还是会 call native libraries 来做压缩，也就沒有 debug 的效果了。详细的压缩格式类型会在 mapred-site.xml 的设定时再介绍。
