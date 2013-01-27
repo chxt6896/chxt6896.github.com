@@ -92,6 +92,10 @@ $HBASE_HOME/conf/hbase-site.xml 是 Hadoop 的核心配置文件，对应并覆�
 		<name>hbase.tmp.dir</name>   
 		<value>/home/hadoop/cluster/data/hbase-tmp</value>
 	</property>
+	<property>     
+		<name>hbase.master</name>   
+		<value>node111:60000</value>
+	</property>
 	<property>   
 		<!-- zookeeper 运行的机器，要为奇数个，使得投票更公平 -->  
 		<name>hbase.zookeeper.quorum</name>   
