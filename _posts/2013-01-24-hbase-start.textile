@@ -55,7 +55,6 @@ h2. Step3-1 环境配置
 {% highlight vim linenos %}
 # The java implementation to use.  Required.
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
-# 此处添加 Hadoop 的 conf 目录
 export HBASE_CLASSPATH=/home/hadoop/cluster/hadoop-1.0.4/conf
 {% endhighlight %} 
 
