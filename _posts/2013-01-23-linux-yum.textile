@@ -10,33 +10,33 @@ h2. 列举包文件
 
 列出资源库中所有可以安装或更新的 rpm 包
 
-{% highlight text linenos %}
-# yum list
+{% highlight bash linenos %}
+$ sudo yum list
 {% endhighlight %}
 
 列出资源库中特定的可以安装或更新以及已经安装的 rpm 包
 
-{% highlight text linenos %}
-# yum list perl //列出名为 perl 的包
-# yum list perl* //列出 perl 开头的包
+{% highlight bash linenos %}
+$ sudo yum list perl //列出名为 perl 的包
+$ sudo yum list perl* //列出 perl 开头的包
 {% endhighlight %}
 
 列出资源库中所有可以更新的 rpm 包
 
-{% highlight text linenos %}
-# yum list updates
+{% highlight bash linenos %}
+$ sudo yum list updates
 {% endhighlight %}
 
 列出已经安装的所有的 rpm 包
 
-{% highlight text linenos %}
-# yum list installed
+{% highlight bash linenos %}
+$ sudo yum list installed
 {% endhighlight %}
 
 列出已经安装的但是不包含在资源库中的 rpm包
 
-{% highlight text linenos %}
-# yum list extras
+{% highlight bash linenos %}
+$ sudo yum list extras
 {% endhighlight %}
 
 注:extras是repos.d中定义的资源列表名称
