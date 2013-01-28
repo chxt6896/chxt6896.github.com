@@ -17,8 +17,10 @@ $ sudo yum list
 列出资源库中特定的可以安装或更新以及已经安装的 rpm 包
 
 {% highlight bash linenos %}
-$ sudo yum list perl //列出名为 perl 的包
-$ sudo yum list perl* //列出 perl 开头的包
+# 列出名为 perl 的包
+$ sudo yum list perl
+# 列出 perl 开头的包
+$ sudo yum list perl*
 {% endhighlight %}
 
 列出资源库中所有可以更新的 rpm 包
@@ -33,13 +35,148 @@ $ sudo yum list updates
 $ sudo yum list installed
 {% endhighlight %}
 
-列出已经安装的但是不包含在资源库中的 rpm包
+列出已经安装的但是不包含在资源库中的 rpm 包
 
 {% highlight bash linenos %}
 $ sudo yum list extras
 {% endhighlight %}
 
-注:extras是repos.d中定义的资源列表名称
+注:extras 是 repos.d 中定义的资源列表名称
+
+h2. 列举资源信息
+
+列出资源库中所有可以安装或更新的 rpm 包的信息
+
+{% highlight bash linenos %}
+$ sudo yum info
+{% endhighlight %}
+
+列出资源库中特定的可以安装或更新以及已经安装的 rpm 包的信息
+
+{% highlight bash linenos %}
+# 列出 perl 包信息
+$ sudo yum info perl
+# 列出 perl 开头的所有包的信息
+$ sudo yum info perl*
+{% endhighlight %}
+
+列出资源库中所有可以更新的 rpm 包的信息
+
+{% highlight bash linenos %}
+$ sudo yum info updates
+{% endhighlight %}
+
+列出已经安装的所有的 rpm 包的信息
+
+{% highlight bash linenos %}
+$ sudo yum info installed
+{% endhighlight %}
+
+列出已经安装的但是不包含在资源库中的 rpm 包的信息
+
+{% highlight bash linenos %}
+$ sudo yum info extras
+{% endhighlight %}
+
+h2. 搜索
+
+搜索匹配特定字符的 rpm 包
+
+{% highlight bash linenos %}
+# 在包名称、包描述等中搜索
+$ sudo yum search perl
+{% endhighlight %}
+
+搜索有包含特定文件名的 rpm 包
+
+{% highlight bash linenos %}
+$ sudo yum provides realplay
+{% endhighlight %}
+
+h2. 管理包
+
+安装 rpm 包
+
+{% highlight bash linenos %}
+# 安装 perl 包
+$ sudo yum install perl
+# 安装perl 开头的包
+$ sudo yum install perl*
+{% endhighlight %}
+
+删除 rpm 包,包括与该包有倚赖性的包
+
+{% highlight bash linenos %}
+# 会删除 perl-* 所有包
+$ sudo yum remove perl*
+{% endhighlight %}
+
+软件组管理
+
+{% highlight bash linenos %}
+# 安装指定的组
+$ sudo yum groupinstall “Chinese Support”
+# 安装了的组成员软件包更新
+$ sudo yum groupupdate “Chinese Support”
+# 安装了的组和可以安装的组一览显示
+$ sudo yum grouplist “Chinese Support”
+# 删除指定的组
+$ sudo yum groupremove “Chinese Support”
+# 指定组所包含的软件包显示
+$ sudo yum groupinfo “Chinese Support”
+{% endhighlight %}
+
+h2. 更新
+
+检查可更新的 rpm 包
+
+{% highlight bash linenos %}
+$ sudo yum check-update
+{% endhighlight %}
+
+更新所有的 rpm 包
+
+{% highlight bash linenos %}
+$ sudo yum update
+{% endhighlight %}
+
+更新指定的 rpm 包,如更新 kernel 和 kernel source
+
+{% highlight bash linenos %}
+$ sudo yum update kernel kernel-source
+{% endhighlight %}
+
+大规模的版本升级,与 yum update 不同的是,连旧的淘汰的包也升级
+
+{% highlight bash linenos %}
+$ sudo yum upgrade
+{% endhighlight %}
+
+h2. 清空缓存
+
+清除暂存中 rpm 包文件
+
+{% highlight bash linenos %}
+$ sudo yum clean packages
+{% endhighlight %}
+
+清除暂存中 rpm 头文件
+
+{% highlight bash linenos %}
+$ sudo yum clearn headers
+{% endhighlight %}
+
+清除暂存中旧的 rpm 头文件
+
+{% highlight bash linenos %}
+$ sudo yum clean oldheaders
+{% endhighlight %}
+
+清除暂存中旧的 rpm 头文件和包文件
+
+{% highlight bash linenos %}
+$ sudo yum clearn all
+{% endhighlight %}
 
 
 
