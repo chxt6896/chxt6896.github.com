@@ -84,69 +84,143 @@ h2. dfs.safemode.threshold.pct
 $ hadoop dfsadmin -safemode leave
 {% endhighlight %}
 
-h2. hadoop.security.authentication
-
-*预设值* : simple
-*说明* : simple 表示沒有 authentication，Hadoop 会用 system account 及 group 来控管权限。另外可以指定为 kerberos，这部分相对比较复杂，要有一个 kerberos server 并产生 account keytab，在执行任何操作前 client 要先用 kinit 指令对 kerberos server 认证，之后的任何操作都是以 kerberos account 来执行。
-
-h2. hadoop.kerberos.kinit.command
+h2. dfs.hosts
 
 *预设值* : N/A
-*说明* : 如果 hadoop.security.authentication 设为 kerberos 就要多设这个参数指定 Kerberos kinit 指令的路径。在 CentOS 装 krb5-workstation package 后预设安装路径为 /usr/kerberos/bin/kinit。
+*说明* : 预设不指定的状况下，只要 datanodes 在 hdfs-site.xml 指定 namenode，在 mapred-site.xml 指定 jobtracker 的位址就可以加入这个 cluster。但是为了安全的考虑，系统管理者可能要决定只有特定的 nodes 可以加入。此值是指定一个档案位置，名字可自取，例如 : /etc/hadoop/conf/dfs-hosts，并列出所有可以连接 namenode 的机器清单。不在清单上的机器是没有权限的。在 mapred-site.xml 里也有个类似的值 mapred.hosts 来指定可以连 jobtracker 的机器清单。
 
-h2. fs.trash.interval
-
-*预设值* : 0(分)
-*说明* : 清掉垃圾筒的时间。预设是不清, 所以在刪除资料时要自己执行
-
-hadoop fs -rm -skipTrash 或 hadoop fs -expunge 
-
-来清除垃圾筒的资料，但是强制用 -skipTrash 会造成误刪的资料救不回来，user 也常常会忘记做 -expunge 而造成 Hadoop 空间不会释放。建议可以设为 1440 让 Hadoop 每天清除垃圾筒。
-
-h2. topology.script.file.name
+h2. dfs.hosts.exclude
 
 *预设值* : N/A
-*说明* : 用作 Hadoop Rack Awareness 的机制，指定一个可执行档，input 会是一组 hostname 或 ip，回传值是 rack name 清单。不指定的情況下，Hadoop 会预设所有的 node 都在同一个 rack 之下。
-以下是一个 python 的范例，不过用 shell script 或其他语言写也可以
+*说明* : 当需要淘汰或移除多台机器时会用到。理论上一台机器无预期的宕机，Hadoop 会侦测并把该机器上的 blocks 搬到其他的 datanodes 上，并不需要系统管理员做额外的动作。但是停掉多台机器的情况下是有风险的，假设备份个数为 3 并停掉三台机器，则有一定的机率某些 blocks 正好只在这三台机器上，移掉之后资料也救不回来了。正确的做法是先告诉 namenode 这些机器将被移除，让 namenode 把上面的资料全部备份到其他的 datanodes 上，再进行停机。跟 dfs.hosts 一样，指定一个档案位置，名字可自取，例如 : /etc/hadoop/conf/dfs-exclude-hosts，并列出所有需淘汰的机器清单。设定后要执行以下的指令通知 namenode 做搬资料的动作。
 
-{% highlight bash python %}
-#!/usr/bin/python
-
-import sys
-from string import join
-
-DEFAULT = '/dc/rack0';
-
-RACK_MAP = {
-    '10.1.113.37' : '/dc/rack1',
-    'hadoop-worker01' : '/dc/rack1',
-    
-    '10.1.113.77' : '/dc/rack1',
-    'hadoop-worker02' : '/dc/rack1',
-    
-    '10.1.113.45' : '/dc/rack2',
-    'hadoop-work03' : '/dc/rack2',
-    
-    '10.1.113.48' : '/dc/rack2',
-    'hadoop-work04' : '/dc/rack2',
-  }
-
-if len(sys.argv) == 1:
-    print DEFAULT
-else:
-    print join([RACK_MAP.get(i, DEFAULT) for i in sys.argv[1:]]," ")
+{% highlight bash linenos %}
+$ hadoop dfsadmin -refreshNodes
 {% endhighlight %}
 
-一个非常大的 Hadoop cluster 可能会跨多个 data centers，每个 data center 会有多个 racks，每个 rack 有多个 nodes。假设 Hadoop replication number 设 3，在 Hadoop 做 replication 时会根据这个设定，第一份资料放在 local node，第二份资料放在另一个 rack 的某个 node，第三份资料会放在与第二份同个 rack 但不同的 node 下。当网络设定有问题或断线时，某一个 rack 可能会全部不见，放在不同的 rack 可以保证仍然能存取到资料。为了增加网络的容错能力，一般都会设定这个 script。
-如果在 cluster 已经有资料的情况下才设定 rack topology，可以用 hadoop balancer 指令让所有的 blocks 重新分配
+进度可以在 Web UI 上看到，当该 datanodes 的状态显示为 Decommissioned 表示可以安全的移除机器了。
 
-h2. topology.script.number.args
 
-*预设值* : 100
-*说明* : 每次传給 topology.script.file.name script 的参数个数。如果 Hadoop node 个数过多，topology.script.file.name script 会被执行多次，一次传入 100 个参数
+h2. dfs.support.append
+
+*预设值* : false
+*说明* : 指定是否可在 HDFS 原有档案內容之后加入新资料。看 hfds-default.xml 里对这个参数的说明是有 bug “This is currently set to false because there are bugs in the ‘append code’ and is not supported in any prodction cluster.”。但是 HBase Configuration 里另外说明了以上的咨询是过时的，在 Cloudera 及 MapR 的版本都已经加入了这个功能。如果有使用 HBase，为了避免资料遗失，请把这个值设为 true。
+
+h2. dfs.namenode.handler.count
+
+*预设值* : 10
+*说明* : 设定 namenode server threads 的数量，这些 threads 会用 RPC 跟其他的 datanodes 沟通。当 datanodes 数量太多时会发现很容易出現 RPC timeout，解决方法是提升网络速度或调高这个值，但要注意的是 thread 数量多也表示 namenode 吃的内存也随着增加。在 "http://hadoop.apache.org/docs/r0.20.2/cluster_setup.html":Hadoop Cluster Setup 这篇文章里提到 900 个 nodes 只需要设成 40，但是个人经验是 100 个 nodes 配 100 个 threads。
+
+h2. dfs.namenode.keytab.file
+
+*预设值* : N/A
+*说明* : 当 core-site.xml 里的 hadoop.security.authentication 参数设为 “kerberos” 时就要指定 keytab 的位置。例如 : /etc/hadoop/conf/hdfs.keytab
+
+h2. dfs.namenode.kerberos.principal
+
+*预设值* : N/A
+*说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时会指定，一般常用的命名规则是 hdfs/_HOST@KERBEROS-REALM.COM
  
+h3. Secondary NameNode 
+ 
+h2. dfs.secondary.namenode.keytab.file
 
-h2. hadoop.native.lib
+*预设值* : N/A
+*说明* : 当 core-site.xml 里的 hadoop.security.authentication 参数设为 “kerberos” 时就要指定 keytab 的位置。例如 : /etc/hadoop/conf/hdfs.keytab
 
-*预设值* : true
-*说明* : 预设 Hadoop 会去找所有可用的 native libraries 并自动 load 进来使用，例如压缩类的 libraries 像 GZIP, LZO 等等。会设成 false 的原因通常是为了 debug，Hadoop 会把 native libraries 换成相对应的 java 实作方式来执行，例如 GZIP，以方便使用者检测 libraries 是否执行错误。但是 LZO 这类的 libraries 并没有 java 实作，所以还是会 call native libraries 来做压缩，也就沒有 debug 的效果了。详细的压缩格式类型会在 mapred-site.xml 的设定时再介绍。
+h2. dfs.secondary.namenode.kerberos.principal
+
+*预设值* : N/A
+*说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时会指定，一般常用的命名规则是 hdfs/_HOST@KERBEROS-REALM.COM
+
+h3. DataNode
+
+h2. dfs.data.dir
+
+*预设值* : ${hadoop.tmp.dir}/dfs/data
+*说明* : 指定本机上放 data nodes 资料的目录，如果要指定多个目录(volumes)可用 “,” 分隔。在 production 环境会指定多个，并设定 dfs.datanode.failed.volumes.tolerated。一般来说，多个目录会对应到系统上不同的 partitions，不同的硬盘。设定多个可加快存取速度，及避免硬盘坏掉需要抽换用。
+
+h2. dfs.datanode.address
+
+*预设值* : 0.0.0.0:50010
+*说明* : datanode service 监听的 port，用来传输资料用。除非是为了 security 的考虑才会需要改 binding 的 IP/Port，不然不需要改这个值。
+
+h2. dfs.datanode.http.address
+
+*预设值* : 0.0.0.0:50075
+*说明* : Web UI 用的 port。除非是为了 security 的考虑才会需要改 binding 的 IP/Port，不然不需要改这个值。
+
+h2. dfs.datanode.handler.count
+
+*预设值* : 3
+*说明* : 指定 data node 上用的 thread 数量。在 production 的环境建议调到 100。
+
+h2. dfs.datanode.max.xcievers
+
+*预设值* : 256
+*说明* : 这个值是指定 datanode 可同时处理的最大档案数量。但是预设值很小，当多个或一个大型程序存取时会发生下面的错误讯息
+
+<pre>
+10/12/08 20:10:31 INFO hdfs.DFSClient: Could not obtain block blk_XXXXXXXXXXXXXXXXXXXXXX_YYYYYYYY from any node: java.io.IOException: 
+No live nodes contain current block. Will get new block locations from namenode and retry... 
+</pre>
+
+以使用 HBase 为例，建议值是 4096。如果还有多个程序存取可再乘 2。
+
+h2. dfs.datanode.failed.volumes.tolerated
+
+*预设值* : 0
+*说明* : 这个值要对应 dfs.data.dir 参数设定的目录个数，0 表示只要有任何一个 volume 坏掉 data nodes 就会被强制停掉。假设挂载 n 个 volumns，Hadoop 会确定 n – dfs.datanode.failed.volumes.tolerated 不能小于 0。设定错误在启动 data node 会看到下面的信息
+
+<pre>
+2011-08-27 11:53:03,785 ERROR org.apache.hadoop.hdfs.server.datanode.DataNode: org.apache.hadoop.util.DiskChecker$DiskErrorException: Invalid value for validVolsRequired : -1 ,  Current valid volumes: 1
+       at org.apache.hadoop.hdfs.server.datanode.FSDataset.<init>(FSDataset.java:906)
+       at org.apache.hadoop.hdfs.server.datanode.DataNode.startDataNode(DataNode.java:373)
+       at org.apache.hadoop.hdfs.server.datanode.DataNode.<init>(DataNode.java:282)
+       at org.apache.hadoop.hdfs.server.datanode.DataNode.makeInstance(DataNode.java:1544)
+       at org.apache.hadoop.hdfs.server.datanode.DataNode.instantiateDataNode(DataNode.java:1484)
+       at org.apache.hadoop.hdfs.server.datanode.DataNode.createDataNode(DataNode.java:1502)
+       at org.apache.hadoop.hdfs.server.datanode.DataNode.secureMain(DataNode.java:1627)
+       at org.apache.hadoop.hdfs.server.datanode.SecureDataNodeStarter.start(SecureDataNodeStarter.java:103)
+       at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+       at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+       at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+       at java.lang.reflect.Method.invoke(Method.java:597)
+       at org.apache.commons.daemon.support.DaemonLoader.start(DaemonLoader.java:177)
+</pre>
+
+如果 data volumns 有 4 个，dfs.datanode.failed.volumes.tolerated 可设为 2。表示当有 2 个硬盘坏掉时 data nodes 还是可以正常运作。这时只要换坏硬盘即可，并不需要停掉 data nodes。
+
+h2. dfs.datanode.data.dir.perm
+
+*预设值* : 700
+*说明* : 这个值是设定 data node 写资料到 local disk 上的权限。使用 POSIX 表示法。在 production 上为了 security 考虑，不建议改这个参数。如果是测试环境为了方便其他 users 用工具分析资料，可以改成 755。
+
+h2. dfs.datanode.du.reserved
+
+*预设值* : 0(byte)
+*说明* : 预设值表示 data nodes 会使用整个 volumns，写满之后会导致无法再写入 M/R jobs 或启动 data nodes 时的暂存档。如果还有其他程序共用这些目录也会受到影响。建议保留至少 1073741824(1G) 的空间。
+
+h2. dfs.datanode.keytab.file
+
+*预设值* : N/A
+*说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时指定，一般常用的命名规则是 hdfs/_HOST@KERBEROS-REALM.COM
+
+h2. dfs.namenode.kerberos.principal
+
+*预设值* : N/A
+*说明* : 当 core-site.xml 里的 hadoop.security.authentication 参数设为 “kerberos” 时就要指定 keytab 的位置。例如 : /etc/hadoop/conf/hdfs.keytab
+
+h2. dfs.datanode.kerberos.principal
+
+*预设值* : N/A
+*说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时指定，一般常用的命名规则是 hdfs/_HOST@KERBEROS-REALM.COM
+
+h3. Etc
+
+h2. dfs.balance.bandwidthPerSec
+
+*预设值* : 1048576(byte)
+*说明* : 这个值是决定 file blocks 从一个 data node 搬到另一个 data node 的速度, 预设为 1MB。主要是用在 re-balance，如果觉得执行速度太慢可以调整这个参数加快 blocks 的搬移。但是这也表示会多占带宽，可能会影响正常 M/R jobs 或 applications 的执行。建议值为 4194304(4MB)
+
+<a href="http://fenriswolf.me/2012/05/25/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-hdfs-site-xml/"> >>Hadoop 參數設定 – hdfs-site.xml</a>

@@ -135,3 +135,6 @@ h2. hadoop.native.lib
 
 *预设值* : true
 *说明* : 预设 Hadoop 会去找所有可用的 native libraries 并自动 load 进来使用，例如压缩类的 libraries 像 GZIP, LZO 等等。会设成 false 的原因通常是为了 debug，Hadoop 会把 native libraries 换成相对应的 java 实作方式来执行，例如 GZIP，以方便使用者检测 libraries 是否执行错误。但是 LZO 这类的 libraries 并没有 java 实作，所以还是会 call native libraries 来做压缩，也就沒有 debug 的效果了。详细的压缩格式类型会在 mapred-site.xml 的设定时再介绍。
+
+
+<a href="http://fenriswolf.me/2012/04/05/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-core-site-xml/"> >>Hadoop 參數設定 – core-site.xml</a>
