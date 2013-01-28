@@ -52,7 +52,10 @@ h2. Step3-1 环境配置
 
 在 $HBASE_HOME/conf/hbase-env.sh 中定义了 HBase 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量和 HBASE_CLASSPATH 变量:
 
-
+{% highlight vim linenos %}
+# The java implementation to use.  Required.
+export JAVA_HOME=/home/hadoop/jdk1.7.0_07
+{% endhighlight %} 
 
 设置允许 HBase 管理 Zookeeper:
 
