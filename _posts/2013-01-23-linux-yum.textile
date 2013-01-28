@@ -41,7 +41,7 @@ $ sudo yum list installed
 $ sudo yum list extras
 {% endhighlight %}
 
-注:extras 是 repos.d 中定义的资源列表名称
+注: extras 是 repos.d 中定义的资源列表名称
 
 h2. 列举资源信息
 
@@ -115,15 +115,15 @@ $ sudo yum remove perl*
 
 {% highlight bash linenos %}
 # 安装指定的组
-$ sudo yum groupinstall “Chinese Support”
+$ sudo yum groupinstall "Chinese Support"
 # 安装了的组成员软件包更新
-$ sudo yum groupupdate “Chinese Support”
+$ sudo yum groupupdate "Chinese Support"
 # 安装了的组和可以安装的组一览显示
-$ sudo yum grouplist “Chinese Support”
+$ sudo yum grouplist "Chinese Support"
 # 删除指定的组
-$ sudo yum groupremove “Chinese Support”
+$ sudo yum groupremove "Chinese Support"
 # 指定组所包含的软件包显示
-$ sudo yum groupinfo “Chinese Support”
+$ sudo yum groupinfo "Chinese Support"
 {% endhighlight %}
 
 h2. 更新
@@ -174,9 +174,10 @@ $ sudo yum clean oldheaders
 
 清除暂存中旧的 rpm 头文件和包文件
 
-{% highlight bash linenos %}
+{% highlight console linenos %}
 $ sudo yum clearn all
+# yum
 {% endhighlight %}
 
-
+">> yum命令常用参数详解":http://www.ha97.com/914.html
 

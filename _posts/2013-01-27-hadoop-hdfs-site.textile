@@ -49,7 +49,7 @@ h2. dfs.https.address
 h2. dfs.replication
 
 *预设值* : 3
-*说明* : 預設 blocks 的備份數量。如果不需要太多的備份或 cluster 比較小，可以改為 2。Client 端也可以根據使用狀況自行更改這個值。只是如果所設的值小於 dfs.replication，在執行 hadoop fsck 指令時會看到這個 block 被標示為 Under-Replicated Blocks。至於備份的機制可以參考 Hadoop 參數設定 – core-site.xml 裡的 topology.script.file.name 說明。
+*说明* : 预设 blocks 的备份数量。如果不需要太多的备份或 cluster 比较小，可以改为 2。Client 端也可以根据使用状况自行更改这个值。只是如果所设的值小于 dfs.replication，在执行 hadoop fsck 指令时会看到这个 block 被标示为 Under-Replicated Blocks。至于备份的机制可以参考 "Hadoop1.x core-site.xml 参数设定":http://chxt6896.github.com/hadoop/2013/01/25/hadoop-core-site.html 里的 topology.script.file.name 说明。
 
 h2. ipc.client.connection.maxidletime
 
