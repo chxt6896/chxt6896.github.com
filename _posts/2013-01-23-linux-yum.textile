@@ -174,10 +174,8 @@ $ sudo yum clean oldheaders
 
 清除暂存中旧的 rpm 头文件和包文件
 
-{% highlight console linenos %}
+{% highlight bash linenos %}
 $ sudo yum clearn all
-# yum
 {% endhighlight %}
 
-">> yum命令常用参数详解":http://www.ha97.com/914.html
-
+<a href="http://www.ha97.com/914.html"> >> yum命令常用参数详解</a>

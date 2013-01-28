@@ -51,32 +51,40 @@ h2. dfs.replication
 *预设值* : 3
 *说明* : 预设 blocks 的备份数量。如果不需要太多的备份或 cluster 比较小，可以改为 2。Client 端也可以根据使用状况自行更改这个值。只是如果所设的值小于 dfs.replication，在执行 hadoop fsck 指令时会看到这个 block 被标示为 Under-Replicated Blocks。至于备份的机制可以参考 "Hadoop1.x core-site.xml 参数设定":http://chxt6896.github.com/hadoop/2013/01/25/hadoop-core-site.html 里的 topology.script.file.name 说明。
 
-h2. ipc.client.connection.maxidletime
+h2. dfs.replication.min
 
-*预设值* : 10000(毫秒)
-*说明* : 设定 Hadoop client 连线时最大的闲置时间，预设是 10 秒。如果 Hadoop cluster 的网络连线不稳，可以把這個值設到 60000(60秒)。
+*预设值* : 1
+*说明* : 不需要特别改这个值。因为并不是所有在 HDFS 上的资料都需要有 3 份备份，这可以由 client 来決定。如果对资料备份非常敏感可以把这个值设为跟 dfs.replication 一样。
 
-h2. ipc.server.tcpnodelay
+h2. dfs.replication.max
 
-*预设值* : false
-*说明* : 在 Hadoop server 是否启动 Nagle’s 演算法。设 true 会 disable 这个演算法，关掉会减少延迟，但是会增加小封包的传输。server site 不太需要设定这个值。
+*预设值* : 512
+*说明* : 因为 client 可以自行决定每个 block 要有几份备份，为了怕误操作导致备份过多而影响整個 cluster 的使用量，建议给一个小一点的值，例如 10。
 
-h2. ipc.client.tcpnodelay
+h2. dfs.block.size
 
-*预设值* : false
-*说明* : 在 Hadoop client 是否启动 Nagle’s 演算法。设 true 会 disable 这个演算法，关掉会减少延迟，但是会增加小封包的传输。client site 建议把这个值设 true。
-
-h2. hadoop.security.authorization
-
-*预设值* : false
-*说明* : 是不是要开启 service-level 帐号验证机制，开启之后 Hadoop 在执行任何动作之前都会先确认是否有权限。详细的权限设定会放在 hadoop-policy.xml 里。例如要让 fenriswolf 这个 account 及 mapreduce group 可以 submit M/R jobs，要设定 security.job.submission.protocol.acl。
+*预设值* : 67108864(byte)
+*说明* : 预设每个 block 是 64MB。如果确定存取的档案都很大可以改为 134217728(128MB)。Client 也可自行决定要使用的 block size 而不需要更改整个 cluster 的设定。
 
 {% highlight bash linenos %}
-<property>
-	<name>security.job.submission.protocol.acl</name>
-	<value>fenriswolf mapreduce</value>
-</property>
+$ hadoop fs -D dfs.block.size=134217728 -put local_name remote_location
 {% endhighlight %}
+
+h2. dfs.safemode.threshold.pct
+
+*预设值* : 0.999f
+*说明* : Hadoop 在启动时预设会进入 safe mode，也就是只读模式，这时是不能写入资料的。只有当 99.9% 的 blocks 达到最小的 dfs.replication.min 数量(预设是 1)才会离开 safe mode。在 dfs.replication.min 设的比较大或 data nodes 数量较多时会等比较久。
+
+下面讨论两个极端的状况:
+
+* 设为大于 1 : 表示永远不会离开 safe mode，这在当 Hadoop cluster 需要做 migration 时很好用，既可继续提供读取服务，又可防止使用者写入资料导致 migration 不完全。
+* 设为 0 : 表示不会启动 safe mode。在 local 测试时会非常的方便，不然常常需要等一段时间或直接执行
+
+{% highlight bash linenos %}
+hadoop dfsadmin -safemode leave
+{% endhighlight %}
+
+才能离开 safe mode。
 
 h2. hadoop.security.authentication
 
