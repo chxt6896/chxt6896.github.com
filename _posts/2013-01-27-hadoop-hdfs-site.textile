@@ -1,0 +1,146 @@
+---
+layout: post
+title: Hadoop1.x hdfs-site.xml 参数设定
+category: hadoop
+---
+
+h2. 平台环境
+
+* CentOS 6.X
+* JDK 1.7
+* Hadoop 1.0.4 
+
+h2. 参照 "hdfs-default.xml":http://hadoop.apache.org/docs/r1.0.4/hdfs-default.html
+
+h3. NameNode
+
+h2. dfs.name.dir
+
+*预设值* : ${hadoop.tmp.dir}/dfs/name
+*说明* : 指定本机上存取 fsimage 及 editlog 的目录，这个目录非常的重要，如果损毁就无法存取 HDFS 的资料了，所以不建议放在 ${hadoop.tmp.dir} 目录下。更好的做法是用 “,” 指定多个目录，Hadoop 会复制 fsimage 的资料到所有的目录下，如果其中一个目录损毁 Hadoop 会自动使用正常的目录并把对的资料再复制到损毁的目录下。
+指定多个目录后在 HDFS portal 会看到多个目录，正常状况会是 Active，当损毁时会变成 Inactive
+
+h2. dfs.namenode.logging.level
+
+*预设值* : info
+*说明* : 这个值是指定 namenode 的 logging level。其他的值有:
+
+* dir : 看 namenode server 的变化
+* block : 看 blocks 新增刪除或 replication 的变化
+* all : 显示全部的 log
+
+除非是为了 debug，不然不建议用其他的等級，会造成 Hadoop 的 log 档案太大。
+
+h2. dfs.http.address
+
+*预设值* : 0.0.0.0:50070
+*说明* : Web UI 用的 port。除非是为了 security 的考量才会需要改 binding 的 IP/Port，不然不需要改这个值。
+
+h2. dfs.https.enable
+
+*预设值* : false
+*说明* : namenode 预设并没有启动 https，在设定 https 的 IP/Port 之前要先确定这个值设为 true。
+
+h2. dfs.https.address
+
+*预设值* : 0.0.0.0:50470
+*说明* : Web UI 用的 port，用 https protocol。除非是为了 security 的考量才会需要改 binding 的 IP/Port，不然不需要改这个值。
+
+h2. dfs.replication
+
+*预设值* : 3
+*说明* : 預設 blocks 的備份數量。如果不需要太多的備份或 cluster 比較小，可以改為 2。Client 端也可以根據使用狀況自行更改這個值。只是如果所設的值小於 dfs.replication，在執行 hadoop fsck 指令時會看到這個 block 被標示為 Under-Replicated Blocks。至於備份的機制可以參考 Hadoop 參數設定 – core-site.xml 裡的 topology.script.file.name 說明。
+
+h2. ipc.client.connection.maxidletime
+
+*预设值* : 10000(毫秒)
+*说明* : 设定 Hadoop client 连线时最大的闲置时间，预设是 10 秒。如果 Hadoop cluster 的网络连线不稳，可以把這個值設到 60000(60秒)。
+
+h2. ipc.server.tcpnodelay
+
+*预设值* : false
+*说明* : 在 Hadoop server 是否启动 Nagle’s 演算法。设 true 会 disable 这个演算法，关掉会减少延迟，但是会增加小封包的传输。server site 不太需要设定这个值。
+
+h2. ipc.client.tcpnodelay
+
+*预设值* : false
+*说明* : 在 Hadoop client 是否启动 Nagle’s 演算法。设 true 会 disable 这个演算法，关掉会减少延迟，但是会增加小封包的传输。client site 建议把这个值设 true。
+
+h2. hadoop.security.authorization
+
+*预设值* : false
+*说明* : 是不是要开启 service-level 帐号验证机制，开启之后 Hadoop 在执行任何动作之前都会先确认是否有权限。详细的权限设定会放在 hadoop-policy.xml 里。例如要让 fenriswolf 这个 account 及 mapreduce group 可以 submit M/R jobs，要设定 security.job.submission.protocol.acl。
+
+{% highlight bash linenos %}
+<property>
+	<name>security.job.submission.protocol.acl</name>
+	<value>fenriswolf mapreduce</value>
+</property>
+{% endhighlight %}
+
+h2. hadoop.security.authentication
+
+*预设值* : simple
+*说明* : simple 表示沒有 authentication，Hadoop 会用 system account 及 group 来控管权限。另外可以指定为 kerberos，这部分相对比较复杂，要有一个 kerberos server 并产生 account keytab，在执行任何操作前 client 要先用 kinit 指令对 kerberos server 认证，之后的任何操作都是以 kerberos account 来执行。
+
+h2. hadoop.kerberos.kinit.command
+
+*预设值* : N/A
+*说明* : 如果 hadoop.security.authentication 设为 kerberos 就要多设这个参数指定 Kerberos kinit 指令的路径。在 CentOS 装 krb5-workstation package 后预设安装路径为 /usr/kerberos/bin/kinit。
+
+h2. fs.trash.interval
+
+*预设值* : 0(分)
+*说明* : 清掉垃圾筒的时间。预设是不清, 所以在刪除资料时要自己执行
+
+hadoop fs -rm -skipTrash 或 hadoop fs -expunge 
+
+来清除垃圾筒的资料，但是强制用 -skipTrash 会造成误刪的资料救不回来，user 也常常会忘记做 -expunge 而造成 Hadoop 空间不会释放。建议可以设为 1440 让 Hadoop 每天清除垃圾筒。
+
+h2. topology.script.file.name
+
+*预设值* : N/A
+*说明* : 用作 Hadoop Rack Awareness 的机制，指定一个可执行档，input 会是一组 hostname 或 ip，回传值是 rack name 清单。不指定的情況下，Hadoop 会预设所有的 node 都在同一个 rack 之下。
+以下是一个 python 的范例，不过用 shell script 或其他语言写也可以
+
+{% highlight bash python %}
+#!/usr/bin/python
+
+import sys
+from string import join
+
+DEFAULT = '/dc/rack0';
+
+RACK_MAP = {
+    '10.1.113.37' : '/dc/rack1',
+    'hadoop-worker01' : '/dc/rack1',
+    
+    '10.1.113.77' : '/dc/rack1',
+    'hadoop-worker02' : '/dc/rack1',
+    
+    '10.1.113.45' : '/dc/rack2',
+    'hadoop-work03' : '/dc/rack2',
+    
+    '10.1.113.48' : '/dc/rack2',
+    'hadoop-work04' : '/dc/rack2',
+  }
+
+if len(sys.argv) == 1:
+    print DEFAULT
+else:
+    print join([RACK_MAP.get(i, DEFAULT) for i in sys.argv[1:]]," ")
+{% endhighlight %}
+
+一个非常大的 Hadoop cluster 可能会跨多个 data centers，每个 data center 会有多个 racks，每个 rack 有多个 nodes。假设 Hadoop replication number 设 3，在 Hadoop 做 replication 时会根据这个设定，第一份资料放在 local node，第二份资料放在另一个 rack 的某个 node，第三份资料会放在与第二份同个 rack 但不同的 node 下。当网络设定有问题或断线时，某一个 rack 可能会全部不见，放在不同的 rack 可以保证仍然能存取到资料。为了增加网络的容错能力，一般都会设定这个 script。
+如果在 cluster 已经有资料的情况下才设定 rack topology，可以用 hadoop balancer 指令让所有的 blocks 重新分配
+
+h2. topology.script.number.args
+
+*预设值* : 100
+*说明* : 每次传給 topology.script.file.name script 的参数个数。如果 Hadoop node 个数过多，topology.script.file.name script 会被执行多次，一次传入 100 个参数
+ 
+
+h2. hadoop.native.lib
+
+*预设值* : true
+*说明* : 预设 Hadoop 会去找所有可用的 native libraries 并自动 load 进来使用，例如压缩类的 libraries 像 GZIP, LZO 等等。会设成 false 的原因通常是为了 debug，Hadoop 会把 native libraries 换成相对应的 java 实作方式来执行，例如 GZIP，以方便使用者检测 libraries 是否执行错误。但是 LZO 这类的 libraries 并没有 java 实作，所以还是会 call native libraries 来做压缩，也就沒有 debug 的效果了。详细的压缩格式类型会在 mapred-site.xml 的设定时再介绍。

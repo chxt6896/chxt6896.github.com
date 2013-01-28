@@ -17,7 +17,7 @@ h2. Step1 规划集群 hosts
 
 在 /etc/hosts 中加入：
 
-{% highlight bash linenos %}
+{% highlight text linenos %}
 192.168.1.111 node111
 192.168.1.112 node112
 192.168.1.113 node113
@@ -75,7 +75,7 @@ h3. Step3-2-1 hbase-site.xml 配置
 
 $HBASE_HOME/conf/hbase-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 hbase-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
-{% highlight bash linenos %}
+{% highlight xml+cheetah linenos %}
 <configuration>  
 	<property>   
 		<!-- hbase 的根目录 -->  
