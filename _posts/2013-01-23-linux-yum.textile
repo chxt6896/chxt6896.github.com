@@ -15,77 +15,31 @@ h2. 列举包文件
 {% endhighlight %}
 
 列出资源库中特定的可以安装或更新以及已经安装的 rpm 包
+
+{% highlight text linenos %}
 # yum list perl //列出名为 perl 的包
 # yum list perl* //列出 perl 开头的包
+{% endhighlight %}
 
 列出资源库中所有可以更新的 rpm 包
+
+{% highlight text linenos %}
 # yum list updates
+{% endhighlight %}
 
 列出已经安装的所有的 rpm 包
+
+{% highlight text linenos %}
 # yum list installed
+{% endhighlight %}
 
 列出已经安装的但是不包含在资源库中的 rpm包
+
+{% highlight text linenos %}
 # yum list extras
+{% endhighlight %}
 
 注:extras是repos.d中定义的资源列表名称
 
-h3. 1. vim 是什么？
 
-vim 是 Vi IMproved，是编辑器 Vi 的一个加强版，一个极其强大并符合 IT 工程师（程序员、运维）习惯的编辑器。
 
-h3. 2. 配置文件在哪？
-
-Windows 系统的配置文件是 vim 安装目录下的 vimrc 文件。
-
-Linux 系统，RHEL 和 CentOS 的配置文件是 /etc/vimrc，Debian 和 Ubuntu 的配置文件是 /usr/share/vim/vimrc。
-
-Mac OS X 的配置文件是 /usr/share/vim/vimrc。
-
-h3. 3. vimRC 中的 RC 是什么意思？
-
-一般在运行某个软件、环境或工具之初，要初始执行的一些命令，称为 Run Commands，即 RC。根据 Wikipedia.org 的记载，RC 缩写的用法源自 MIT 的相容分时操作系统 (Compatible Time-Sharing System，CTSS)[1]。所以以后如果你看到了 SystemRC 或者 ScreenRC，也就知其缘由了。
-
-h3. 4. 三种基本模式
-
-在《大家来学vim》中提到 vim 有6+5种模式，但除了细分程度不同外，实际上常用的只有3种模式: <b>Normal Mode</b>、<b>Insert Mode</b> 和 <b>Command-line Mode</b>。
-
-* 从 Normal Mode 进入 Insert Mode，可以按 i、I、a、A、o、O、r、R 即可。其中 i 和 I 表示插入(Insert)，r 和 R 表示替换(replace)。
-
-* 从 Insert Mode 进入 Normal Mode，只需要按 ESC 键即可。
-
-* 从 Normal Mode 进入 Command-line Mode，可以按 :、/、?。其中 : 表示输入 vim 命令，/ 表示后面输入要向下搜索的字符串， ? 表示后面输入要向上搜索字符串。
-
-* 从 Command-line Mode进入 Normal Mode，只需要按 ESC 键即可了。
-
-你可以把 Normal Mode 理解为常态，进入其他任何一种模式，需要某种特殊方式，而从其他特殊模式回到 Normal Mode，就按 ESC 键即可。
-
-h3. 5. vim 中那些最最常用的配置
-
-当你尝试去 Google 一些其他人的 vimrc 配置时，你一定会找到一篇叫做《The ultimate vim configuration》的文章，不过它的作者，Amix 后来在他的博客上提到[2]，这份在 Google 搜索 vimrc 会排在前十的 vim 配置文件，如今已经过时了，所以他提供了一些更新信息。
-
-# 颜色设置
-** syntax on       开启代码高亮
-** syntax off      关闭代码高亮
-** syntax enable   开启代码高亮
-# 搜索设置
-** set hlsearch    开启搜索高亮
-** set nohlsearch  关闭搜索高亮
-** set incsearch   输入搜索字符串的同时进行搜索
-** set ignorecase  搜索时忽略大小写
-# 用户界面
-** set showmode    开启模式显示
-** set ruler       开启光标位置提示
-** set number      显示行号
-** set nonu        不显示行号
-** set cursorline  强调光标所在行
-** set cmdheight=1 命令部分高度为1
-# 编辑辅助配置
-** set autoindent    自动缩进
-** set noautoindent  不自动缩进
-** set smartindent   智能缩进
-** set autoread      当文件在外部被改变时，vim自动更新载入
-** set showmatch     显示匹配的括号
-
-fn1. "Run Commands":http://en.wikipedia.org/wiki/Run_commands
-
-fn2. "The Ultimate vim Configuration(vimRC)":http://amix.dk/blog/post/19486
