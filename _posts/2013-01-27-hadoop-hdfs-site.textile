@@ -78,13 +78,11 @@ h2. dfs.safemode.threshold.pct
 下面讨论两个极端的状况:
 
 * 设为大于 1 : 表示永远不会离开 safe mode，这在当 Hadoop cluster 需要做 migration 时很好用，既可继续提供读取服务，又可防止使用者写入资料导致 migration 不完全。
-* 设为 0 : 表示不会启动 safe mode。在 local 测试时会非常的方便，不然常常需要等一段时间或直接执行
+* 设为 0 : 表示不会启动 safe mode。在 local 测试时会非常的方便，不然常常需要等一段时间或直接执行下面才能离开 safe mode。
 
 {% highlight bash linenos %}
-hadoop dfsadmin -safemode leave
+$ hadoop dfsadmin -safemode leave
 {% endhighlight %}
-
-才能离开 safe mode。
 
 h2. hadoop.security.authentication
 
