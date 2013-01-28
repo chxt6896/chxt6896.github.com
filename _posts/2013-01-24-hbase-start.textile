@@ -39,7 +39,7 @@ $ cd ~/cluster/hbase-0.94.4
 
 在 ~/.bashrc 中加入环境变量：
 
-{% highlight vim linenos %}
+{% highlight bash linenos %}
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
 export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
 export HBASE_HOME=/home/hadoop/cluster/hbase-0.94.4
@@ -52,15 +52,17 @@ h2. Step3-1 环境配置
 
 在 $HBASE_HOME/conf/hbase-env.sh 中定义了 HBase 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量和 HBASE_CLASSPATH 变量:
 
-{% highlight vim linenos %}
+{% highlight bash linenos %}
 # The java implementation to use.  Required.
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
+# Extra Java CLASSPATH elements.  Optional.
+# 此处添加 Hadoop 的 conf 目录
 export HBASE_CLASSPATH=/home/hadoop/cluster/hadoop-1.0.4/conf
 {% endhighlight %} 
 
 设置允许 HBase 管理 Zookeeper:
 
-{% highlight vim linenos %}
+{% highlight bash linenos %}
 # Tell HBase whether it should manage it's own instance of Zookeeper or not.
 export HBASE_MANAGES_ZK=true
 {% endhighlight %} 
