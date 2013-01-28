@@ -185,6 +185,7 @@ p.postmetadata a{
 }
 
 .highlight{
+		background-color: #ffffcc;
 		font-size: 14px;
 		overflow: auto;
 }
