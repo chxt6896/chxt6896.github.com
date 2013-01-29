@@ -174,19 +174,19 @@ h2. dfs.datanode.failed.volumes.tolerated
 
 <pre>
 2011-08-27 11:53:03,785 ERROR org.apache.hadoop.hdfs.server.datanode.DataNode: org.apache.hadoop.util.DiskChecker$DiskErrorException: Invalid value for validVolsRequired : -1 ,  Current valid volumes: 1
-       at org.apache.hadoop.hdfs.server.datanode.FSDataset.<init>(FSDataset.java:906)
-       at org.apache.hadoop.hdfs.server.datanode.DataNode.startDataNode(DataNode.java:373)
-       at org.apache.hadoop.hdfs.server.datanode.DataNode.<init>(DataNode.java:282)
-       at org.apache.hadoop.hdfs.server.datanode.DataNode.makeInstance(DataNode.java:1544)
-       at org.apache.hadoop.hdfs.server.datanode.DataNode.instantiateDataNode(DataNode.java:1484)
-       at org.apache.hadoop.hdfs.server.datanode.DataNode.createDataNode(DataNode.java:1502)
-       at org.apache.hadoop.hdfs.server.datanode.DataNode.secureMain(DataNode.java:1627)
-       at org.apache.hadoop.hdfs.server.datanode.SecureDataNodeStarter.start(SecureDataNodeStarter.java:103)
-       at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-       at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
-       at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
-       at java.lang.reflect.Method.invoke(Method.java:597)
-       at org.apache.commons.daemon.support.DaemonLoader.start(DaemonLoader.java:177)
+        at org.apache.hadoop.hdfs.server.datanode.FSDataset.<init>(FSDataset.java:906)
+        at org.apache.hadoop.hdfs.server.datanode.DataNode.startDataNode(DataNode.java:373)
+        at org.apache.hadoop.hdfs.server.datanode.DataNode.<init>(DataNode.java:282)
+        at org.apache.hadoop.hdfs.server.datanode.DataNode.makeInstance(DataNode.java:1544)
+        at org.apache.hadoop.hdfs.server.datanode.DataNode.instantiateDataNode(DataNode.java:1484)
+        at org.apache.hadoop.hdfs.server.datanode.DataNode.createDataNode(DataNode.java:1502)
+        at org.apache.hadoop.hdfs.server.datanode.DataNode.secureMain(DataNode.java:1627)
+        at org.apache.hadoop.hdfs.server.datanode.SecureDataNodeStarter.start(SecureDataNodeStarter.java:103)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+        at java.lang.reflect.Method.invoke(Method.java:597)
+        at org.apache.commons.daemon.support.DaemonLoader.start(DaemonLoader.java:177)
 </pre>
 
 如果 data volumns 有 4 个，dfs.datanode.failed.volumes.tolerated 可设为 2。表示当有 2 个硬盘坏掉时 data nodes 还是可以正常运作。这时只要换坏硬盘即可，并不需要停掉 data nodes。

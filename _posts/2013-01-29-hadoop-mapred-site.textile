@@ -1,0 +1,216 @@
+---
+layout: post
+title: Hadoop1.x mapred-site.xml 参数设定
+category: hadoop
+---
+
+h2. 平台环境
+
+* CentOS 6.X
+* JDK 1.7
+* Hadoop 1.0.4 
+
+h2. 参照 "mapred-default.xml":http://hadoop.apache.org/docs/r1.0.4/mapred-default.html
+
+h3. JobTracker
+
+h2. mapred.job.tracker
+
+*预设值* : local
+*说明* : 设定 jobtracker 的 hostname 及 port。预设是 local，表示所有的 job 会用 local job runner 来执行，而且只有一个 mapper 及一个 reducer。在这个设定下，如果要启动 jobtracker service 反而会出错。一般常看到的设定是 localhost:9001。不过跟 core-site.xml 里的 fs.default.name 一样，会建议用 hostname 来设定。
+
+h2. mapred.job.tracker.http.address
+
+*预设值* : 0.0.0.0:50030
+*说明* : jobtracker Web UI 用的 port。除非是为了 security 的考虑才会需要改 binding 的 IP/Port，不然不需要改这个值。
+
+h2. mapred.system.dir
+
+*预设值* : ${hadoop.tmp.dir}/mapred/system
+*说明* : 在 HDFS 上的资料夹，放所有 M/R jobs 相关的控制信息，一个正在执行的 M/R job 会在这个目录里建立一个子目录。
+
+h2. mapred.temp.dir
+
+*预设值* : ${hadoop.tmp.dir}/mapred/temp
+*说明* : 在 HDFS 上一个共享的资料夹，放所有 M/R 相关的暂存资料
+
+h2. mapred.local.dir
+
+*预设值* : ${hadoop.tmp.dir}/mapred/local
+*说明* : 在 tasktracer 上存放暂存资料的目录。跟 hdfs-site.xml 里的 dfs.data.dir 设定一样，指定多个目录(volumes) 可用 “,” 以加快存取速度。如果有使用 distributed cache 的話，档案也会放在这个位置。
+
+h2. mapred.hosts
+
+*预设值* : N/A
+*说明* : 跟 hdfs-site.xml 里的 dfs.hosts 一样。此值是指定一个档案位置，名字可自取，例如 : /etc/hadoop/conf/mapred-hosts，并列出所有可以连接 jobtracer 的机器清单。不在清单上的机器是没有权限的。
+
+h2. mapred.hosts.exclude
+
+*预设值* : N/A
+*说明* : 跟 hdfs-site.xml 里的 dfs.hosts.exclude 一样。当需要淘汰或移除多台机器的 tasktracer 时会用到。一般来说，为了 data locality 的考虑，一台机器上会同时起 datanode 和 tasktracer。在淘汰时也需要同时停掉这些 services。所以方便起见，dfs.hosts 和 mapred.hosts 会共用同一个档案，dfs.hosts.exclude 和 mapred.hosts.exclude 也会共用同一个档案。
+
+h2. mapred.jobtracker.restart.recover
+
+*预设值* : false
+*说明* : 设成 true 可以让 jobtracker 重启的时候自动恢复之前执行到一半的 M/R jobs，可是这个功能在 Cloudera CDH3 中并无法正常运作。可以参考 Cloudera 的 "Known issues JobTracker recovery does not work after a restart":https://ccp.cloudera.com/display/CDHDOC/Known+Issues+and+Work+Arounds+in+CDH3#KnownIssuesandWorkAroundsinCDH3-JobTrackerrecoverydoesnotworkafterarestart.
+
+h2. mapred.jobtracker.completeuserjobs.maximum
+
+*预设值* : 100
+*说明* : 在 jobtracker 内存中保存已完成的 job 个数，并让使用者方便在 jobtracker UI 上查询。如果超过 100 个 jobs ，就会写入 disk 并放到 job history 中。这个设定是依每个使用者而设的，所以使用者多而且 job 数也多的情况会造成 jobtracker 使用太多的内存，可能会导致常做 full GC 或 OOME。建议可以只设 10。
+
+h2. mapred.jobtracker.taskScheduler
+
+*预设值* : org.apache.hadoop.mapred.JobQueueTaskScheduler
+*说明* : 做 M/R job 调度所使用的 scheduler。
+
+h2. mapred.job.tracker.handler.count
+
+*预设值* : 10
+*说明* : 设定 jobtracker server threads 的数量，这些 threads 会用 RPC 跟其他的 tasktrackers 沟通。跟 hdfs-site.xml 里的 dfs.namenode.handler.count 一样，设的值越高表示 jobtracker 吃的内存也随着增加。在官方文件里的建议值是全部 tasktracer 数量的 4%。以个人经验来说，如果 jobtracker 机器配备跟 namenode 同级，那 dfs.namenode.handler.count 及 mapred.job.tracker.handler.count 的设定可用一样，100 个 nodes 配 100 个 threads。
+
+h2. job.end.notification.url
+
+*预设值* : N/A
+*说明* : 当一个 job 执行完毕，不管成功或失败，jobtracker 会根据这个设定送出一个 http request 通知指定的 url。例如: http://localhost:8080/jobstatus.jsp?jobId=$jobId&jobStatus=$jobStatus。$jobId 和 $jobStatus 是内建的参数，jobtracker 会把这个两个值转成实际执行的 job id 和 status。jobstatus.jsp 是自己实现的程序，里面可以依据传来的 job id 再回 jobtracker 查训更多的信息并导入到不同的 logging system。对于做 M/R job monitoring(监控) 非常好用，不需要一直 polling jobtracker 来得知现有 job 执行的状态。
+
+h2. mapreduce.jobtracker.keytab.file
+
+*预设值* : N/A
+*说明* : 当 core-site.xml 里的 hadoop.security.authentication 参数设为 “kerberos” 时就要指定 keytab 的位置。例如 : /etc/hadoop/conf/mapred.keytab。
+
+h2. mapreduce.jobtracker.kerberos.principal
+
+*预设值* : N/A
+*说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时会指定，一般常用的命名规则是 mapred/_HOST@KERBEROS-REALM.COM
+
+h3. TaskTracker
+
+h2. mapred.task.tracker.http.address
+
+*预设值* : 0.0.0.0:50060
+*说明* : tasktracker Web UI 用的 port。除非是为了 security 的考虑才会需要改 binding 的 IP/Port，不然不需要改这个值。
+
+h2. mapred.child.java.opts
+
+*预设值* : -Xmx200m
+*说明* : tasktracer 会依每个要执行的 java task 启动独立的 child process，这个值可以设定每个 process 的 JVM 参数。例如: 要增加 heap size 及 gc log 的话可以改成
+
+-Xmx1024m -verbose:gc -Xloggc:/var/log/hadoop/task-gc-@taskid@.log
+
+@taskid@ 是内建的参数，tasktracer 会把这个值转成实际执行的 task id。
+各 app 也可在 submit job 之前，依据自己的需求调整这个设定。
+
+h2. mapred.child.ulimit
+
+*预设值* : N/A(kb)
+*说明* : 设定最大的虚拟内存使用量。跟 mapred.child.java.opts 不太一样，mapred.child.java.opts 所设定的 -Xmx 只是 tasktracer 所启动的 java child process 所用的 heap size，但 mapred.child.ulimit 所设定的包括 child process 本身及其所启动的其他 sub process 的内存总和。建议这个值的大小应为 mapred.child.java.opts 指定的 2~3 倍。例如: 在 mapred.child.java.opts 设定 1G，则 mapred.child.ulimit 设为 3G。
+不然，在 task 执行期间可能会出现以下的错误信息，虽然看起來是 warning，但已经表示 JVM 没启动成功。
+
+<pre>
+2012-07-29 10:57:28,199 INFO org.apache.hadoop.mapred.JvmManager: JVM : jvm_201207291054_0001_m_1994801458 exited with exit code 134. Number of tasks it ran: 0
+2012-07-29 10:57:28,200 WARN org.apache.hadoop.mapred.TaskRunner: attempt_201207291054_0001_m_000005_3 : Child Error
+java.io.IOException: Task process exit with nonzero status of 134.
+        at org.apache.hadoop.mapred.TaskRunner.run(TaskRunner.java:227)
+</pre>
+
+因为这个参数比较敏感，应该要由系统管理者指定适合的值并设为 final，也就是不允许使用者自己修改。让这个值为空，并直接修改系统 limits.conf 也是一个解决方式。
+
+h2. tasktracker.http.threads
+
+*预设值* : 40
+*说明* : tasktracer http server 所使用的 thread 数量，主要是让 reducer 在 shuffle 阶段取得 mapper 的中间产出。这是一个全局的变量，并不能依据各自的需求做修改。一般来说，在小的 cluster 里保持原来设定即可。越大的值所使用的内存也会相对增加，但效果不见得显著。在 Apache 官网上的测试报告，2000 个 nodes 也只设定到 50 而已。
+
+h2. mapred.tasktracker.map.tasks.maximum
+
+*预设值* : 2
+*说明* : tasktracer 可同时执行的 mapper 数量。一般来说，设定的值会依 CPU core 数而定。例如: 一台机器有 8 core CPU，一个 core 跑两个 processes，可使用的数量是 8×2-2=14 (要减掉 datanode 及 tasktracer 使用的 slot 数)，则 mapper 及 reducer 数量可设为 7。要注意的是，设的值越高不见得是好事，除了 CPU utilization 之外，内存使用量也是考虑因素之一。假设 datanode 使用 1G，tasktracker 也用 1G，mapper 及 reducer 都用预设值 200 MB。那总内存使用量是 1000+1000+14×200=4800(MB)。因此要看机器的规格来决定。
+
+h2. mapred.tasktracker.reduce.tasks.maximum
+
+*预设值* : 2
+*说明* : tasktracer 可同时执行的 reducer 数量。基本的配置和 mapred.tasktracker.map.tasks.maximum 一样。有个可以考虑的点是，在执行 M/R job 里有许多是只有 mapper 不需要 reducer 的，例如 HBase import/export。所以可以视需求加大 mapper 的个数并减少 reducer 的个数。
+
+h2. mapred.map.max.attempts
+
+*预设值* : 4
+*说明* : 当 mapper 失败时 tasktracer 重试此 mapper 的次数。在一个很大的 cluster 里，mapper 或 reducer 失败不一定是程序逻辑出错，有可能是网络出问题造成短时间的 timeout。常遇到的状况是重新执行一次就好了。一般来说不需要特别改这个值。
+
+h2. mapred.reduce.max.attempts
+
+*预设值* : 4
+*说明* : 同上，差别只在设的是 reducer 的重试次数。
+
+h2. mapred.max.map.failures.percent
+
+*预设值* : 0
+*说明* : 设 0 表示不能有任何一个 mapper 失败，不然整个 job 会失败。如果在 M/R jobs 里不需要这么高的容错率，允许 100 个 mapper 里失败 5 个也算 job 执行成功，那可以把这个值设为 5/100 = 5%。
+
+h2. mapred.max.reduce.failures.percent
+
+*预设值* : 0
+*说明* : 同上，差别只在设的是 reducer 的失败百分比。
+
+h2. mapred.map.tasks.speculative.execution
+
+*预设值* : true
+*说明* : 决定是否开启 mapper 的推测性执行(Speculative Execution)。一般来说，假设一个 job 有 100 个 mappers，其中 99 个很快就完成，剩最后一个非常的慢，系統还是会等到他完成整个 job 才算結束。会慢的原因可能是硬件有问题，网络不稳或程序写的不够好。但这不是 Hadoop 本身要处理的问题。Hadoop 能做的是，在另一个 tasktracer 上执行同样的 mapper，先执行完的 mapper output 会传給 reducer，比较慢而没有执行完的 mapper 会自动被所属的 tasktracer 杀掉。要注意的是，被杀掉的 task 数也会被计算在 mapred.reduce.max.attempts 里。
+
+推测性执行并不是为了做平行运算用的，原本的 mapper 及推测性 mapper (speculative mapper) 也不会同时被执行。判断是否会启动另一个 speculative mapper 的理由是当原本的 mapper 执行超过某个特定时间(至少一分钟)，而且原本的 mapper 长时间没有回报任何新的进度才会被执行。这也不是让程序可靠度提升的正确方式，如果发现原本的程序逻辑有错造成某些 mappers 执行较慢，应该以改程序为主。另外，如果发开者没有想到推测性执行的可能性，可能同样的 mapper 读写同一份资源造成 race condition。
+
+在 production 的环境会有大量的 M/R job 在执行，建议的做法是设为 false，不要让系统消耗过多的资源去执行多余的 mapper。由 client 来决定是否使用推测性执行会比较好。
+
+h2. mapred.reduce.tasks.speculative.execution
+
+*预设值* : true
+*说明* : 同上，差别只在设的是 reducer 的推测性执行。
+
+h2. mapred.reduce.slowstart.completed.maps
+
+*预设值* : 0.05
+*说明* : 当一个 job 里的 mappers 数完成 5% 的时候开始执行 reducers。例如: 有 100 个 mappers 的情况，只要做完 5 个 mappers 就开始执行 reducers。
+
+下面讨论两个极端的状况
+
+* 0: 表示 reducers 会立即执行。一般来说不会这样设定，reducers 还是会等待 mapper 执行完。
+* 1: 会等到所有的 mappers 执行完才开始执行 reducers。这很容易因为某个 mappers 执行较慢而拖慢整个 job 的执行时间。
+
+client app 也可依据各自的需求修改这个参数。建议可设为 0.75，也就是 3/4 的 mappers 执行完后就执行 reducers。
+
+h2. mapred.compress.map.output
+
+*预设值* : false
+*说明* : 决定 mapper 的 output 是否要压缩。一般来说，性能的瓶颈大部分是在 IO，而不是 CPU。所以大型的 cluster 来说最好设为 true，可以减少 mapper 的资料写入 disk 的时间，节省暂存档的空间，减少网络传输量，及把资料传给 reducer 的时间。
+
+h2. mapred.map.output.compression.codec
+
+*预设值* : org.apache.hadoop.io.compress.DefaultCodec
+*说明* : 如果 mapred.compress.map.output 设为 true，则会用这个 codec 来执行压缩。一般常见的压缩格式:
+
+* deflate: org.apache.hadoop.io.compress.DefaultCodec，已内建
+* gzip: org.apache.hadoop.io.compress.GzipCodec，已内建
+* bzip2: org.apache.hadoop.io.compress.BZip2Codec，已内建
+* lzo: com.hadoop.compression.lzo.LzoCodec，因为 lzo 是 GPL license，Apache 或 Cloudera 的版本没有内建 ，需要自行装 lzo package
+* snappy: org.apache.hadoop.io.compress.SnappyCodec，Cloudera 的版本已经有内建这个 codec
+
+h2. io.sort.factor
+
+*预设值* : 10
+*说明* : 当 mappers 计算完成如果有产出，就会先写入一段 memory buffer(预设是 100 MB)， buffer 达到 80% (定义在 io.sort.spill.percent 里) 之后就会写入 disk，并产生一个 spill file。当 mapper 写出的资料量大就有可能产生多个 spill files。在执行完成交給 reducer 之前会先进入合并及排序的阶段，多个 spill files 会合并为单一且排序过的档案。这个值就是设定一次合并的档案数。例如: 有 50 个 mapper spill files，预设值是 10 的情况下，就会有 5 次合并的动作并产生 5 个中介档，然后再多一次合并动作把 5 个中介档合并为一个。加大这个值可以有效的减少合并的次数及产生的中介档案，不过所需的内存也相对变大。以 Cloudera 的建议可以在 production 环境改成 25 或 32。
+
+h2. io.sort.mb
+
+*预设值* : 100(mb)
+*说明* : 这是在 io.sort.factor 里说明的 memory buffer，越大的值也表示所产生的 spill files 会越少。但相对的使用的内存会增加，大档案做合并及排序也不见得比较快。还有一个地方要注意，假设 mapred.child.java.opts 里定义的 heap size 为 1024 MB，io.sort.mb 是 100 MB，则 client 的 mapper 就只剩 924 MB 可以用。建议可以设到 320。使用者也可以依需求在 submit jobs 之前自行调整。
+
+h2. mapreduce.tasktracker.keytab.file
+
+*预设值* : N/A
+*说明* : 当 core-site.xml 里的 hadoop.security.authentication 参数设为 “kerberos” 时就要指定 keytab 的位置。例如 : /etc/hadoop/conf/mapred.keytab
+
+h2. mapreduce.tasktracker.kerberos.principal
+
+*预设值* : N/A
+*说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时会指定，一般常用的命名规则是 mapred/_HOST@KERBEROS-REALM.COM
+
+<a href="http://fenriswolf.me/2012/08/06/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-mapred-site-xml/"> >>Hadoop 參數設定 – mapred-site.xml</a>
