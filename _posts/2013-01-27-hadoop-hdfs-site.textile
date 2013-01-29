@@ -109,7 +109,7 @@ h2. dfs.support.append
 h2. dfs.namenode.handler.count
 
 *预设值* : 10
-*说明* : 设定 namenode server threads 的数量，这些 threads 会用 RPC 跟其他的 datanodes 沟通。当 datanodes 数量太多时会发现很容易出現 RPC timeout，解决方法是提升网络速度或调高这个值，但要注意的是 thread 数量多也表示 namenode 吃的内存也随着增加。在 "http://hadoop.apache.org/docs/r0.20.2/cluster_setup.html":Hadoop Cluster Setup 这篇文章里提到 900 个 nodes 只需要设成 40，但是个人经验是 100 个 nodes 配 100 个 threads。
+*说明* : 设定 namenode server threads 的数量，这些 threads 会用 RPC 跟其他的 datanodes 沟通。当 datanodes 数量太多时会发现很容易出現 RPC timeout，解决方法是提升网络速度或调高这个值，但要注意的是 thread 数量多也表示 namenode 吃的内存也随着增加。在 "Hadoop Cluster Setup":http://hadoop.apache.org/docs/r0.20.2/cluster_setup.html 这篇文章里提到 900 个 nodes 只需要设成 40，但是个人经验是 100 个 nodes 配 100 个 threads。
 
 h2. dfs.namenode.keytab.file
 
@@ -160,7 +160,7 @@ h2. dfs.datanode.max.xcievers
 *预设值* : 256
 *说明* : 这个值是指定 datanode 可同时处理的最大档案数量。但是预设值很小，当多个或一个大型程序存取时会发生下面的错误讯息
 
-<pre>
+<pre style="overflow: auto;">
 10/12/08 20:10:31 INFO hdfs.DFSClient: Could not obtain block blk_XXXXXXXXXXXXXXXXXXXXXX_YYYYYYYY from any node: java.io.IOException: 
 No live nodes contain current block. Will get new block locations from namenode and retry... 
 </pre>
@@ -172,7 +172,7 @@ h2. dfs.datanode.failed.volumes.tolerated
 *预设值* : 0
 *说明* : 这个值要对应 dfs.data.dir 参数设定的目录个数，0 表示只要有任何一个 volume 坏掉 data nodes 就会被强制停掉。假设挂载 n 个 volumns，Hadoop 会确定 n – dfs.datanode.failed.volumes.tolerated 不能小于 0。设定错误在启动 data node 会看到下面的信息
 
-<pre>
+<pre style="overflow: auto;">
 2011-08-27 11:53:03,785 ERROR org.apache.hadoop.hdfs.server.datanode.DataNode: org.apache.hadoop.util.DiskChecker$DiskErrorException: Invalid value for validVolsRequired : -1 ,  Current valid volumes: 1
        at org.apache.hadoop.hdfs.server.datanode.FSDataset.<init>(FSDataset.java:906)
        at org.apache.hadoop.hdfs.server.datanode.DataNode.startDataNode(DataNode.java:373)
