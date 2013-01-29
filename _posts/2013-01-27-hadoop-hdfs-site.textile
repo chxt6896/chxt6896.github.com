@@ -160,7 +160,7 @@ h2. dfs.datanode.max.xcievers
 *预设值* : 256
 *说明* : 这个值是指定 datanode 可同时处理的最大档案数量。但是预设值很小，当多个或一个大型程序存取时会发生下面的错误讯息
 
-<pre style="overflow: auto;">
+<pre>
 10/12/08 20:10:31 INFO hdfs.DFSClient: Could not obtain block blk_XXXXXXXXXXXXXXXXXXXXXX_YYYYYYYY from any node: java.io.IOException: 
 No live nodes contain current block. Will get new block locations from namenode and retry... 
 </pre>
@@ -172,7 +172,7 @@ h2. dfs.datanode.failed.volumes.tolerated
 *预设值* : 0
 *说明* : 这个值要对应 dfs.data.dir 参数设定的目录个数，0 表示只要有任何一个 volume 坏掉 data nodes 就会被强制停掉。假设挂载 n 个 volumns，Hadoop 会确定 n – dfs.datanode.failed.volumes.tolerated 不能小于 0。设定错误在启动 data node 会看到下面的信息
 
-<pre style="overflow: auto;">
+<pre>
 2011-08-27 11:53:03,785 ERROR org.apache.hadoop.hdfs.server.datanode.DataNode: org.apache.hadoop.util.DiskChecker$DiskErrorException: Invalid value for validVolsRequired : -1 ,  Current valid volumes: 1
        at org.apache.hadoop.hdfs.server.datanode.FSDataset.<init>(FSDataset.java:906)
        at org.apache.hadoop.hdfs.server.datanode.DataNode.startDataNode(DataNode.java:373)
