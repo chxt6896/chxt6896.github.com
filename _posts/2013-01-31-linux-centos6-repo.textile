@@ -1,0 +1,72 @@
+---
+layout: post
+title: CentOS 6.X 哈工大源
+category: linux
+---
+
+h3. 由于正常 CentOS 源不在教育网免费 IP 列表里，或者使用 VPN，或者更换自己的源，下面提供 *哈尔滨工业大学* 自己的源
+
+h2. Step1
+
+{% highlight bash linenos %}
+$ touch CentOS-Base.repo
+{% endhighlight %}
+
+编辑 CentOS-Base 添加:
+
+# CentOS-Base.repo
+# The mirror system uses the connecting IP address of the client and the
+# update status of each mirror to pick mirrors that are updated to and
+# geographically close to the client.  You should use this for CentOS updates
+# unless you are manually picking other mirrors.
+#
+# If the mirrorlist= does not work for you, as a fall back you can try the 
+# remarked out baseurl= line instead.
+#
+#
+[base]
+name=CentOS-$releasever - Base
+baseurl=http://run.hit.edu.cn/centos/6/os/$basearch/
+gpgcheck=1
+gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
+
+#released updates 
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://run.hit.edu.cn/centos/6/updates/$basearch/
+gpgcheck=1
+gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
+
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras
+baseurl=http://run.hit.edu.cn/centos/6/extras/$basearch/
+gpgcheck=1
+gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
+
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-$releasever - Plus
+baseurl=http://run.hit.edu.cn/centos/6/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
+
+h2. Step2
+
+替换系统的默认 repo:
+
+{% highlight bash linenos %}
+$ sudo mv CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+{% endhighlight %}
+
+h2. Step3
+
+{% highlight bash linenos %}
+# 清除暂存中旧的 rpm 头文件和包文件
+$ sudo yum clean all
+# 把服务器的包信息下载到本地电脑缓存起来
+$ sudo yum makecache
+# 更新所有的 rpm 包
+$ sudo yum update
+{% endhighlight %}
