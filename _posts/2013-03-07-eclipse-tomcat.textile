@@ -33,7 +33,7 @@ h3. Eclipse - toolsbar -> Window -> Prefences -> Tomcat
 * 配置 Tomcat 的根目录路径
 * 选择发布到 Tomcat 的模式(建议选择默认的 Context files)
 ** 选择 Context files，则启动小猫的时候就会在 Tomcat 6.0\conf\Catalina\localhost 下建立一个 xml 文件，来标识该应用，xml 文件的名字由 Context name 决定
-** 选择 Server.xml，则会修改 Tomcat 6.0\conf\server.xml，添加如 <Context path="test" reloadable="true" docBase="D:\test\WebContent" workDir="D:\test\work" /> 来标识该应用
+** 选择 Server.xml，则会修改 Tomcat 6.0\conf\server.xml，添加如 <code><Context path="test" reloadable="true" docBase="D:\test\WebContent" workDir="D:\test\work" /></code> 来标识该应用
 
 h3. 你的 Dynamic Web project 项目 -> Properties -> Tomcat 
 
