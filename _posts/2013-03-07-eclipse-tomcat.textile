@@ -9,7 +9,6 @@ h2. 起源
 Eclipse 下使用 Tomcat 运行 Web 应用有两种方式: 
 
 * 配置 Eclipse 的 Server 功能，连接 Tomcat 服务，很方便~适合小项目
-
 * 使用 TomcatPlugin 插件，可以在 Eclipse 中单独启动 Tomcat 服务，同时运行多个项目
 
 h2. Step1 安装
@@ -30,29 +29,29 @@ h3. Eclipse - toolsbar -> Window -> Prefences -> Tomcat
 
 !/images/eclipse/tomcat.png!
 
-# 选择对应的 Tomcat 版本
-# 配置 Tomcat 的根目录路径
-# 选择发布到 Tomcat 的模式(建议选择默认的 Context files)
-## 选择 Context files，则启动小猫的时候就会在 Tomcat 6.0\conf\Catalina\localhost 下建立一个 xml 文件，来标识该应用，xml 文件的名字由 Context name 决定
-## 选择 Server.xml，则会修改 Tomcat 6.0\conf\server.xml，添加如 <Context path="test" reloadable="true" docBase="D:\test\WebContent" workDir="D:\test\work" /> 来标识该应用
+* 选择对应的 Tomcat 版本
+* 配置 Tomcat 的根目录路径
+* 选择发布到 Tomcat 的模式(建议选择默认的 Context files)
+** 选择 Context files，则启动小猫的时候就会在 Tomcat 6.0\conf\Catalina\localhost 下建立一个 xml 文件，来标识该应用，xml 文件的名字由 Context name 决定
+** 选择 Server.xml，则会修改 Tomcat 6.0\conf\server.xml，添加如 <Context path="test" reloadable="true" docBase="D:\test\WebContent" workDir="D:\test\work" /> 来标识该应用
 
 h3. 你的 Dynamic Web project 项目 -> Properties -> Tomcat 
 
 !/images/eclipse/tomcat2.png!
  
-# 勾选 Is a Tomcat Project
-# Context name 填写你项目的名称(如 /test 或 test 均可，建议不要斜杠)，这个名字决定访问路径 http://localhost:8080/test
-# Subdirectory to set as web application root (optional) 是和 src 同一目录下的，里面放有 WEB-INF 和 META-INF 的文件夹的名字，一般填 WebContent 或者 WebRoot
+* 勾选 Is a Tomcat Project
+* Context name 填写你项目的名称(如 /test 或 test 均可，建议不要斜杠)，这个名字决定访问路径 http://localhost:8080/test
+* Subdirectory to set as web application root (optional) 是和 src 同一目录下的，里面放有 WEB-INF 和 META-INF 的文件夹的名字，一般填 WebContent 或者 WebRoot
 
 h3. 你的 Dynamic Web project 项目 -> Properties -> Java Build Path -> Source
 
 !/images/eclipse/tomcat3.png!
 
-# Default output folder 定位到 项目名/WebContent/WEB-INF/classes(如 test/WebContent/WEB-INF/classes)，没有这个文件夹就自己建立
+* Default output folder 定位到 项目名/WebContent/WEB-INF/classes(如 test/WebContent/WEB-INF/classes)，没有这个文件夹就自己建立
 
 h2. Step3 启动
 
-点击小猫 Start Tomcat，如果程序没错就可以在 http://localhost:8080/test 下找 index 页面了～
+点击小猫 Start Tomcat，如果程序没错就可以在 http://localhost:8080/test 下测试了
 
 <a href="http://www.cnblogs.com/jspace/archive/2011/04/04/2004947.html"> >>>Eclipse Tomcat插件的配置,及 Tomcat 的配置 ( 谁来教我？)</a>
 <a href="http://baoxbstudy.blog.51cto.com/3769874/810565"> >>>eclipse+tomcat插件开发web项目</a>
