@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ubuntu+Eclipse+SVN 解密
+title: Eclipse+SVN 解密
 category: eclipse
 ---
 
@@ -29,12 +29,13 @@ h3. 如何选择？可以从这几方面考虑：
 
 以上几点是否可以对你选择那个插件有所帮助呢？其实这两个插件都很不错，对于我们日常使用来说，哪个都能很好完成我们的任务，如果你还是不能确定，就别再费神在这上面花工夫了，也不用再在网上寻找两者比较了，随便选一个就行了。
 
-h3. 我使用的是 Subclipse + SVNKit，下面具体讲解一下配置过程
+h3. 我使用的是 Windows + Subclipse + JavaHL / Linux + Subclipse + SVNKit，下面具体讲解一下配置过程
 
 h2. Step1
 
 首先需要安装 Subclipse，建议直接使用 Eclipse 自带的 Marketplace 安装，Help -> Eclipse Marketplace -> 搜索 Subclipse 安装
 
+h3. 如果是 Windows Eclipse 这一步就可以了，用自带的 JavaHL；如果是 Linux Eclipse 则还需要第二步
 
 h2. Step2
 

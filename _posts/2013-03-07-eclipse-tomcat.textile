@@ -1,0 +1,24 @@
+---
+layout: post
+title: Eclipse+TomcatPlugin 解密
+category: eclipse
+---
+
+h3. 起源
+
+eclipse 下使用 Tomcat 运行 Web 应用有两种方式: 
+
+* 配置 eclipse 的 Server 功能，连接 Tomcat 服务，很方便~适合小项目
+
+* 使用 TomcatPlugin 插件，可以在 eclipse 中单独启动 Tomcat 服务，同时运行多个项目
+
+h2. Step1
+
+在 "这里":http://www.eclipsetotale.com/tomcatPlugin.html 下载对应 eclipse 版本的 tomcatPlugin 插件，eclipse3.6 以上版本均使用最新 tomcatPluginV33 
+
+h2. Step2
+
+<a href="http://www.cnblogs.com/jspace/archive/2011/04/04/2004947.html"> >>>Eclipse Tomcat插件的配置,及 Tomcat 的配置 ( 谁来教我？)</a>
+<a href="http://baoxbstudy.blog.51cto.com/3769874/810565"> >>>eclipse+tomcat插件开发web项目</a>
+<a href="http://blog.duteba.com/technology/article/42.htm"> >>>eclipse3.6安装tomcat插件3.3</a>
+<a href="http://www.jishuziyuan.com/archive/lw7e44355998/7361181.html"> >>>把ECLIPSE项目部署到TOMCAT插件上的问题</a>
