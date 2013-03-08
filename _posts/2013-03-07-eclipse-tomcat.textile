@@ -9,7 +9,7 @@ h2. 起源
 Eclipse 下使用 Tomcat 运行 Web 应用有两种方式: 
 
 * 配置 Eclipse 的 Server 功能，连接 Tomcat 服务，很方便~适合小项目
-* 使用 TomcatPlugin 插件，可以在 Eclipse 中单独启动 Tomcat 服务，同时运行多个项目
+* 使用 TomcatPlugin 插件，在 Eclipse 中单独启动 Tomcat 服务，可同时运行多个项目
 
 h2. Step1 安装
 
