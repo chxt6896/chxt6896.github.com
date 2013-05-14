@@ -1,0 +1,45 @@
+---
+layout: post
+title: MySQL 大小写区分解惑
+category: mysql
+---
+
+h3. MySQL 在 Linux 和 Windows 下对大小写处理不同 
+
+h2. Linux 版
+
+h3. Linux 下 MySQL 安装完后是默认: 区分表名的大小写，不区分列名的大小写
+
+用 root 帐号登录后，在 /etc/my.cnf 中的 [mysqld] 后添加添加 lower_case_table_names=1，重启 MySQL 服务，这时已设置成功: 不区分表名的大小写
+
+lower_case_table_names 参数详解:
+
+lower_case_table_names=0
+
+其中 0: 区分大小写，1: 不区分大小写
+
+MySQL 在 Linux 下数据库名、表名、列名、别名大小写规则是这样的: 
+
+# 数据库名与表名是严格区分大小写的
+
+# 表的别名是严格区分大小写的
+
+# 列名与列的别名在所有的情况下均是忽略大小写的
+
+# 变量名也是严格区分大小写的
+
+h2. Windows 版
+
+h3. MySQL 在 Windows 下都不区分大小写
+
+如果想在查询时区分字段值的大小写，字段值需要设置 BINARY 属性，设置的方法有多种: 
+
+* 创建时设置:
+CREATE TABLE T(
+	A VARCHAR(10) BINARY
+);
+
+* 使用 alter 修改: 
+ALTER TABLE 'tablename' MODIFY COLUMN 'cloname' VARCHAR(45) BINARY;
+
+* mysql table editor 中直接勾选 BINARY 项
