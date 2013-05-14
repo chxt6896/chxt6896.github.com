@@ -1,6 +1,6 @@
 ---
 layout: post
-title: MySQL 备份vs还原
+title: MySQL 备份与还原
 category: mysql
 ---
 
