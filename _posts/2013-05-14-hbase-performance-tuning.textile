@@ -23,13 +23,14 @@ h2. hbase.regionserver.handler.count
 压测时，开启<a href="http://hbase.apache.org/book.html#rpc.logging" target="_blank">Enabling RPC-level logging</a>，可以同时监控每次请求的内存消耗和 GC 的状况，最后通过多次压测结果来合理调节 IO 线程数。
 这里是一个案例 <a href="http://software.intel.com/en-us/articles/hadoop-and-hbase-optimization-for-read-intensive-search-applications/" target="_blank">Hadoop and HBase Optimization for Read Intensive Search Applications</a>，作者在 SSD 的机器上设置 IO 线程数为 100，仅供参考。
 
-h2. hbase.regionserver.handler.count
+h2. hbase.hregion.max.filesize
 
 *预设值*: 
 *说明*: 
 *调优*: 
 
-h2. hbase.regionserver.handler.count
+h2. hbase.regionserver.global.memstore.upperLimit/lowerLimit
+
 *预设值*: 
 *说明*: 
 *调优*: 
