@@ -14,6 +14,7 @@ h3. 方法一
 
 {% highlight bash linenos %}
 # 使用通配符，授与 root 用户从任何其它主机发起访问
+# mysql -u hadoop -h 192.168.1.1 -p
 mysql> GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY 'xxx' WITH GRANT OPTION;
 {% endhighlight %}
 
