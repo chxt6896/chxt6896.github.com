@@ -4,6 +4,7 @@ title: HBase 性能调优
 category: hbase
 ---
 h2. zookeeper.session.timeout
+
 *预设值* : 3分钟（180000ms）
 *说明* : RegionServer 与 Zookeeper 间的连接超时时间。当超时时间到后，ReigonServer 会被 Zookeeper 从 RS 集群清单中移除，HMaster 收到移除通知后，会对这台 server 负责的 regions 重新 balance，让其他存活的 RegionServer 接管。
 *调优* : 这个 timeout 决定了 RegionServer 是否能够及时的 failover。设置成1分钟或更低，可以减少因等待超时而被延长的 failover 时间。
@@ -12,16 +13,18 @@ h2. zookeeper.session.timeout
 如果集群正在集中处理一些大数据，未避免响应时间过长（假死）而被 Zookeeper 从 RS 集群中移除，应设置成更高的时间。
 
 h2. hbase.regionserver.handler.count
+
 *预设值*: 10
 *说明*: RegionServer 的请求处理 IO 线程数。
 *调优*: 这个参数的调优与内存息息相关。
 较少的 IO 线程，适用于处理单次请求内存消耗较高的 Big PUT 场景（大容量单次 PUT 或设置了较大 cache 的 scan，均属于 Big PUT）或 ReigonServer 的内存比较紧张的场景。
 较多的 IO 线程，适用于单次请求内存消耗低，TPS 要求非常高的场景。设置该值的时候，以监控内存为主要参考。
 这里需要注意的是如果 server 的 region 数量很少，大量的请求都落在一个region上，因快速充满 memstore 触发 flush 导致的读写锁会影响全局 TPS，不是 IO 线程数越高越好。
-压测时，开启 "Enabling RPC-level logging":http://hbase.apache.org/book.html#rpc.logging ，可以同时监控每次请求的内存消耗和 GC 的状况，最后通过多次压测结果来合理调节 IO 线程数。
-这里是一个案例 "Hadoop and HBase Optimization for Read Intensive Search Applications":http://software.intel.com/en-us/articles/hadoop-and-hbase-optimization-for-read-intensive-search-applications/ ，作者在 SSD 的机器上设置 IO 线程数为 100，仅供参考。
+压测时，开启<a href="http://hbase.apache.org/book.html#rpc.logging" target="_blank">Enabling RPC-level logging</a>，可以同时监控每次请求的内存消耗和 GC 的状况，最后通过多次压测结果来合理调节 IO 线程数。
+这里是一个案例 <a href="http://software.intel.com/en-us/articles/hadoop-and-hbase-optimization-for-read-intensive-search-applications/" target="_blank">Hadoop and HBase Optimization for Read Intensive Search Applications</a>，作者在 SSD 的机器上设置 IO 线程数为 100，仅供参考。
 
 h2. hbase.regionserver.handler.count
+
 *预设值*: 
 *说明*: 
 *调优*: 
