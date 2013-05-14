@@ -10,7 +10,7 @@ h2. 平台环境
 * JDK 1.7
 * Hadoop 1.0.4 
 
-h2. 参照 "hdfs-default.xml":http://hadoop.apache.org/docs/r1.0.4/hdfs-default.html
+h2. 参照 <a href="http://hadoop.apache.org/docs/r1.0.4/hdfs-default.html" target="_blank">hdfs-default.xml</a>
 
 h3. NameNode
 
@@ -223,4 +223,4 @@ h2. dfs.balance.bandwidthPerSec
 *预设值* : 1048576(byte)
 *说明* : 这个值是决定 file blocks 从一个 data node 搬到另一个 data node 的速度, 预设为 1MB。主要是用在 re-balance，如果觉得执行速度太慢可以调整这个参数加快 blocks 的搬移。但是这也表示会多占带宽，可能会影响正常 M/R jobs 或 applications 的执行。建议值为 4194304(4MB)
 
-<a href="http://fenriswolf.me/2012/05/25/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-hdfs-site-xml/"> >>Hadoop 參數設定 – hdfs-site.xml</a>
+<a href="http://fenriswolf.me/2012/05/25/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-hdfs-site-xml/" target="_blank"> >>Hadoop 參數設定 – hdfs-site.xml</a>

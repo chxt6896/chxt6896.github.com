@@ -10,7 +10,7 @@ h2. 平台环境
 * JDK 1.7
 * Hadoop 1.0.4 
 
-h2. 参照 "mapred-default.xml":http://hadoop.apache.org/docs/r1.0.4/mapred-default.html
+h2. 参照 <a href="http://hadoop.apache.org/docs/r1.0.4/mapred-default.html" target="_blank">mapred-default.xml</a>
 
 h3. JobTracker
 
@@ -213,4 +213,4 @@ h2. mapreduce.tasktracker.kerberos.principal
 *预设值* : N/A
 *说明* : 指定 kerberos principal 名称，这在产生 keytab 档案时会指定，一般常用的命名规则是 mapred/_HOST@KERBEROS-REALM.COM
 
-<a href="http://fenriswolf.me/2012/08/06/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-mapred-site-xml/"> >>Hadoop 參數設定 – mapred-site.xml</a>
+<a href="http://fenriswolf.me/2012/08/06/hadoop-%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A-mapred-site-xml/" target="_blank"> >>Hadoop 參數設定 – mapred-site.xml</a>

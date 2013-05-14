@@ -3,6 +3,9 @@ layout: post
 title: HBase 性能调优
 category: hbase
 ---
+
+h2. 参照 <a href="http://hbase.apache.org/book.html#performance" target="_blank">Apache HBase (TM) Performance Tuning</a>
+
 h2. zookeeper.session.timeout
 
 *预设值* : 3分钟（180000ms）

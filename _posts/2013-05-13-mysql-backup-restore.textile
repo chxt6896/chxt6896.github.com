@@ -31,4 +31,4 @@ h3. 方法二
 $ mysql -u root -p test < test.sql
 {% endhighlight %}
 
-<a href="http://blog.csdn.net/linwaterbin/article/details/8810339"> >>【逻辑备份】深入浅出 mysqldump：常用操作、案例分享、意外终止的原因以及解决方法</a>
+<a href="http://blog.csdn.net/linwaterbin/article/details/8810339" target="_blank"> >>【逻辑备份】深入浅出 mysqldump：常用操作、案例分享、意外终止的原因以及解决方法</a>

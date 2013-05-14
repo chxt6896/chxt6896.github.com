@@ -6,15 +6,15 @@ category: blog
 
 Jekyll is a simple, blog aware, static site generator. It takes a template directory (representing the raw form of a website), runs it through Textile or Markdown and Liquid converters, and spits out a complete, static website suitable for serving with Apache or your favorite web server. This is also the engine behind GitHub Pages, which you can use to host your project’s page or blog right here from GitHub.
 
-h2. <a href="http://wiki.github.com/mojombo/jekyll/install" rel="nofollow">安装 Jekyll</a>
+h2. <a href="http://wiki.github.com/mojombo/jekyll/install" target="_blank">安装 Jekyll</a>
 
 下面详细说明一下在Windows环境下安装Jekyll~~Linux系统下的直接看教程就好了
 
 h2. Step1
  
-首先你需要有一个Windows下的Linux模拟环境，可以安装<a href="http://www.cygwin.com/" rel="nofollow">Cygwin</a>，或者使用MsysGit。
+首先你需要有一个Windows下的Linux模拟环境，可以安装<a href="http://www.cygwin.com/" target="_blank">Cygwin</a>，或者使用MsysGit。
 
-Jekyll是用Ruby编写的。最好的安装方式是通过<a href="http://rubyforge.org/frs/?group_id=126" rel="nofollow">RubyGems</a>:
+Jekyll是用Ruby编写的。最好的安装方式是通过<a href="http://rubyforge.org/frs/?group_id=126" target="_blank">RubyGems</a>:
 		
 {% highlight bash linenos %} 
 $ gem install jekyll
@@ -26,9 +26,9 @@ DevKit 是windows平台下编译和使用本地C/C++扩展包的工具。它就�
 
 h2. Step2
 
-下载最新的<a href="http://rubyforge.org/frs/?group_id=167" rel="nofollow">RubyInstaller</a>（我使用的是rubyinstaller-1.9.3-p0.exe），安装
+下载最新的<a href="http://rubyforge.org/frs/?group_id=167" target="_blank">RubyInstaller</a>（我使用的是rubyinstaller-1.9.3-p0.exe），安装
 
-下载最新的<a href="https://github.com/oneclick/rubyinstaller/downloads/" rel="nofollow">DevKit</a>（我使用的是DevKit-tdm-32-4.5.2-20110712-1620-sfx.exe），安装
+下载最新的<a href="https://github.com/oneclick/rubyinstaller/downloads/" target="_blank">DevKit</a>（我使用的是DevKit-tdm-32-4.5.2-20110712-1620-sfx.exe），安装
 
 h2. Step3
 
@@ -53,5 +53,5 @@ Jekyll 0.11.0
 
 更多请参考博文： 
 
-"Jekyll in Windows 终极奥义":http://chxt6896.github.com/blog/2012/03/15/jekyll-in-windows.html
-"Jekyll 本地调试之若干问题":http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html
+<a href="http://chxt6896.github.com/blog/2012/03/15/jekyll-in-windows.html" target="_blank"> >>Jekyll in Windows 终极奥义</a>
+<a href="http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html" target="_blank"> >>Jekyll 本地调试之若干问题</a>
