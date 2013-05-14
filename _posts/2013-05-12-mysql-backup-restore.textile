@@ -1,0 +1,32 @@
+---
+layout: post
+title: MySQL 备份vs还原
+category: mysql
+---
+
+h3. 如果你要简单将一个 MySQL 库从一个节点转移到另一个节点
+
+h2. Step1 备份(node1)
+
+{% highlight bash linenos %}
+# mysqldump -u 用户名 -p 数据库名 > 导出的文件名 
+$ mysqldump -u root -p test > test.sql
+{% endhighlight %}
+
+h2. Step2 还原(node2)
+
+h3. 方法一
+
+{% highlight bash linenos %}
+$ mysql -u root -p
+mysql> create database test;
+mysql> use test;
+mysql> source test.sql;
+# 再次出现 mysql> 并且没有提示错误即还原成功 
+{% endhighlight %}
+
+h3. 方法二
+
+{% highlight bash linenos %}
+$ mysql -u root -p test < test.sql
+{% endhighlight %}
