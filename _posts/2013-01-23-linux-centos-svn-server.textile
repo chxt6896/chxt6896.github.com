@@ -134,10 +134,16 @@ h3. Step2-6 修改 svnserve.conf 文件，使用户和策略配置生效
 
 {% highlight bash linenos %}
 [general]
+# 定义非授权用户的访问权限，有三种方式: none(限制访问), read(只读), write(读写)，默认为 read 
 anon-access = none
+# 定义授权用户的访问权限，有三种方式: none(限制访问), read(只读), write(读写)，默认为 write
 auth-access = write
+# 定义保存用户名和密码的文件名称，这里为 passwd，和该文件位于同一目录
 password-db = /home/hadoop/svn/project/conf/passwd
+# 定义保存授权信息的文件名称，这里为 authz，和该文件位于同一目录
 authz-db = /home/hadoop/svn/project/conf/authz
+# 定义客户端连接是的“认证命名空间”， SVN 会在认证提示里显示，并且作为凭证缓存的关键字
+realm = My First Repository
 {% endhighlight %}
 
 h3. Step2-7 启动服务器

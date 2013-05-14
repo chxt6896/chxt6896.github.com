@@ -4,7 +4,7 @@ title: CentOS 6.X 哈工大源
 category: linux
 ---
 
-h3. 由于正常 CentOS 源不在教育网免费 IP 列表里，或者使用 VPN，或者更换自己的源，下面提供 *哈尔滨工业大学* 自己的源
+h3. 由于正常 CentOS 源不在教育网免费 IP 列表里，或者使用 VPN，或者更换自己的源，下面提供 *哈尔滨工业大学* 自己的源，我这里用的是 EL6.3
 
 h2. Step1
 
@@ -27,28 +27,28 @@ $ touch CentOS-Base.repo
 #
 [base]
 name=CentOS-$releasever - Base
-baseurl=http://run.hit.edu.cn/centos/6/os/$basearch/
+baseurl=http://run.hit.edu.cn/centos/6.3/os/$basearch/
 gpgcheck=1
 gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
 
 #released updates 
 [updates]
 name=CentOS-$releasever - Updates
-baseurl=http://run.hit.edu.cn/centos/6/updates/$basearch/
+baseurl=http://run.hit.edu.cn/centos/6.3/updates/$basearch/
 gpgcheck=1
 gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
 
 #additional packages that may be useful
 [extras]
 name=CentOS-$releasever - Extras
-baseurl=http://run.hit.edu.cn/centos/6/extras/$basearch/
+baseurl=http://run.hit.edu.cn/centos/6.3/extras/$basearch/
 gpgcheck=1
 gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6
 
 #additional packages that extend functionality of existing packages
 [centosplus]
 name=CentOS-$releasever - Plus
-baseurl=http://run.hit.edu.cn/centos/6/centosplus/$basearch/
+baseurl=http://run.hit.edu.cn/centos/6.3/centosplus/$basearch/
 gpgcheck=1
 enabled=0
 gpgkey=http://run.hit.edu.cn/centos/RPM-GPG-KEY-CentOS-6

@@ -1,0 +1,55 @@
+---
+layout: post
+title: CentOS+MySQL 相约日记
+category: linux
+---
+
+
+h3. MySQL 我的最爱
+
+h2. Step1 安装
+
+{% highlight bash linenos %}
+$ sudo yum install mysql mysql-server
+{% endhighlight %}
+
+h2. Step2 配置
+
+{% highlight bash linenos %}
+$ sudo vim /etc/my.cnf
+{% endhighlight %}
+
+<pre>
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+user=mysql
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+# 设置编码格式
+default-character-set=utf8
+# 设置不区分大小写
+lower_case_table_names=1 
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+[mysql]
+# 设置编码格式
+default-character-set=utf8
+</pre>
+
+h2. Step3 启动服务
+
+{% highlight bash linenos %}
+# 设置MySQL服务随系统启动自启动
+$ sudo chkconfig mysqld on
+# 确认MySQL自启动，如果2--5为on的状态就OK
+$ sudo chkconfig --list mysqld
+mysqld 0:off 1:off 2:on 3:on 4:on 5:on 6:off
+# 启动MySQL服务
+$ sudo /etc/rc.d/init.d/mysqld start
+Initializing MySQL database:			[ OK ]
+Starting MySQL:										[ OK ]
+{% endhighlight %}
