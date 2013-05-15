@@ -125,4 +125,4 @@ $ gem install liquid --version '2.2.2'
 
 <a href="http://stackoverflow.com/questions/7801197/syntax-highlighting-with-pygments-is-failing-via-liquid-templates-string-error" target="_blank"> >>>Syntax Highlighting with Pygments is failing via Liquid Templates String Error</a>
 
-h2. Problem6 \"Liquid error: No such file or directory – pygmentize\"
+h2. Problem6 "Liquid error: No such file or directory – pygmentize"
