@@ -1,41 +1,41 @@
 ---
 layout: post
-title: Jekyll 本地调试之若干问题
+title: Jekyll \u672C\u5730\u8C03\u8BD5\u4E4B\u82E5\u5E72\u95EE\u9898
 category: blog
 ---
 
-h3. 没有看似简单的事，简单的开头后面往往都九曲十弯
+h3. \u6CA1\u6709\u770B\u4F3C\u7B80\u5355\u7684\u4E8B\uFF0C\u7B80\u5355\u7684\u5F00\u5934\u540E\u9762\u5F80\u5F80\u90FD\u4E5D\u66F2\u5341\u5F2F
 
-为什么要用本地调试？其实应该反问自己，如果不用本地调试，将会多么麻烦，每每有改动想要调试着看看效果，都至少要 add, commit, push 三条命令上传到 github 服务器，说白了就两个字“麻烦”。
+\u4E3A\u4EC0\u4E48\u8981\u7528\u672C\u5730\u8C03\u8BD5\uFF1F\u5176\u5B9E\u5E94\u8BE5\u53CD\u95EE\u81EA\u5DF1\uFF0C\u5982\u679C\u4E0D\u7528\u672C\u5730\u8C03\u8BD5\uFF0C\u5C06\u4F1A\u591A\u4E48\u9EBB\u70E6\uFF0C\u6BCF\u6BCF\u6709\u6539\u52A8\u60F3\u8981\u8C03\u8BD5\u7740\u770B\u770B\u6548\u679C\uFF0C\u90FD\u81F3\u5C11\u8981 add, commit, push \u4E09\u6761\u547D\u4EE4\u4E0A\u4F20\u5230 github \u670D\u52A1\u5668\uFF0C\u8BF4\u767D\u4E86\u5C31\u4E24\u4E2A\u5B57\u201C\u9EBB\u70E6\u201D\u3002
 
-编译 Jekyll 编辑网站只需在根目录执行 jekyll 命令，下面的命令是 GitHub 更新网站所使用的默认指令。
+\u7F16\u8BD1 Jekyll \u7F16\u8F91\u7F51\u7AD9\u53EA\u9700\u5728\u6839\u76EE\u5F55\u6267\u884C jekyll \u547D\u4EE4\uFF0C\u4E0B\u9762\u7684\u547D\u4EE4\u662F GitHub \u66F4\u65B0\u7F51\u7AD9\u6240\u4F7F\u7528\u7684\u9ED8\u8BA4\u6307\u4EE4\u3002
 
 {% highlight bash linenos %}
 $ jekyll --pygments --safe
 {% endhighlight %}
 
-现在执行这条命令，就会将整个网站创建在目录 _site 下。
+\u73B0\u5728\u6267\u884C\u8FD9\u6761\u547D\u4EE4\uFF0C\u5C31\u4F1A\u5C06\u6574\u4E2A\u7F51\u7AD9\u521B\u5EFA\u5728\u76EE\u5F55 _site \u4E0B\u3002
 
-如果没有安装 Apache 等 Web服务器，还可以使用 Jekyll 的内置 Web服务器。
+\u5982\u679C\u6CA1\u6709\u5B89\u88C5 Apache \u7B49 Web\u670D\u52A1\u5668\uFF0C\u8FD8\u53EF\u4EE5\u4F7F\u7528 Jekyll \u7684\u5185\u7F6E Web\u670D\u52A1\u5668\u3002
 
 {% highlight bash linenos %}
 $ jekyll --server --auto
 {% endhighlight %}
 
-默认在端口4000开启 Web服务器，访问 http://localhost:4000 即可。
+\u9ED8\u8BA4\u5728\u7AEF\u53E34000\u5F00\u542F Web\u670D\u52A1\u5668\uFF0C\u8BBF\u95EE http://localhost:4000 \u5373\u53EF\u3002
 
-h3. 下面是一些在 jekyll 运行时可能会出现的一些问题及解决方案：
+h3. \u4E0B\u9762\u662F\u4E00\u4E9B\u5728 jekyll \u8FD0\u884C\u65F6\u53EF\u80FD\u4F1A\u51FA\u73B0\u7684\u4E00\u4E9B\u95EE\u9898\u53CA\u89E3\u51B3\u65B9\u6848\uFF1A
 
 h2. Problem1 <a href="https://github.com/mojombo/jekyll/issues/388" target="_blank">"When a Liquid exception is thrown by a post, the error-handling cannot call self.name"</a>
 
-在 lib/jekyll/post.rb 中补充上 name 即可。
+\u5728 lib/jekyll/post.rb \u4E2D\u8865\u5145\u4E0A name \u5373\u53EF\u3002
 
 h2. Problem2 "Liquid error: incompatible character encodings: UTF-8 and IBM437"
 
-这个问题是在 Windows 下出现的，英文博文没问题，中文博文就会报错，原因是你所使用的控制台并不能工作 UTF-8。
+\u8FD9\u4E2A\u95EE\u9898\u662F\u5728 Windows \u4E0B\u51FA\u73B0\u7684\uFF0C\u82F1\u6587\u535A\u6587\u6CA1\u95EE\u9898\uFF0C\u4E2D\u6587\u535A\u6587\u5C31\u4F1A\u62A5\u9519\uFF0C\u539F\u56E0\u662F\u4F60\u6240\u4F7F\u7528\u7684\u63A7\u5236\u53F0\u5E76\u4E0D\u80FD\u5DE5\u4F5C UTF-8\u3002
 
-<h3>1. MyGit 控制台解决方案</h3>
-* 临时：在执行 jekyll 命令前，将当前控制台的代码格式转为 UTF-8:
+<h3>1. MyGit \u63A7\u5236\u53F0\u89E3\u51B3\u65B9\u6848</h3>
+* \u4E34\u65F6\uFF1A\u5728\u6267\u884C jekyll \u547D\u4EE4\u524D\uFF0C\u5C06\u5F53\u524D\u63A7\u5236\u53F0\u7684\u4EE3\u7801\u683C\u5F0F\u8F6C\u4E3A UTF-8:
 
 {% highlight bash linenos %}
 $ export LC_ALL=en_US.UTF-8
@@ -43,19 +43,19 @@ $ export LANG=en_US.UTF-8
 $ jekyll --server --auto
 {% endhighlight %}
 
-* 永久：添加两对用户自定义的环境变量，LC_ALL=en_US.UTF-8 和 LANG=en_US.UTF-8
+* \u6C38\u4E45\uFF1A\u6DFB\u52A0\u4E24\u5BF9\u7528\u6237\u81EA\u5B9A\u4E49\u7684\u73AF\u5883\u53D8\u91CF\uFF0CLC_ALL=en_US.UTF-8 \u548C LANG=en_US.UTF-8
 
 
 
-<h3>2. cmd 控制台解决方案</h3>
-* 临时：在执行 jekyll 命令前，将当前控制台的代码格式转为 UTF-8:
+<h3>2. cmd \u63A7\u5236\u53F0\u89E3\u51B3\u65B9\u6848</h3>
+* \u4E34\u65F6\uFF1A\u5728\u6267\u884C jekyll \u547D\u4EE4\u524D\uFF0C\u5C06\u5F53\u524D\u63A7\u5236\u53F0\u7684\u4EE3\u7801\u683C\u5F0F\u8F6C\u4E3A UTF-8:
 
 {% highlight bash linenos %}
 chcp 65001
 jekyll --server --auto
 {% endhighlight %}
 
-* 永久：将 chcp 命令和 jekyll 命令合并成一个 rake 任务，文件名就叫 rakefile，在 cmd 控制台执行 rake runwindows 即可。
+* \u6C38\u4E45\uFF1A\u5C06 chcp \u547D\u4EE4\u548C jekyll \u547D\u4EE4\u5408\u5E76\u6210\u4E00\u4E2A rake \u4EFB\u52A1\uFF0C\u6587\u4EF6\u540D\u5C31\u53EB rakefile\uFF0C\u5728 cmd \u63A7\u5236\u53F0\u6267\u884C rake runwindows \u5373\u53EF\u3002
 <pre><code>
 task :runwindows do
     puts '* Changing the codepage'
@@ -66,21 +66,21 @@ end
 </code></pre>
 
 <a href="https://github.com/mojombo/jekyll/issues/188" target="_blank"> >>>Ruby 1.9 character encoding changes</a>
-<a href="http://ruby-taiwan.org/topics/46" target="_blank"> >>>octopress在windows下出现的字符集错误</a>
+<a href="http://ruby-taiwan.org/topics/46" target="_blank"> >>>octopress\u5728windows\u4E0B\u51FA\u73B0\u7684\u5B57\u7B26\u96C6\u9519\u8BEF</a>
 <a href="http://joseoncode.com/2011/11/27/solving-utf-problem-with-jekyll-on-windows/" target="_blank"> >>>Solving UTF problem with Jekyll on Windows</a>
 
 h2. Problem3 "Ruby193/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in 'read_yaml': invalid byte sequence in GBK (ArgumentError)"
 
-貌似是 jekyll 的一个 bug
+\u8C8C\u4F3C\u662F jekyll \u7684\u4E00\u4E2A bug
 
-将 convertible.rb 的第29行改为：
+\u5C06 convertible.rb \u7684\u7B2C29\u884C\u6539\u4E3A\uFF1A
 <b>self.content = File.read(File.join(base, name), :encoding => "utf-8")</b>
 
-<a href="http://www.oschina.net/question/129471_37163" target="_blank"> >>>windows下git bash中执行jekyll --server出错，编码问题</a>
+<a href="http://www.oschina.net/question/129471_37163" target="_blank"> >>>windows\u4E0Bgit bash\u4E2D\u6267\u884Cjekyll --server\u51FA\u9519\uFF0C\u7F16\u7801\u95EE\u9898</a>
 
-h2. Problem4 卡在"Running the classifier...this could take a while"，无法即时调试
+h2. Problem4 \u5361\u5728"Running the classifier...this could take a while"\uFF0C\u65E0\u6CD5\u5373\u65F6\u8C03\u8BD5
 
-若要解释清楚此怪，还得从 Related posts 说起，这个相关博文的定位源于下面这个函数：
+\u82E5\u8981\u89E3\u91CA\u6E05\u695A\u6B64\u602A\uFF0C\u8FD8\u5F97\u4ECE Related posts \u8BF4\u8D77\uFF0C\u8FD9\u4E2A\u76F8\u5173\u535A\u6587\u7684\u5B9A\u4F4D\u6E90\u4E8E\u4E0B\u9762\u8FD9\u4E2A\u51FD\u6570\uFF1A
 
 {% highlight ruby linenos %}
 # Calculate related posts.
@@ -106,17 +106,17 @@ def related_posts(posts)
 end
 {% endhighlight %}
 
-相信你已经发现了，这句"Running the classifier... this could take a while."就产自这里，分类器一直在工作，分出哪些是相关的博文，所以当你的博文数量很多的时候，这个分类的时间就会很长，可能永远处于Running状态（只限于本地调试的时间）。
+\u76F8\u4FE1\u4F60\u5DF2\u7ECF\u53D1\u73B0\u4E86\uFF0C\u8FD9\u53E5"Running the classifier... this could take a while."\u5C31\u4EA7\u81EA\u8FD9\u91CC\uFF0C\u5206\u7C7B\u5668\u4E00\u76F4\u5728\u5DE5\u4F5C\uFF0C\u5206\u51FA\u54EA\u4E9B\u662F\u76F8\u5173\u7684\u535A\u6587\uFF0C\u6240\u4EE5\u5F53\u4F60\u7684\u535A\u6587\u6570\u91CF\u5F88\u591A\u7684\u65F6\u5019\uFF0C\u8FD9\u4E2A\u5206\u7C7B\u7684\u65F6\u95F4\u5C31\u4F1A\u5F88\u957F\uFF0C\u53EF\u80FD\u6C38\u8FDC\u5904\u4E8ERunning\u72B6\u6001\uFF08\u53EA\u9650\u4E8E\u672C\u5730\u8C03\u8BD5\u7684\u65F6\u95F4\uFF09\u3002
 
-注意上面紧接着出现了一个关键词 *lsi* ， <a href="https://github.com/mojombo/jekyll/wiki/configuration" target="_blank">Jekyll Configuration</a> 里面有对其的描述 "Produces an index for related posts(产生相关博文的索引)"，至此就知道了只要把 lsi 功能关掉即可。
+\u6CE8\u610F\u4E0A\u9762\u7D27\u63A5\u7740\u51FA\u73B0\u4E86\u4E00\u4E2A\u5173\u952E\u8BCD *lsi* \uFF0C <a href="https://github.com/mojombo/jekyll/wiki/configuration" target="_blank">Jekyll Configuration</a> \u91CC\u9762\u6709\u5BF9\u5176\u7684\u63CF\u8FF0 "Produces an index for related posts(\u4EA7\u751F\u76F8\u5173\u535A\u6587\u7684\u7D22\u5F15)"\uFF0C\u81F3\u6B64\u5C31\u77E5\u9053\u4E86\u53EA\u8981\u628A lsi \u529F\u80FD\u5173\u6389\u5373\u53EF\u3002
 
-在 _config.yml 可以找到对 lsi 的设置，直接删掉即可，默认是 lsi:false
+\u5728 _config.yml \u53EF\u4EE5\u627E\u5230\u5BF9 lsi \u7684\u8BBE\u7F6E\uFF0C\u76F4\u63A5\u5220\u6389\u5373\u53EF\uFF0C\u9ED8\u8BA4\u662F lsi:false
 
 <a href="http://bristolrb.org/2009/01/22/latent-semantic-indexing.html" target="_blank"> >>>Latent semantic indexing</a>
 
-h2. Problem5 "Liquid error: undefined method `join’for ......"
+h2. Problem5 "Liquid error: undefined method `join\u2019for ......"
 
-这好像是 Liquid 2.3.0 的一个 bug，通过还原2.2.2版本即可解决：
+\u8FD9\u597D\u50CF\u662F Liquid 2.3.0 \u7684\u4E00\u4E2A bug\uFF0C\u901A\u8FC7\u8FD8\u539F2.2.2\u7248\u672C\u5373\u53EF\u89E3\u51B3\uFF1A
 
 {% highlight bash linenos %}
 $ gem uninstall liquid
@@ -125,4 +125,4 @@ $ gem install liquid --version '2.2.2'
 
 <a href="http://stackoverflow.com/questions/7801197/syntax-highlighting-with-pygments-is-failing-via-liquid-templates-string-error" target="_blank"> >>>Syntax Highlighting with Pygments is failing via Liquid Templates String Error</a>
 
-h2. Problem6 "Liquid error: No such file or directory – pygmentize"
+h2. Problem6 "Liquid error: No such file or directory \u2013 pygmentize"
