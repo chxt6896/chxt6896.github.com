@@ -1,14 +1,14 @@
 ---
 layout: post
-title: mysqldb安装心路Ubuntu 
+title: mysqldb 安装心路 Ubuntu 
 category: python
 ---
 
-<b>正在学习web.py，看到了数据库部分。</b>
+h3. 正在学习 web.py，看到了数据库部分。
 
-引用原文“注意:在你开始使用数据库之前，确保你已经安装了合适的数据库访问库。比如对于MySQL数据库，使用 MySQLdb，对于Postgres数据库使用psycopg2。”Postgres没听说过，故还是选择MySQL。
+引用原文"注意:在你开始使用数据库之前，确保你已经安装了合适的数据库访问库。比如对于 MySQL 数据库，使用 MySQLdb，对于 Postgres 数据库使用 psycopg2。" Postgres 没听说过，故还是选择 MySQL。
 
-根据链接去下载了MySQL-python-1.2.3，打开README，好长的安装前提条件，，，
+根据链接去下载了 MySQL-python-1.2.3，打开 README，好长的安装前提条件，，，
 
 Prerequisites
 
@@ -112,68 +112,59 @@ Prerequisites
 
 .. _Cygwin: http://www.cygwin.com/
 
+h3. 重点在安装 setuptools 和 MySQL
 
+h2. Step1 安装 MySQL
 
-<b>重点在安装setuptools和MySQL</b>
+去官网上下载了包包，结果最后还是选择了用新立得安装
 
-<b>1.安装MySQL：</b>
+{% highlight bash linenos %}
+$ sudo apt-get install mysql-server mysql-client
+$ sudo start mysql
+$ sudo stop mysql
+{% endhighlight %}
+  
+当你修改了配置文件後，你需要重启 mysqld 才能使这些修改生效。
 
-  去官网上下载了包包，结果最后还是选择了用新立得安装
+要想检查 mysqld 进程是否已经开启，可以使用下面的命令：
 
-  sudo apt-get install mysql-server mysql-client
+{% highlight bash linenos %}
+$ pgrep mysqld
+{% endhighlight %}
+  
+如果进程开启，这个命令将会返回该进程的 id。
 
-  sudo start mysql #手动的话这样启动
+<a href="http://2010.siteserver.cn/itwebsite/contents/2060/5969.html" target="_blank"> >>Ubuntu下安装mysql的方法</a>
+<a href="http://2goo.info/blog/panjj/other/2010/10/22/134" target="_blank"> >>Ubuntu下安装MySQL</a>
 
-  sudo stop mysql #手动停止
-
-  当你修改了配置文件後，你需要重启 mysqld 才能使这些修改生效。
-
-  要想检查 mysqld 进程是否已经开启，可以使用下面的命令：
-
-  pgrep mysqld
-
-  如果进程开启，这个命令将会返回该进程的 id。
-
-  "http://2010.siteserver.cn/itwebsite/contents/2060/5969.html":http://2010.siteserver.cn/itwebsite/contents/2060/5969.html
-
-  "http://2goo.info/blog/panjj/other/2010/10/22/134":http://2goo.info/blog/panjj/other/2010/10/22/134
-
-
-
-<b>2.安装setuptools：</b>
+h2. Step2 安装 setuptools
 
 从新立得可以安装
 
+h3. 下面进入主题 mysqldb 的安装
 
+{% highlight bash linenos %}
+$ tar xfz MySQL-python-1.2.1.tar.gz
+$ cd MySQL-python-1.2.1
+# edit site.cfg if necessary
+$ python setup.py build
+$ sudo python setup.py install
+{% endhighlight %}
+  
+h3. 最后一步安装会遇到的问题
 
+h2. Problem1 没有 mysql_config 文件
 
-
-<b>##下面进入主题mysqldb的安装：</b>
-
-  $ tar xfz MySQL-python-1.2.1.tar.gz
-  $ cd MySQL-python-1.2.1
-  $ # edit site.cfg if necessary
-  $ python setup.py build
-  $ sudo python setup.py install # or su first
-
-
-
-<b>最后一步安装会遇到的问题：</b>
-
-<b>1.没有mysql_config文件</b>
-
-mysql_config是属于MySQL开发用的文件，而使用apt-get安装的MySQL是没有这个文件的，于是在包安装器里面寻找
+mysql_config 是属于 MySQL 开发用的文件，而使用 apt-get 安装的 MySQL 是没有这个文件的，于是在包安装器里面寻找
 
 libmysqld-dev
-
 libmysqlclient-dev
 
 这两个包安装后问题即可解决
 
+h2. Problem2 EnvironmentError: mysql_config not found
 
-
-<b>2.EnvironmentError: mysql_config not found</b>
-
+<pre>
 root@vpser:~# cd MySQL-python-1.2.3
 root@vpser:~/MySQL-python-1.2.3# python setup.py install
 sh: mysql_config: not found
@@ -185,19 +176,22 @@ Traceback (most recent call last):
   File "/root/MySQL-python-1.2.3/setup_posix.py", line 24, in mysql_config
     raise EnvironmentError("%s not found" % (mysql_config.path,))
 EnvironmentError: mysql_config not found
+</pre>
 
-首先查找mysql_config的位置，使用find / -name mysql_config ，比如我的在/usr/local/mysql/bin/mysql_config
+首先查找 mysql_config 的位置，使用 find / -name mysql_config，比如我的在 /usr/local/mysql/bin/mysql_config
 
-修改setup_posix.py文件，在26行：
+修改 setup_posix.py 文件，在26行：
 mysql_config.path = "mysql_config" 修改为：
 mysql_config.path = "/usr/local/mysql/bin/mysql_config"
-修改完成后保存，再执行
+修改完成后保存，再执行: 
 
+{% highlight bash linenos %}
 $ python setup.py build
-$ sudo python setup.py install # or su first
+$ sudo python setup.py install
+{% endhighlight %}
 
+h3. 说到这里其实非常的麻烦了，继续看 README 文档，下面其实有说明可以直接用新立得安装，尴尬，，，。。。
 
-
-<b>说到这里其实非常的麻烦了，继续看README文档，下面其实有说明可以直接用新立得安装，尴尬，，，。。。</b>
-
-sudo apt-get install python-mysqldb
+{% highlight bash linenos %}
+$ sudo apt-get install python-mysqldb
+{% endhighlight %}

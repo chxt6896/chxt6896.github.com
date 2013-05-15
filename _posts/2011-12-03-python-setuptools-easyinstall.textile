@@ -4,17 +4,17 @@ title: Setuptools(easy_install) 安装利器
 category: python
 ---
 
-setuptools是 Python Enterprise Application Kit（PEAK）的一个副项目，它 是一组Python的 distutilsde工具的增强工具(适用于 Python 2.3.5 以上的版本，64 位平台则适用于 Python 2.4 以上的版本)，可以让程序员更方便的创建和发布 Python 包，特别是那些对其它包具有依赖性的状况。
+setuptools 是 Python Enterprise Application Kit（PEAK）的一个副项目，它 是一组 Python 的 distutilsde工具的增强工具(适用于 Python 2.3.5 以上的版本，64 位平台则适用于 Python 2.4 以上的版本)，可以让程序员更方便的创建和发布 Python 包，特别是那些对其它包具有依赖性的状况。
 
 h2. 简介
 
-经常接触Python的同学可能会注意到，当需要安装第三方python包时，可能会用到<b>easy_install</b>命令。easy_install是由<a href="http://peak.telecommunity.com/" rel="nofollow">PEAK</a>(Python Enterprise Application Kit)开发的<a href="http://pypi.python.org/pypi/setuptools" rel="nofollow">setuptools</a>包里带的一个命令，所以使用easy_install实际上是在调用setuptools来完成安装模块的工作。
+经常接触 Python 的同学可能会注意到，当需要安装第三方 python 包时，可能会用到 *easy_install* 命令。easy_install是由<a href="http://peak.telecommunity.com/" target="_blank">PEAK</a>(Python Enterprise Application Kit)开发的<a href="http://pypi.python.org/pypi/setuptools" target="_blank">setuptools</a>包里带的一个命令，所以使用easy_install实际上是在调用setuptools来完成安装模块的工作。
 
-Perl 用户比较熟悉 CPAN，而 Ruby 用户则比较熟悉 Gems；引导 <b>setuptools</b> 的 <b>ez_setup</b> 工具和随之而生的扩展后的 <b>easy_install</b> 与 “Cheeseshop”（Python Package Index，也称为 “PyPI”）一起工作来实现相同的功能。它可以很方便的让您自动下载，编译，安装和管理Python包。
+Perl 用户比较熟悉 CPAN，而 Ruby 用户则比较熟悉 Gems；引导 *setuptools* 的 *ez_setup* 工具和随之而生的扩展后的 *easy_install* 与 "Cheeseshop"（Python Package Index，也称为 "PyPI"）一起工作来实现相同的功能。它可以很方便的让您自动下载，编译，安装和管理Python包。
 
 h2. 特性
 
-相比Python 自带的用于发布 Python 应用程序的模块distutils ，用于发布 Python 应用程序。但 distutils 没有提供定义其它依赖包的功能，setuptools 的真正优点并不在于实现distutils 所能实现的功能——尽管它的确增强了distutils的功能并简化了setup.py 脚本中的内容。setuptools 最大的优势是它在包管理能力方面的增强。它可以使用一种更加透明的方法来查找、下载并安装依赖包；并可以在一个包的多个版本中自由进行切换，这些版本都安装在同一个系统上；也可以声明对某个包的特定版本的需求；还可以只使用一个简单的命令就能更新到某个包的最新版本。给人印象最为深刻的是，即使有些包的开发人员可能还从未考虑过任何 setuptools 兼容性问题，我们依然可以使用这些包。
+相比 Python 自带的用于发布 Python 应用程序的模块 distutils，用于发布 Python 应用程序。但 distutils 没有提供定义其它依赖包的功能，setuptools 的真正优点并不在于实现 distutils 所能实现的功能——尽管它的确增强了 distutils 的功能并简化了 setup.py 脚本中的内容。setuptools 最大的优势是它在包管理能力方面的增强。它可以使用一种更加透明的方法来查找、下载并安装依赖包；并可以在一个包的多个版本中自由进行切换，这些版本都安装在同一个系统上；也可以声明对某个包的特定版本的需求；还可以只使用一个简单的命令就能更新到某个包的最新版本。给人印象最为深刻的是，即使有些包的开发人员可能还从未考虑过任何 setuptools 兼容性问题，我们依然可以使用这些包。
 
 * 在构建时使用 EasyInstall 工具自动查找、下载、安装、升级所依赖的软件包，EasyInstall 支持通过 HTTP、 FTP、 Subversion 以及 SuroceForge 下载软件包，并能自动扫描 PyPI 上的网页以找到下载链接。(对于熟悉 Perl 的用户， PyPI 是 Python 领域最接近的 CPAN 了。)
 
@@ -46,7 +46,7 @@ h3. a.使用 ez_setup.py 安装
 
 这是 setuptools 自豪的一种安装方式，只需要一个大约 8K 作为的脚本ez_setup.py，就能自动为用户安装包括 setuptools 自身在内的许多 Python 包。
 
-使用这种方式，用户只需要下载 <a href="http://peak.telecommunity.com/dist/ez_setup.py" rel="nofollow">ez_setup.py</a> 并运行，就可以自动下载和安装适合用户当前 Python 版本的适当的 setuptools egg 文件(当然，用户需要 Python 2.3.5 以上的版本，64 位操作系统的用户则需要 Python 2.4 以上的版本)。此外，这段脚本还会将可执行的 easy_install 脚本安装到用户所有的操作系统 Python 可执行脚本正常应该安装的位置(例如，Windows 用户会安装到 Python 安装目录下的 Scripts 目录中)。关于这种安装方法的更详细说明和注意事项，请参考其<a href="http://peak.telecommunity.com/DevCenter/EasyInstall#installing-easy-install" rel="nofollow">官方说明</a>。简单的安装命令如下：
+使用这种方式，用户只需要下载 <a href="http://peak.telecommunity.com/dist/ez_setup.py" target="_blank">ez_setup.py</a> 并运行，就可以自动下载和安装适合用户当前 Python 版本的适当的 setuptools egg 文件(当然，用户需要 Python 2.3.5 以上的版本，64 位操作系统的用户则需要 Python 2.4 以上的版本)。此外，这段脚本还会将可执行的 easy_install 脚本安装到用户所有的操作系统 Python 可执行脚本正常应该安装的位置(例如，Windows 用户会安装到 Python 安装目录下的 Scripts 目录中)。关于这种安装方法的更详细说明和注意事项，请参考其<a href="http://peak.telecommunity.com/DevCenter/EasyInstall#installing-easy-install" target="_blank">官方说明</a>。简单的安装命令如下：
 
 {% highlight bash linenos %} 
 $ wget -q http://peak.telecommunity.com/dist/ez_setup.py
@@ -59,7 +59,7 @@ Linux: /usr/local/bin
 
 h3. b.使用完整的安装包安装（推荐）
 
-当然，用户也可以使用 setuptools 在 <a href="http://pypi.python.org/pypi/setuptools" rel="nofollow">Python Cheese Shop</a> 上发布的合适的完整的发布版本来安装。
+当然，用户也可以使用 setuptools 在 <a href="http://pypi.python.org/pypi/setuptools" target="_blank">Python Cheese Shop</a> 上发布的合适的完整的发布版本来安装。
 
 对于使用 Windows 的用户，下载相应的exe文件安装～
 
@@ -73,7 +73,7 @@ h2. 使用
 
 使用方法非常简单，在命令行输入“easy_install 参数”即可。
 
-1. 通过模块名称来安装。setuptools会自动搜索<a href="http://pypi.python.org/pypi" rel="nofollow">PyPI</a> 以查找最新版本的模块。如果找到的话，她会自动下载、编译和安装：例如
+1. 通过模块名称来安装。setuptools会自动搜索<a href="http://pypi.python.org/pypi" target="_blank">PyPI</a> 以查找最新版本的模块。如果找到的话，她会自动下载、编译和安装：例如
 
 {% highlight bash linenos %}
 $ easy_install SQLObject
@@ -117,32 +117,32 @@ $ easy_install .
 $ easy_install -m package-name 
 {% endhighlight %}
 
-如果想删除通过easy_install安装的软件包，比如说：MySQL-python，可以执行命令：
+如果想删除通过 easy_install 安装的软件包，比如说：MySQL-python，可以执行命令：
 
 {% highlight bash linenos %}
 $ easy_install -m MySQL-python 
 {% endhighlight %}
 
-注：此操作会从easy-install.pth文件里把MySQL-python的相关信息抹去，剩下的egg文件，你可以手动删除。
-更多easyinstall的使用方法参考<a href="http://peak.telecommunity.com/DevCenter/EasyInstall" rel="nofollow">Easyinstall官方文档</a>
+注：此操作会从 easy-install.pth 文件里把 MySQL-python 的相关信息抹去，剩下的 egg 文件，你可以手动删除。
+更多easyinstall的使用方法参考<a href="http://peak.telecommunity.com/DevCenter/EasyInstall" target="_blank">Easyinstall官方文档</a>
 
-注：通过easy_install安装软件，相关安装信息会保存到easy-install.pth文件里，路径类似如下形式：
+注：通过 easy_install 安装软件，相关安装信息会保存到 easy-install.pth 文件里，路径类似如下形式：
 Windows：C:\Python26\Lib\site-packages\easy-install.pth
 Linux：/usr/local/lib/python25/site-packages/easy-install.pth
 
 h2. 相关资源
 
-* <a href="http://pypi.python.org/pypi/setuptools" rel="nofollow">setuptools模块下载地址</a>
+* <a href="http://pypi.python.org/pypi/setuptools" target="_blank"> setuptools模块下载地址</a>
 
-* <a href="http://peak.telecommunity.com/DevCenter/setuptools" rel="nofollow">setuptools在线文档</a>
+* <a href="http://peak.telecommunity.com/DevCenter/setuptools" target="_blank">setuptools在线文档</a>
 
-* <a href="http://peak.telecommunity.com/DevCenter/EasyInstall" rel="nofollow">Easy install在线文档</a>
+* <a href="http://peak.telecommunity.com/DevCenter/EasyInstall" target="_blank">Easy install在线文档</a>
 
-* <a href="http://www.ibm.com/developerworks/cn/linux/l-cppeak3.html" rel="nofollow">可爱的Python: 使用 setuptools 孵化 Python egg</a>
+* <a href="http://www.ibm.com/developerworks/cn/linux/l-cppeak3.html" target="_blank">可爱的Python: 使用 setuptools 孵化 Python egg</a>
 
-* <a href="http://peak.telecommunity.com/dist/ez_setup.py" rel="nofollow">ez_setup.py脚本</a>
+* <a href="http://peak.telecommunity.com/dist/ez_setup.py" target="_blank">ez_setup.py脚本</a>
 
-以上是python下setuptools的简介 。
+以上是 python 下 setuptools 的简介 。
 
 h2. egg
  

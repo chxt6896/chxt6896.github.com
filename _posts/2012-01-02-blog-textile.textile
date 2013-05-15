@@ -4,28 +4,28 @@ title: Textile 标记语言
 category: blog
 ---
 
-h2. <a href="http://swik.net/Textile">Textile</a>
+h2. <a href="http://swik.net/Textile" target="_blank">Textile</a>
 
-Textile is a <a href="http://swik.net/web">web</a> text <a href="http://swik.net/markup-language">markup-language</a> that balances the strength of HTML with speed and ease of editing.
+Textile is a <a href="http://swik.net/web" target="_blank">web</a> text <a href="http://swik.net/markup-language" target="_blank">markup-language</a> that balances the strength of HTML with speed and ease of editing.
 
-Unlike many wiki or other markup languages, Textile sticks closely to the semantics of <a href="http://swik.net/HTML">HTML</a>, headings for example are represented by 'h1', 'h2' for <code><h1></code> and <code><h2></code>. Attaching classes and ids to elements is also easy with Textile.
+Unlike many wiki or other markup languages, Textile sticks closely to the semantics of <a href="http://swik.net/HTML" target="_blank">HTML</a>, headings for example are represented by 'h1', 'h2' for <code><h1></code> and <code><h2></code>. Attaching classes and ids to elements is also easy with Textile.
 
-Textile is used by both blogs and a number of <a href="http://swik.net/wiki">wikis</a>, including the <a href="http://swik.net/Rails">Ruby on Rails</a> <a href="http://swik.net/instiki">instiki</a> powered wiki and by <a href="http://swik.net/SWiK">SWiK</a>. Textile does not make a provision for wiki links however, so various wikis have interpreted their own wiki link standards.
+Textile is used by both blogs and a number of <a href="http://swik.net/wiki" target="_blank">wikis</a>, including the <a href="http://swik.net/Rails" target="_blank">Ruby on Rails</a> <a href="http://swik.net/instiki" target="_blank">instiki</a> powered wiki and by <a href="http://swik.net/SWiK" target="_blank">SWiK</a>. Textile does not make a provision for wiki links however, so various wikis have interpreted their own wiki link standards.
 
 h3. Textile implementations
 
-# <a href="http://swik.net/Redcloth">Redcloth</a> - Ruby （我的选择）
-# <a href="http://swik.net/Text%3A%3ATextile">Text::Textile</a> - Perl
-# <a href="http://swik.net/PyTextile">PyTextile</a> - Python
-# <a href="http://swik.net/TextilePHP">TextilePHP</a> - PHP
-# <a href="http://swik.net/Textile4J">Textile4J</a> - Java
-# <a href="http://swik.net/JTextile">JTextile</a> - Java
-# <a href="http://swik.net/Textile-J">Textile-J</a> - Java and <a href="http://swik.net/Eclipse">Eclipse</a>
-# <a href="http://swik.net/PLextile">PLextile</a> - Java
+# <a href="http://swik.net/Redcloth" target="_blank">Redcloth</a> - Ruby （我的选择）
+# <a href="http://swik.net/Text%3A%3ATextile" target="_blank">Text::Textile</a> - Perl
+# <a href="http://swik.net/PyTextile" target="_blank">PyTextile</a> - Python
+# <a href="http://swik.net/TextilePHP" target="_blank">TextilePHP</a> - PHP
+# <a href="http://swik.net/Textile4J" target="_blank">Textile4J</a> - Java
+# <a href="http://swik.net/JTextile" target="_blank">JTextile</a> - Java
+# <a href="http://swik.net/Textile-J" target="_blank">Textile-J</a> - Java and <a href="http://swik.net/Eclipse" target="_blank">Eclipse</a>
+# <a href="http://swik.net/PLextile" target="_blank">PLextile</a> - Java
 
-h2. <a href="http://redcloth.org/">Redcloth</a>
+h2. <a href="http://redcloth.org/" target="_blank">Redcloth</a>
 
-RedCloth is a module for using <a href="http://swik.net/Textile">Textile</a> in <a href="http://swik.net/Ruby">Ruby</a>. <a href="http://swik.net/Textile">Textile</a> is a text format. RedCloth acts as a complete <a href="http://swik.net/Textile">Textile</a> processing engine.
+RedCloth is a module for using <a href="http://swik.net/Textile" target="_blank">Textile</a> in <a href="http://swik.net/Ruby" target="_blank">Ruby</a>. <a href="http://swik.net/Textile" target="_blank">Textile</a> is a text format. RedCloth acts as a complete <a href="http://swik.net/Textile" target="_blank">Textile</a> processing engine.
 
 因为 Jekyll 是基于 Ruby 的，故选择了同样基于 Ruby 的 RedCloth
 
@@ -45,6 +45,6 @@ markdown: redcloth
 
 h2. 使用方法
 
-可以学习官方的 <a href="http://redcloth.org/hobix.com/textile/"> >>>Textile Quick Reference</a>
+可以学习官方的 <a href="http://redcloth.org/hobix.com/textile/" target="_blank"> >>>Textile Quick Reference</a>
 
-也可以使用轻量级的 <a href="http://www.textism.com/tools/textile/index.php"> >>>Textism</a>
+也可以使用轻量级的 <a href="http://www.textism.com/tools/textile/index.php" target="_blank" >>>Textism</a>

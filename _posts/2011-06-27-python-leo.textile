@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Leo文学化编程
+title: Leo 文学化编程
 category: python
 ---
 
@@ -8,8 +8,8 @@ category: python
 
 比起写帮助文档，这个功能要强大很多
 
-最新的4.9版本需要Qt GUI Toolkit，还没整明白
+最新的4.9版本需要 Qt GUI Toolkit，还没整明白
 
-于是，还是用的07年老版本4.5版，使用python-tk图形化
+于是，还是用的07年老版本4.5版，使用 python-tk 图形化
 
 哥们也文学一把～～～

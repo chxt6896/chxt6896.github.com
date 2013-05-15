@@ -14,7 +14,7 @@ h2. 为什么使用 Disqus
 
 h2. Step1
 
-<a href="http://disqus.com">注册 Disqus 帐号</a>，用邮箱注册下就可以了，注册需要填写：Site URL，Site Name，Site Shortname
+<a href="http://disqus.com" target="_blank">注册 Disqus 帐号</a>，用邮箱注册下就可以了，注册需要填写：Site URL，Site Name，Site Shortname
 
 h3. 注意：这3个都是必须要填写的，而且，短域名将会在最后的 install 中使用到
 
@@ -24,7 +24,7 @@ h2. Step2
 
 h2. Step3
 
-安装，因为没有用到插件安装，所以选择最下面的 <a href="http://docs.disqus.com/developers/universal/">Universal Code</a> ～所谓安装，其实就是将一段 js 代码嵌入到你的博客源代码里面
+安装，因为没有用到插件安装，所以选择最下面的 <a href="http://docs.disqus.com/developers/universal/" target="_blank">Universal Code</a> ～所谓安装，其实就是将一段 js 代码嵌入到你的博客源代码里面
 
 在开始之前，你需要确认：
 
@@ -76,7 +76,7 @@ h2. 添加评论计数到首页
 
 然后，在首页需要添加评论的地方，写一个链接，href 的属性值为 {{"{{ post.url"}} }}#disqus_thread，Disqus 将会通过 URL 获取评论数
 
-<a href="http://disqus.com/api/docs/"> >>>The Disqus Web API</a>
+<a href="http://disqus.com/api/docs/" target="_blank"> >>>The Disqus Web API</a>
 
 h2. 添加最近评论到首页（新版上面找不到了）
 
@@ -90,4 +90,4 @@ h2. 添加最近评论到首页（新版上面找不到了）
 
 !/images/blog/disqus.png!
 
-<a href="http://disqus.rubyforge.org/classes/Disqus/Widget.html"> >>>Disqus Widget</a>
+<a href="http://disqus.rubyforge.org/classes/Disqus/Widget.html" target="_blank"> >>>Disqus Widget</a>

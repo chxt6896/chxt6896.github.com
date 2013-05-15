@@ -4,16 +4,16 @@ title: Readability
 category: python
 ---
 
-<b>Readability是用JavaScript 技术写的程序，能够自动识别HTML页面中的正文内容，将导航、菜单、广告、页脚等非正文内容剔除掉，从而留下一个HTML页面最有用的信息。</b>
+<b>Readability是用 JavaScript 技术写的程序，能够自动识别 HTML 页面中的正文内容，将导航、菜单、广告、页脚等非正文内容剔除掉，从而留下一个 HTML 页面最有用的信息。</b>
 
-Readability有Python、php、ruby等语言的实现，这里就给大家介绍一下Readability的Python实现。
+Readability 有 Python、php、ruby 等语言的实现，这里就给大家介绍一下 Readability 的 Python 实现。
 
-<b>Python Readability 是基于BeautifulSoup的，所以可移植性很好，可以在GAE上面直接使用，但是速度会稍微慢一些。</b>
+<b>Python Readability 是基于 BeautifulSoup 的，所以可移植性很好，可以在 GAE 上面直接使用，但是速度会稍微慢一些。</b>
 
 参考:
 
-Python Readability "https://github.com/gfxmonk/python-readability":https://github.com/gfxmonk/python-readability
+<a href="https://github.com/gfxmonk/python-readability" target="_blank">Python Readability</a>
 
-Readability "https://www.readability.com/":https://www.readability.com/
+<a href="https://www.readability.com/" target="_blank">Readability</a>
 
-decruft "http://www.minvolai.com/blog/decruft-arc90s-readability-in-python/":http://www.minvolai.com/blog/decruft-arc90s-readability-in-python/
+<a href="http://www.minvolai.com/blog/decruft-arc90s-readability-in-python/" target="_blank">decruft</a>

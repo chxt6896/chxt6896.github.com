@@ -6,6 +6,6 @@ category: python
 
 pydoc -p 8000
 
-然后再浏览器中打开http://localhost:8000/ 即可使用python-docs
+然后再浏览器中打开 http://localhost:8000/ 即可使用 python-docs
 
 幸福ING~~~

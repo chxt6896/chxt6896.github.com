@@ -6,6 +6,6 @@ category: html5
 
 h2. 保持一颗对技术的痴迷，开始HTML5的学习
 
-根据蔡学庸老师的学习经验，最简单且免费的方式是，先到 <a href="http://www.w3schools.com/html5/">W3Schools</a> 看相关的线上教材，看完之后大概都能够有相当不错的基础了。然后细节的部份再到 W3C（或者 WHATWG）看相关的 Spec。
+根据蔡学庸老师的学习经验，最简单且免费的方式是，先到 <a href="http://www.w3schools.com/html5/" target="_blank">W3Schools</a> 看相关的线上教材，看完之后大概都能够有相当不错的基础了。然后细节的部份再到 W3C（或者 WHATWG）看相关的 Spec。
 
 

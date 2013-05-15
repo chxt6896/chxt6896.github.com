@@ -4,11 +4,11 @@ title: Beautiful Soup-Quick Start
 category: python
 ---
 
-<b>Beautiful Soup 是一个处理Python HTML/XML的模块</b>
-Beautiful Soup的官方页面：http://www.crummy.com/software/BeautifulSoup/
+<b> Beautiful Soup 是一个处理 Python HTML/XML 的模块</b>
+<a href="http://www.crummy.com/software/BeautifulSoup/" target="_blank">Beautiful Soup的官方页面</a>
 
 <b>（一）Beautiful Soup 下载与安装</b>
-下载地址：http://www.crummy.com/software/BeautifulSoup/
+<a href="http://www.crummy.com/software/BeautifulSoup/" target="_blank">下载地址</a>
 安装其实很简单，Beautiful Soup只有一个文件BeautifulSoup.py，只要把这个文件拷到你的工作目录，就可以了。
 from BeautifulSoup import BeautifulSoup           # For processing HTML
 from BeautifulSoup import BeautifulStoneSoup 			# For processing XML
@@ -152,5 +152,4 @@ for incident in soup('td', width="90%"):
     print
 {% endhighlight %}
 
-更多可查看官方中文教程:)
-"http://www.crummy.com/software/BeautifulSoup/documentation.zh.html":http://www.crummy.com/software/BeautifulSoup/documentation.zh.html
+更多可查看<a href="http://www.crummy.com/software/BeautifulSoup/documentation.zh.html" target="_blank">官方中文教程</a>:)
