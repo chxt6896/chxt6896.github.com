@@ -15,7 +15,7 @@ h2. Step1 安装
 
 h2. Step1-1 Install TomcatPlugin
 
-在 "这里":http://www.eclipsetotale.com/tomcatPlugin.html 下载对应 Eclipse 版本的 tomcatPlugin 插件，Eclipse3.6 以上版本均使用最新 tomcatPluginV33 
+在 <a href="http://www.eclipsetotale.com/tomcatPlugin.html" target="_blank">这里</a>下载对应 Eclipse 版本的 tomcatPlugin 插件，Eclipse3.6 以上版本均使用最新 tomcatPluginV33 
 
 然后将得到的压缩包解压，放入 Eclipse 的 plugins 目录中重启 Eclipse， Tomcat 插件安装成功！ !/images/eclipse/tomcatplugin.png!
 
@@ -53,7 +53,7 @@ h2. Step3 启动
 
 点击小猫 Start Tomcat，如果程序没错就可以在 http://localhost:8080/test 下测试了
 
-<a href="http://www.cnblogs.com/jspace/archive/2011/04/04/2004947.html"> >>>Eclipse Tomcat插件的配置,及 Tomcat 的配置 ( 谁来教我？)</a>
-<a href="http://baoxbstudy.blog.51cto.com/3769874/810565"> >>>eclipse+tomcat插件开发web项目</a>
-<a href="http://blog.duteba.com/technology/article/42.htm"> >>>eclipse3.6安装tomcat插件3.3</a>
-<a href="http://www.jishuziyuan.com/archive/lw7e44355998/7361181.html"> >>>把ECLIPSE项目部署到TOMCAT插件上的问题</a>
+<a href="http://www.cnblogs.com/jspace/archive/2011/04/04/2004947.html" target="_blank"> >>>Eclipse Tomcat插件的配置,及 Tomcat 的配置 ( 谁来教我？)</a>
+<a href="http://baoxbstudy.blog.51cto.com/3769874/810565" target="_blank"> >>>eclipse+tomcat插件开发web项目</a>
+<a href="http://blog.duteba.com/technology/article/42.htm" target="_blank"> >>>eclipse3.6安装tomcat插件3.3</a>
+<a href="http://www.jishuziyuan.com/archive/lw7e44355998/7361181.html" target="_blank"> >>>把ECLIPSE项目部署到TOMCAT插件上的问题</a>

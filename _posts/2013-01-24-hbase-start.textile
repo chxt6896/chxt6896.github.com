@@ -7,7 +7,7 @@ category: hbase
 h2. 平台环境
 
 * CentOS 6.X
-* <a href="http://chxt6896.github.com/hadoop/2012/09/17/hadoop-start.html">Hadoop1.0.4 集群平台</a>  
+* <a href="http://chxt6896.github.com/hadoop/2012/09/17/hadoop-start.html" target="_blank">Hadoop1.0.4 集群平台</a>  
 * 三台机器
 ** 192.168.1.111 node111 (NameNode, SecondaryNameNode, DataNode)
 ** 192.168.1.112 node112 (DataNode)
@@ -161,4 +161,4 @@ $ jps
 
 如果出现错误或 HBase 集群未正常启动，可以查看 $HBASE_HOME/logs/ 下的日志文件。
 
-<a href="http://f.dataguru.cn/forum.php?mod=viewthread&tid=55934&page=1&extra=#pid210319"> >>Hbase-0.94.4 on Hadoop-1.0.4-1安装向导</a>
+<a href="http://f.dataguru.cn/forum.php?mod=viewthread&tid=55934&page=1&extra=#pid210319" target="_blank"> >>Hbase-0.94.4 on Hadoop-1.0.4-1安装向导</a>

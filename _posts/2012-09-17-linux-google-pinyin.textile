@@ -8,7 +8,7 @@ h3. 最近研究基于 Hadoop 的全网爬虫，又用回到了 Ubuntu 系统下
 
 h2. libgooglepinyin
 
-推荐使用 <a href="http://code.google.com/p/libgooglepinyin/">libgooglepinyin</a> 项目，它支持IBus下添加 GooglePinyin 输入法
+推荐使用 <a href="http://code.google.com/p/libgooglepinyin/" target="_blank">libgooglepinyin</a> 项目，它支持IBus下添加 GooglePinyin 输入法
 
 h2. Step1 安装依赖
 

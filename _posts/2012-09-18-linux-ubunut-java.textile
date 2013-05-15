@@ -12,7 +12,7 @@ Ubuntu 下有一个自带的 OpenJDK，但是不怎么好用，一般都还是�
 $ sudo apt-get install sun-java6-jdk
 {% endhighlight %}
 
-只能从 "Orcale Java 官网":http://www.oracle.com/technetwork/java/javase/downloads/jdk7u7-downloads-1836413.html 上下载相应的压缩包
+只能从 <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk7u7-downloads-1836413.html" target="_blank">Orcale Java 官网</a> 上下载相应的压缩包
 
 h2. Step1
 
@@ -70,4 +70,4 @@ export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin
 $ source ~/.bashrc
 {% endhighlight %}
 
-<a href="http://www.linuxidc.com/Linux/2012-04/59413.htm"> >>Ubuntu下安装JDK,Eclipse和Android SDK</a>
+<a href="http://www.linuxidc.com/Linux/2012-04/59413.htm" target="_blank"> >>Ubuntu下安装JDK,Eclipse和Android SDK</a>

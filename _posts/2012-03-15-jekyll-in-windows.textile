@@ -4,9 +4,9 @@ title: Jekyll in Windows 终极奥义
 category: blog
 ---
 
-h2. Install "msysGit":http://msysgit.github.com/ 
+h2. Install <a href="http://msysgit.github.com/" target="_blank">msysGit</a> 
 
-h2. Download "Wget":http://users.ugent.be/~bpuype/wget/ for Windows
+h2. Download <a href="http://users.ugent.be/~bpuype/wget/" target="_blank">Wget</a> for Windows
 
 Wget(&quot;World Wide Web&quot;和"Get"的结合)是一个在网络上进行下载的简单而强大的自由软件，此为 Windows 版本，只需下载 wget.exe 文件后放在 C:\windows 下即可在任何位置调用 wget 命令
 
@@ -14,8 +14,8 @@ h2. Install Ruby
 
 Jekyll requires Ruby 1.9.1 or higher 
 
-* "github.com/mojombo/jekyll/wiki/install":https://github.com/mojombo/jekyll/wiki/install
-* "rubyinstaller.org":http://rubyinstaller.org/
+* <a href="https://github.com/mojombo/jekyll/wiki/install" target="_blank">github.com/mojombo/jekyll/wiki/install</a>
+* <a href="http://rubyinstaller.org/" target="_blank">rubyinstaller.org</a>
 
 h2. Install Python
 

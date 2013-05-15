@@ -6,7 +6,7 @@ category: blog
 
 h3. 经历了太多的等待，GitHub 终于诞下了 Windows 版，有平板触摸的感觉，欢喜^^ 
 
-GitHub for Windows 是一个100%的本地应用，可以运行在 *Windows XP*, *Vista*, *7*, *pre-release Windows 8*。应用中包括完整的 "msysGit":https://github.com/msysgit/msysgit 安装，使其成为在 Windows 上使用 Git 的不二选择。
+GitHub for Windows 是一个100%的本地应用，可以运行在 *Windows XP*, *Vista*, *7*, *pre-release Windows 8*。应用中包括完整的 <a href="https://github.com/msysgit/msysgit" target="_blank">msysGit</a> 安装，使其成为在 Windows 上使用 Git 的不二选择。
 
 h2. Discover, Create and Share
 
@@ -30,5 +30,5 @@ GitHub for Windows is the easiest way to manage your repositories on GitHub.com.
 
 We provide a *no questions asked* install experience and silent, automated updates that install in the background.
 
-<a href="https://github.com/blog/1127-github-for-windows"> >>原文出处</a>
-<a href="http://windows.github.com/"> >>下载地址</a> （安装需要 .Net Framework 4, 在线下载, ssh会重新自动安装）
+<a href="https://github.com/blog/1127-github-for-windows" target="_blank"> >>原文出处</a>
+<a href="http://windows.github.com/" target="_blank"> >>下载地址</a> （安装需要 .Net Framework 4, 在线下载, ssh会重新自动安装）

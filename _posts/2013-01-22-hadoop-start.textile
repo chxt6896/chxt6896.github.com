@@ -210,8 +210,8 @@ $ jps
 
 如果出现错误或 Hadoop 集群未正常启动，可以查看 $HADOOP_HOME/logs/ 下的日志文件。
 
-<a href="http://yymmiinngg.iteye.com/blog/706699"> >>Hadoop集群安装</a>
-<a href="http://f.dataguru.cn/thread-53478-1-1.html"> >>基于CentOS 6.3 64bit操作系统的Hadoop 1.0.4 集群部署</a>
+<a href="http://yymmiinngg.iteye.com/blog/706699" target="_blank"> >>Hadoop集群安装</a>
+<a href="http://f.dataguru.cn/thread-53478-1-1.html" target="_blank"> >>基于CentOS 6.3 64bit操作系统的Hadoop 1.0.4 集群部署</a>
 
 h2. Problem1 Warning: $HADOOP_HOME is deprecated. (1.x 版本以后出现的)
 

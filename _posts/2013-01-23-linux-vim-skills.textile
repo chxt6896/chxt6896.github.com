@@ -63,6 +63,6 @@ h3. 5. vim 中那些最最常用的配置
 ** set autoread      当文件在外部被改变时，vim自动更新载入
 ** set showmatch     显示匹配的括号
 
-fn1. "Run Commands":http://en.wikipedia.org/wiki/Run_commands
+fn1. <a href="http://en.wikipedia.org/wiki/Run_commands" target="_blank">Run Commands</a>
 
-fn2. "The Ultimate vim Configuration(vimRC)":http://amix.dk/blog/post/19486
+fn2. <a href="http://amix.dk/blog/post/19486" target="_blank">The Ultimate vim Configuration(vimRC)</a>

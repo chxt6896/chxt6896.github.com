@@ -34,8 +34,8 @@ h2. hbase.regionserver.handler.count
 
 h2. hbase.hregion.max.filesize
 
-*预设值*: 
-*说明*: 
+*预设值*: 256M
+*说明*: 在当前 ReigonServer 上单个 Reigon 的最大存储空间，单个 Region 超过该值时，这个 Region 会被自动 split 成更小的 region。
 *调优*: 
 
 h2. hbase.regionserver.global.memstore.upperLimit/lowerLimit
