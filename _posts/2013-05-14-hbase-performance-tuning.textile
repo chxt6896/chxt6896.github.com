@@ -37,6 +37,20 @@ h2. hbase.hregion.max.filesize
 *预设值*: 256M
 *说明*: 在当前 ReigonServer 上单个 Reigon 的最大存储空间，单个 Region 超过该值时，这个 Region 会被自动 split 成更小的 region。
 *调优*: 
+* 小 region 对 split 和 compaction 友好，因为拆分 region 或 compact 小 region 里的 storefile 速度很快，内存占用低。缺点是 split 和 compaction 会很频繁。
+特别是数量较多的小 region 不停地 split, compaction，会导致集群响应时间波动很大，region 数量太多不仅给管理上带来麻烦，甚至会引发一些 Hbase 的 bug。
+一般512以下的都算小 region!!
+
+* 大 region，则不太适合经常 split 和 compaction，因为做一次 compact和 split 会产生较长时间的停顿，对应用的读写性能冲击非常大。此外，大 region 意味着较大的 storefile，compaction 时对内存也是一个挑战。
+当然，大 region 也有其用武之地。如果你的应用场景中，某个时间点的访问量较低，那么在此时做 compact 和 split，既能顺利完成 split 和 compaction，又能保证绝大多数时间平稳的读写性能。
+
+* 既然 split 和 compaction 如此影响性能，有没有办法去掉？
+<h3>compaction 是无法避免的，split 倒是可以从自动调整为手动。</h3>
+只要通过将这个参数值调大到某个很难达到的值，比如 100G，就可以间接禁用自动 split（RegionServer 不会对未到达 100G 的 region 做 split）。
+再配合 <a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/util/RegionSplitter.html" target="_blank">RegionSplitter</a> 这个工具，在需要 split 时，手动 split。
+手动 split 在灵活性和稳定性上比起自动split要高很多，相反，管理成本增加不多，比较推荐 online 实时系统使用。
+
+* 内存方面，小 region 在设置 memstore 的大小值上比较灵活，大 region 则过大过小都不行，过大会导致 flush 时 app 的 IO wait 增高，过小则因 store file 过多影响读性能。
 
 h2. hbase.regionserver.global.memstore.upperLimit/lowerLimit
 
@@ -44,5 +58,5 @@ h2. hbase.regionserver.global.memstore.upperLimit/lowerLimit
 *说明*: 
 *调优*: 
 
-{% highlight text linenos %}
+{% highlight bash linenos %}
 {% endhighlight %}
