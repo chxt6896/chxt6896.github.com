@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: Jekyll 本地调试之若干问题
 category: blog
