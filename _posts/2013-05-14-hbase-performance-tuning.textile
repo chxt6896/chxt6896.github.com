@@ -11,11 +11,11 @@ h2. zookeeper.session.timeout
 *预设值* : 3分钟（180000ms）
 *说明* : RegionServer 与 Zookeeper 间的连接超时时间。当超时时间到后，ReigonServer 会被 Zookeeper 从 RS 集群清单中移除，HMaster 收到移除通知后，会对这台 server 负责的 regions 重新 balance，让其他存活的 RegionServer 接管。
 *调优* : 这个 timeout 决定了 RegionServer 是否能够及时的 failover。
-*设置成1分钟或更低，可以减少因等待超时而被延长的 failover 时间。
+* 设置成1分钟或更低，可以减少因等待超时而被延长的 failover 时间。
 
-*不过需要注意的是，对于一些 Online 应用，RegionServer 从宕机到恢复时间本身就很短的（网络闪断，crash 等故障，运维可快速介入），如果调低 timeout 时间，反而会得不偿失。因为当 ReigonServer 被正式从 RS 集群中移除时，HMaster 就开始做 balance 了（让其他 RS 根据故障机器记录的 WAL 日志进行恢复）。当故障的 RS 在人工介入恢复后，这个 balance 动作是毫无意义的，反而会使负载不均匀，给 RS 带来更多负担。特别是那些固定分配 regions 的场景。
+* 不过需要注意的是，对于一些 Online 应用，RegionServer 从宕机到恢复时间本身就很短的（网络闪断，crash 等故障，运维可快速介入），如果调低 timeout 时间，反而会得不偿失。因为当 ReigonServer 被正式从 RS 集群中移除时，HMaster 就开始做 balance 了（让其他 RS 根据故障机器记录的 WAL 日志进行恢复）。当故障的 RS 在人工介入恢复后，这个 balance 动作是毫无意义的，反而会使负载不均匀，给 RS 带来更多负担。特别是那些固定分配 regions 的场景。
 
-*如果集群正在集中处理一些大数据，为避免响应时间过长（假死）而被 Zookeeper 从 RS 集群中移除，应设置成更高的时间。
+* 如果集群正在集中处理一些大数据，为避免响应时间过长（假死）而被 Zookeeper 从 RS 集群中移除，应设置成更高的时间。
 
 h2. hbase.regionserver.handler.count
 
@@ -24,13 +24,13 @@ h2. hbase.regionserver.handler.count
 *调优*: 这个参数的调优与内存息息相关。
 * 较少的 IO 线程，适用于处理单次请求内存消耗较高的 Big PUT 场景（大容量单次 PUT 或设置了较大 cache 的 scan，均属于 Big PUT）或 ReigonServer 的内存比较紧张的场景。
 
-*较多的 IO 线程，适用于单次请求内存消耗低，TPS 要求非常高的场景。设置该值的时候，以监控内存为主要参考。
+* 较多的 IO 线程，适用于单次请求内存消耗低，TPS 要求非常高的场景。设置该值的时候，以监控内存为主要参考。
 
-*这里需要注意的是如果 server 的 region 数量很少，大量的请求都落在一个region上，因快速充满 memstore 触发 flush 导致的读写锁会影响全局 TPS，不是 IO 线程数越高越好。
+* 这里需要注意的是如果 server 的 region 数量很少，大量的请求都落在一个region上，因快速充满 memstore 触发 flush 导致的读写锁会影响全局 TPS，不是 IO 线程数越高越好。
 
-*压测时，开启<a href="http://hbase.apache.org/book.html#rpc.logging" target="_blank">Enabling RPC-level logging</a>，可以同时监控每次请求的内存消耗和 GC 的状况，最后通过多次压测结果来合理调节 IO 线程数。
+* 压测时，开启<a href="http://hbase.apache.org/book.html#rpc.logging" target="_blank">Enabling RPC-level logging</a>，可以同时监控每次请求的内存消耗和 GC 的状况，最后通过多次压测结果来合理调节 IO 线程数。
 
-*这里是一个案例 <a href="http://software.intel.com/en-us/articles/hadoop-and-hbase-optimization-for-read-intensive-search-applications/" target="_blank">Hadoop and HBase Optimization for Read Intensive Search Applications</a>，作者在 SSD 的机器上设置 IO 线程数为 100，仅供参考。
+* 这里是一个案例 <a href="http://software.intel.com/en-us/articles/hadoop-and-hbase-optimization-for-read-intensive-search-applications/" target="_blank">Hadoop and HBase Optimization for Read Intensive Search Applications</a>，作者在 SSD 的机器上设置 IO 线程数为 100，仅供参考。
 
 h2. hbase.hregion.max.filesize
 
