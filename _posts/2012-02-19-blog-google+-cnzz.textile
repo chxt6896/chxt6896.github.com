@@ -8,7 +8,7 @@ h2. Google+
 
 想必你已经在很多网站上面见到过 Google+1 的按钮了，下面就在你的博客中也加入吧:
 
-首先登录 <a href="http://www.google.com/webmasters/+1/button/index.html" rel="nofollow">Google+1 按钮页面</a>，然后按照提示选择样式和设定高级功能，最后将代码粘贴到指定位置即可。
+首先登录 <a href="http://www.google.com/webmasters/+1/button/index.html" target="_blank">Google+1 按钮页面</a>，然后按照提示选择样式和设定高级功能，最后将代码粘贴到指定位置即可。
 
 h2. Problem
 
@@ -36,7 +36,7 @@ h2. Problem
 
 h2. CNZZ
 
-每天打开博客，发现都是静悄悄的，除了通过评论来引起你的注意外，一切都是浮云。因此，CNZZ站长统计的必要性就体现出来了，<a href="http://www.cnzz.com/" rel="nofollow">注册</a>并添加网址，操作非常简单。
+每天打开博客，发现都是静悄悄的，除了通过评论来引起你的注意外，一切都是浮云。因此，CNZZ站长统计的必要性就体现出来了，<a href="http://www.cnzz.com/" target="_blank">注册</a>并添加网址，操作非常简单。
 
 CNZZ 提供样式代码展示：文字样式 or 图片样式。可以选择任意一种样式代码放到你网页的尾部
 
