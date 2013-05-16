@@ -191,8 +191,6 @@ p.postmetadata a{
 div.highlight {
     margin-top: 15px;
     margin-bottom: 10px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
 }
 
 div.highlight pre {
