@@ -188,14 +188,14 @@ p.postmetadata a{
     color: #a52713;
 }
 
-div.syntax {
+div.highlight {
     margin-top: 15px;
     margin-bottom: 10px;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
 
-div.syntax pre {
+div.highlight pre {
     background-color: transparent;
     margin: 0;
     padding: 10px;
