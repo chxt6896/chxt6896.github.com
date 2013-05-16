@@ -1,0 +1,42 @@
+---
+layout: post
+title: HBase 性能调优-程序设计与开发
+category: hbase
+---
+
+h2. Part1 表的设计
+
+h3. p1.1 Pre-Creating Regions
+
+默认情况下，在创建 HBase 表的时候会自动创建一个 region 分区，当导入数据的时候，所有的 HBase 客户端都向这一个 region 写数据，直到这个 region 足够大了才进行切分。一种可以加快批量写入速度的方法是通过预先创建一些空的 regions，这样当数据写入 HBase 时，会按照 region 分区情况，在集群内做数据的负载均衡。
+
+有关预分区，详情参见 <a href="http://hbase.apache.org/book.html#precreate.regions" target="_blank">Table Creation: Pre-Creating Regions</a>，下面是一个例子: 
+
+{% highlight java linenos %}
+public static boolean createTable(HBaseAdmin admin, HTableDescriptor table, byte[][] splits) throws IOException {
+	try {
+    admin.createTable(table, splits);
+    return true;
+  } catch (TableExistsException e) {
+    logger.info("table " + table.getNameAsString() + " already exists");
+    // the table already exists...
+    return false;  
+  }
+}
+
+public static byte[][] getHexSplits(String startKey, String endKey, int numRegions) {
+  byte[][] splits = new byte[numRegions-1][];
+  BigInteger lowestKey = new BigInteger(startKey, 16);
+  BigInteger highestKey = new BigInteger(endKey, 16);
+  BigInteger range = highestKey.subtract(lowestKey);
+  BigInteger regionIncrement = range.divide(BigInteger.valueOf(numRegions));
+  lowestKey = lowestKey.add(regionIncrement);
+  for(int i=0; i < numRegions-1;i++) {
+    BigInteger key = lowestKey.add(regionIncrement.multiply(BigInteger.valueOf(i)));
+    byte[] b = String.format("%016x", key).getBytes();
+    splits[i] = b;
+  }
+  return splits;
+}
+{% endhighlight %}
+
