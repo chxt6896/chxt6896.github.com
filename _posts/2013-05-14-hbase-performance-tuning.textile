@@ -54,9 +54,42 @@ h2. hbase.hregion.max.filesize
 
 h2. hbase.regionserver.global.memstore.upperLimit/lowerLimit
 
-*预设值*: 
-*说明*: 
-*调优*: 
+*预设值*: 0.4/0.35
+*upperLimit 说明*: hbase.hregion.memstore.flush.size 这个参数的作用是当单个 Region 内所有的 memstore 大小总和超过指定值时，flush 该 region 的所有 memstore。RegionServer 的 flush 是通过将请求添加一个队列，模拟生产消费模式来异步处理的。那这里就有一个问题，当队列来不及消费，产生大量积压请求时，可能会导致内存陡增，最坏的情况是触发 OOM。
 
-{% highlight bash linenos %}
-{% endhighlight %}
+这个参数的作用是防止内存占用过大，当 ReigonServer 内所有 region 的 memstores 所占用内存总和达到 heap 的40%时，HBase 会强制 block 所有的更新并 flush 这些 region 以释放所有 memstore 占用的内存。
+*lowerLimit 说明*: 同 upperLimit，只不过 lowerLimit 在所有 region 的 memstores 所占用内存达到 Heap 的35%时，不 flush 所有的 memstore。它会找一个 memstore 内存占用最大的 region，做个别 flush，此时写更新还是会被 block。lowerLimit 算是一个在所有 region 强制 flush 导致性能降低前的补救措施。在日志中，表现为 "** Flush thread woke up with memory above low water."
+*调优*: 这是一个Heap内存保护参数，默认值已经能适用大多数场景。
+* 参数调整会影响读写，如果写的压力大导致经常超过这个阀值，则调小读缓存 hfile.block.cache.size 增大该阀值，或者 Heap 余量较多时，不修改读缓存大小。
+
+* 如果在高压情况下，也没超过这个阀值，那么建议你适当调小这个阀值再做压测，确保触发次数不要太多，然后还有较多 Heap 余量的时候，调大 hfile.block.cache.size 提高读性能。
+
+* 还有一种可能性是 hbase.hregion.memstore.flush.size 保持不变，但 RS 维护了过多的 region，要知道 region 数量直接影响占用内存的大小。
+
+h2. hfile.block.cache.size
+
+*预设值*: 0.2
+*说明*: storefile 的读缓存占用 Heap 的大小百分比，0.2表示20%。该值直接影响数据读的性能。
+*调优*: 当然是越大越好，如果写比读少很多，开到0.4-0.5也没问题。如果读写较均衡，0.3左右。如果写比读多，果断默认吧。设置这个值的时候，你同时要参考 hbase.regionserver.global.memstore.upperLimit，该值是 memstore 占 heap 的最大百分比，两个参数一个影响读，一个影响写。如果两值加起来超过80-90%，会有 OOM 的风险，谨慎设置。
+
+h2. hbase.hstore.blockingStoreFiles
+
+*预设值*: 7
+*说明*: 在 flush 时，当一个 region 中的 Store（Coulmn Family）内有超过7个 storefile 时，则 block 所有的写请求进行 compaction，以减少 storefile 数量。
+*调优*: block 写请求会严重影响当前 regionServer 的响应时间，但过多的 storefile 也会影响读性能。从实际应用来看，为了获取较平滑的响应时间，可将值设为无限大。如果能容忍响应时间出现较大的波峰波谷，那么默认或根据自身场景调整即可。
+
+h2. hbase.hregion.memstore.block.multiplier
+
+*预设值*: 2
+*说明*: 当一个 region 里的 memstore 占用内存大小超过 hbase.hregion.memstore.flush.size 两倍的大小时，block 该 region 的所有请求，进行 flush，释放内存。
+
+虽然我们设置了 region 所占用的 memstores 总内存大小，比如64M，但想象一下，在最后63.9M的时候，我 Put 了一个200M的数据，此时 memstore 的大小会瞬间暴涨到超过预期的 hbase.hregion.memstore.flush.size 的几倍。这个参数的作用是当 memstore 的大小增至超过 hbase.hregion.memstore.flush.size 2倍时，block 所有请求，遏制风险进一步扩大。
+*调优*: 这个参数的默认值还是比较靠谱的。如果你预估你的正常应用场景（不包括异常）不会出现突发写或写的量可控，那么保持默认值即可。如果正常情况下，你的写请求量就会经常暴长到正常的几倍，那么你应该调大这个倍数并调整其他参数值，比如 hfile.block.cache.size 和 hbase.regionserver.global.memstore.upperLimit/lowerLimit，以预留更多内存，防止 HBase server OOM。
+
+h2. hbase.hregion.memstore.mslab.enabled
+
+*预设值*: true
+*说明*: 减少因内存碎片导致的 Full GC，提高整体性能。
+*调优*: 详见 <a href="http://kenwublog.com/avoid-full-gc-in-hbase-using-arena-allocation" target="_blank">利用Arena Allocation避免HBase触发Full GC</a>
+
+h2. 其他
