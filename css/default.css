@@ -188,10 +188,19 @@ p.postmetadata a{
     color: #a52713;
 }
 
-.highlight{
-		background-color: #f0f0f0;
-		font-size: 16px;
-		overflow: auto;
+div.syntax {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+div.syntax pre {
+    background-color: transparent;
+    margin: 0;
+    padding: 10px;
+    border: none;
+    overflow: auto;
 }
 
 #archive_posts ul li{
