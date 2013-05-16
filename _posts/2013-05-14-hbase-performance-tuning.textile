@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HBase 性能调优
+title: HBase 性能调优-系统配置
 category: hbase
 ---
 
@@ -95,3 +95,25 @@ h2. hbase.hregion.memstore.mslab.enabled
 *调优*: 详见 <a href="http://kenwublog.com/avoid-full-gc-in-hbase-using-arena-allocation" target="_blank">利用Arena Allocation避免HBase触发Full GC</a>
 
 h2. 其他
+
+h3. 启用 LZO 压缩
+
+LZO 对比 Hbase 默认的 GZip，前者性能较高，后者压缩比较高，具体参见 <a href="http://wiki.apache.org/hadoop/UsingLzoCompression" target="_blank">Using LZO Compression</a>。对于想提高 HBase 读写性能的开发者，采用 LZO 是比较好的选择。对于非常在乎存储空间的开发者，则建议保持默认。
+
+h3. 不要在一张表里定义太多的 Column Family
+
+Hbase 目前不能良好的处理超过包含2-3个 CF 的表。因为某个 CF 在 flush 发生时，它邻近的 CF 也会因关联效应被触发 flush，最终导致系统产生更多 IO。
+
+h3. 批量导入
+
+在批量导入数据到 Hbase 前，你可以通过预先创建 regions，来平衡数据的负载。详见 <a href="http://hbase.apache.org/book.html#precreate.regions" target="_blank">Table Creation: Pre-Creating Regions</a>
+
+h3. 避免 CMS concurrent mode failure
+
+HBase 使用 CMS GC。默认触发 GC 的时机是当年老代内存达到90%的时候，这个百分比由 -XX:CMSInitiatingOccupancyFraction=N 这个参数来设置。
+
+concurrent mode failed 发生在这样一个场景：当年老代内存达到90%的时候，CMS 开始进行并发垃圾收集，于此同时，新生代还在迅速不断地晋升对象到年老代。当年老代 CMS 还未完成并发标记时，年老代满了，悲剧就发生了。CMS 因为没内存可用不得不暂停 mark，并触发一次 stop the world（挂起所有 jvm 线程），然后采用单线程拷贝方式清理所有垃圾对象。这个过程会非常漫长。为了避免出现 concurrent mode failed，建议让 GC 在未到90%时就触发。
+
+可以简单的这么计算，如果你的 hfile.block.cache.size 和 hbase.regionserver.global.memstore.upperLimit 加起来有60%（默认），那么你可以设置 70-80，一般高10%左右差不多。
+
+<a href="http://kenwublog.com/hbase-performance-tuning" target="_blank"> >>HBase性能调优</a>
