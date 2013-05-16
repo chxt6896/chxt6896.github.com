@@ -57,8 +57,10 @@ h2. hbase.regionserver.global.memstore.upperLimit/lowerLimit
 *预设值*: 0.4/0.35
 *基础*: hbase.hregion.memstore.flush.size 这个参数的作用是当单个 Region 内所有的 memstore 大小总和超过指定值时，flush 该 region 的所有 memstore。RegionServer 的 flush 是通过将请求添加一个队列，模拟生产消费模式来异步处理的。那这里就有一个问题，当队列来不及消费，产生大量积压请求时，可能会导致内存陡增，最坏的情况是触发 OOM。
 *说明*: 
-* upperLimit 这个参数的作用是防止内存占用过大，当 ReigonServer 内所有 region 的 memstores 所占用内存总和达到 heap 的40%时，HBase 会强制 block 所有的更新并 flush 这些 region 以释放所有 memstore 占用的内存。
-* lowerLimit 这个参数的作用是在所有 region 的 memstores 所占用内存达到 Heap 的35%时，不 flush 所有的 memstore。它会找一个 memstore 内存占用最大的 region，做个别 flush，此时写更新还是会被 block。lowerLimit 算是一个在所有 region 强制 flush 导致性能降低前的补救措施。在日志中，表现为 "** Flush thread woke up with memory above low water."
+* *upperLimit* 这个参数的作用是防止内存占用过大，当 ReigonServer 内所有 region 的 memstores 所占用内存总和达到 heap 的40%时，HBase 会强制 block 所有的更新并 flush 这些 region 以释放所有 memstore 占用的内存。
+
+* *lowerLimit* 这个参数的作用是在所有 region 的 memstores 所占用内存达到 Heap 的35%时，不 flush 所有的 memstore。它会找一个 memstore 内存占用最大的 region，做个别 flush，此时写更新还是会被 block。lowerLimit 算是一个在所有 region 强制 flush 导致性能降低前的补救措施。在日志中，表现为 "** Flush thread woke up with memory above low water."
+
 *调优*: 这是一个 Heap 内存保护参数，默认值已经能适用大多数场景。
 * 参数调整会影响读写，如果写的压力大导致经常超过这个阀值，则调小读缓存 hfile.block.cache.size 增大该阀值，或者 Heap 余量较多时，不修改读缓存大小。
 
