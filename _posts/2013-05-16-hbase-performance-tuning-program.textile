@@ -6,7 +6,7 @@ category: hbase
 
 h2. Part1 表的设计
 
-h3. p1.1 Pre-Creating Regions
+h3. p1-1 Pre-Creating Regions
 
 默认情况下，在创建 HBase 表的时候会自动创建一个 region 分区，当导入数据的时候，所有的 HBase 客户端都向这一个 region 写数据，直到这个 region 足够大了才进行切分。一种可以加快批量写入速度的方法是通过预先创建一些空的 regions，这样当数据写入 HBase 时，会按照 region 分区情况，在集群内做数据的负载均衡。
 
@@ -40,7 +40,7 @@ public static byte[][] getHexSplits(String startKey, String endKey, int numRegio
 }
 {% endhighlight %}
 
-h3. p1.2 Row Key
+h3. p1-2 Row Key
 
 HBase 中 row key 用来检索表中的记录，支持以下三种方式: 
 * 通过单个 row key 访问：即按照某个 row key 键值进行 get 操作；
@@ -52,23 +52,23 @@ row key 是按照 *字典序* 存储，因此设计 row key 时，要充分利�
 
 举个例子：如果最近写入 HBase 表中的数据是最可能被访问的，可以考虑将时间戳作为 row key 的一部分，由于是字典序排序，所以可以使用 Long.MAX_VALUE - timestamp 作为 row key，这样能保证新写入的数据在读取时可以被快速命中。
 
-h3. p1.3 Column Family
+h3. p1-3 Column Family
 
 *不要在一张表里定义太多的 column family* 。目前 Hbase 并不能很好的处理超过2~3个 column family 的表。因为某个 column family 在 flush 的时候，它邻近的 column family 也会因关联效应被触发 flush，最终导致系统产生更多的 I/O。感兴趣的同学可以对自己的 HBase 集群进行实际测试，从得到的测试结果数据验证一下。
 
-h3. p1.4 In Memory
+h3. p1-4 In Memory
 
 创建表的时候，可以通过 HColumnDescriptor.setInMemory(true) 将表放到 RegionServer 的缓存中，保证在读取的时候被 cache 命中。
 
-h3. p1.5 Max Version
+h3. p1-5 Max Version
 
 创建表的时候，可以通过 HColumnDescriptor.setMaxVersions(int maxVersions) 设置表中数据的最大版本，如果只需要保存最新版本的数据，那么可以设置 setMaxVersions(1)。
 
-h3. p1.6 Time To Live
+h3. p1-6 Time To Live
 
 创建表的时候，可以通过 HColumnDescriptor.setTimeToLive(int timeToLive) 设置表中数据的存储生命期，过期数据将自动被删除，例如如果只需要存储最近两天的数据，那么可以设置 setTimeToLive(2 * 24 * 60 * 60)。
 
-h3. p1.7 Compact & Split
+h3. p1-7 Compact & Split
 
 在 HBase 中，数据在更新时首先写入 WAL日志(HLog)和内存(MemStore)中，MemStore 中的数据是排序的，当 MemStore 累计到一定阈值时，就会创建一个新的 MemStore，并且将老的 MemStore 添加到 flush 队列，由单独的线程 flush 到磁盘上，成为一个 StoreFile。于此同时， 系统会在 zookeeper 中记录一个 redo point，表示这个时刻之前的变更已经持久化了(minor compact)。
 
@@ -78,9 +78,40 @@ StoreFile 是只读的，一旦创建后就不可以再修改。因此 Hbase 的
 
 实际应用中，可以考虑必要时手动进行 major compact，将同一个 row key 的修改进行合并形成一个大的 StoreFile。同时，可以将 StoreFile 设置大些，减少 split 的发生。
 
+h2. Part2 写表操作
 
+h3. p2-1 多 HTable 并发写
 
+创建多个 HTable 客户端用于写操作，提高写数据的吞吐量，一个例子: 
 
+{% highlight java linenos %}
+static final Configuration conf = HBaseConfiguration.create();
+static final String table_log_name = "user_log";
+wTableLog = new HTable[tableN];
+for (int i = 0; i < tableN; i++) {
+    wTableLog[i] = new HTable(conf, table_log_name);
+    wTableLog[i].setWriteBufferSize(5 * 1024 * 1024); //5MB
+    wTableLog[i].setAutoFlush(false);
+}
+{% endhighlight %}
+
+h3. p2-2 HTable 参数设置
+
+h3. p2-2-1 Auto Flush
+
+通过调用 HTable.setAutoFlush(false) 方法可以将 HTable 写客户端的自动 flush 关闭，这样可以批量写入数据到 HBase，而不是有一条 put 就执行一次更新，只有当 put 填满客户端写缓存时，才实际向 HBase 服务端发起写请求。默认情况下 auto flush 是开启的。
+
+h3. p2-2-2 Write Buffer
+
+通过调用 HTable.setWriteBufferSize(writeBufferSize) 方法可以设置 HTable 客户端的写 buffer 大小，如果新设置的 buffer 小于当前写 buffer 中的数据时，buffer 将会被 flush 到服务端。其中，writeBufferSize 的单位是 byte 字节数，可以根据实际写入数据量的多少来设置该值。
+
+h3. p2-2-3 WAL Flag
+
+在 HBase 中，客户端向集群中的 RegionServer 提交数据时（Put/Delete操作），首先会先写 WAL（Write Ahead Log）日志（即 HLog，一个 RegionServer 上的所有 Region 共享一个 HLog），只有当 WAL 日志写成功后，再接着写 MemStore，然后客户端被通知提交数据成功；如果写 WAL 日志失败，客户端则被通知提交失败。这样做的好处是可以做到 RegionServer 宕机后的数据恢复。
+
+因此，对于相对不太重要的数据，可以在 Put/Delete 操作时，通过调用 Put.setWriteToWAL(false) 或 Delete.setWriteToWAL(false) 函数，放弃写 WAL 日志，从而提高数据写入的性能。
+
+*谨慎选择关闭 WAL 日志，因为这样的话，一旦 RegionServer 宕机，Put/Delete 的数据将会无法根据 WAL 日志进行恢复。*
 
 
 
