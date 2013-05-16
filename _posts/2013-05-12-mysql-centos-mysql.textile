@@ -128,7 +128,7 @@ Thanks for using MySQL!
 
 h2. Step5 测试
 
-{% highlight bash linenos %}
+{% highlight mysql linenos %}
 # 用 root 用户通过密码登录
 $ mysql -u root -p
 Enter password: <-- 输入密码

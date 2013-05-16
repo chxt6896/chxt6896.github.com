@@ -8,7 +8,7 @@ h3. 如果你要简单将一个 MySQL 库从一个节点转移到另一个节点
 
 h2. Step1 备份(node1)
 
-{% highlight bash linenos %}
+{% highlight mysql linenos %}
 # mysqldump -u 用户名 -p 数据库名 > 导出的文件名 
 $ mysqldump -u root -p test > test.sql
 {% endhighlight %}
@@ -17,7 +17,7 @@ h2. Step2 还原(node2)
 
 h3. 方法一
 
-{% highlight bash linenos %}
+{% highlight mysql linenos %}
 $ mysql -u root -p
 mysql> create database test;
 mysql> use test;
@@ -27,7 +27,7 @@ mysql> source test.sql;
 
 h3. 方法二
 
-{% highlight bash linenos %}
+{% highlight mysql linenos %}
 $ mysql -u root -p test < test.sql
 {% endhighlight %}
 
