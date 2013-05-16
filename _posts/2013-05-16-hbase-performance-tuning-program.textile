@@ -42,12 +42,12 @@ public static byte[][] getHexSplits(String startKey, String endKey, int numRegio
 
 h3. p1.2 Row Key
 
-HBase 中 row key 用来检索表中的记录，支持以下三种方式：
+HBase 中 row key 用来检索表中的记录，支持以下三种方式: 
 * 通过单个 row key 访问：即按照某个 row key 键值进行 get 操作；
 * 通过 row key 的 range 进行 scan：即通过设置 startRowKey 和 endRowKey，在这个范围内进行扫描；
 * 全表扫描：即直接扫描整张表中所有行记录。
-在 HBase 中，row key 可以是任意字符串，最大长度 64KB，实际应用中一般为 10~100bytes，存为 byte[] 字节数组，*一般设计成定长的*。
+在 HBase 中，row key 可以是任意字符串，最大长度 64KB，实际应用中一般为 10~100bytes，存为 byte[] 字节数组，*一般设计成定长的* 。
 
-row key 是按照*字典序*存储，因此设计 row key 时，要充分利用这个排序特点，将经常一起读取的数据存储到一块，将最近可能会被访问的数据放在一块。
+row key 是按照 *字典序* 存储，因此设计 row key 时，要充分利用这个排序特点，将经常一起读取的数据存储到一块，将最近可能会被访问的数据放在一块。
 
 举个例子：如果最近写入 HBase 表中的数据是最可能被访问的，可以考虑将时间戳作为 row key 的一部分，由于是字典序排序，所以可以使用 Long.MAX_VALUE - timestamp 作为 row key，这样能保证新写入的数据在读取时可以被快速命中。
