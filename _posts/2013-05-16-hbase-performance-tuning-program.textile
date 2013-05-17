@@ -113,6 +113,39 @@ h3. p2-2-3 WAL Flag
 
 *谨慎选择关闭 WAL 日志，因为这样的话，一旦 RegionServer 宕机，Put/Delete 的数据将会无法根据 WAL 日志进行恢复。*
 
+h3. p2-3 批量写
+
+通过调用 HTable.put(Put) 方法可以将一个指定的 row key 记录写入 HBase，同样 HBase 提供了另一个方法：通过调用 HTable.put(List<Put>) 方法可以将指定的 row key 列表，批量写入多行记录，这样做的好处是批量执行，只需要一次网络 I/O 开销，这对于对数据实时性要求高，网络传输 RTT 高的情景下可能带来明显的性能提升。
+
+h3. p2-4 多线程并发写
+
+在客户端开启多个 HTable 写线程，每个写线程负责一个 HTable 对象的 flush 操作，这样结合定时 flush 和写 buffer（writeBufferSize），可以既保证在数据量小的时候，数据可以在较短时间内被 flush（如1秒内），同时又保证在数据量大的时候，写 buffer 一满就及时进行 flush。下面给个具体的例子:
+
+{% highlight java linenos %}
+for (int i = 0; i < threadN; i++) {
+    Thread th = new Thread() {
+        public void run() {
+            while (true) {
+                try {
+                    sleep(1000); //1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (wTableLog[i]) {
+                    try {
+                        wTableLog[i].flushCommits();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    };
+    th.setDaemon(true);
+    th.start();
+}
+{% endhighlight %}
+
 
 
 
