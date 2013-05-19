@@ -358,15 +358,29 @@ h3. p4-1 服务端计算
 * RegionObserver: 提供用于从客户端监控表相关操作的钩子，例如表的 get/put/scan/delete 等；
 * Endpoint: 提供可以在 region 上执行任意函数的命令触发器。一个使用例子是 RegionServer 端的列聚合，这里有<a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/coprocessor/package-summary.html#commandtarget" target="_blank">代码示例</a>。
 
+h3. p4-2 写端计算
 
+h3. p4-2-1 计数
 
+HBase 本身可以看作是一个可以水平扩展的 Key-Value 存储系统，但是其本身的计算能力有限（Coprocessor 可以提供一定的服务端计算），因此使用 HBase 时，往往需要从写端或者读端进行计算，然后将最终的计算结果返回给调用者。举两个简单的例子: 
+* PV 计算：通过在 HBase 写端内存中，累加计数，维护 PV 值的更新，同时为了做到持久化，定期（如1秒）将 PV 计算结果同步到 HBase 中，这样查询端最多会有1秒钟的延迟，能看到秒级延迟的 PV 结果。
+* 分钟 PV 计算：与上面提到的 PV 计算方法相结合，每分钟将当前的累计 PV 值，按照 rowkey + minute 作为新的 rowkey 写入 HBase 中，然后在查询端通过 scan 得到当天各个分钟以前的累计 PV 值，然后顺次将前后两分钟的累计 PV 值相减，就得到了当前一分钟内的 PV 值，从而最终也就得到当天各个分钟内的 PV 值。
 
+h3. p4-2-2 去重
 
+对于 UV 的计算，就是个去重计算的例子。分两种情况: 
+* 如果内存可以容纳，那么可以在 Hash 表中维护所有已经存在的 UV 标识，每当新来一个标识时，通过快速查找 Hash 确定是否是一个新的 UV，若是则 UV 值加1，否则 UV 值不变。另外，为了做到持久化或提供给查询接口使用，可以定期（如1秒）将 UV 计算结果同步到 HBase 中。
+* 如果内存不能容纳，可以考虑采用 Bloom Filter 来实现，从而尽可能的减少内存的占用情况。除了 UV 的计算外，判断 URL 是否存在也是个典型的应用场景。
 
+h3. p4-3 读端计算
 
+如果对于响应时间要求比较苛刻的情况（如单次 http 请求要在毫秒级时间内返回），个人觉得读端不宜做过多复杂的计算逻辑，尽量做到读端功能单一化: 即从 HBase RegionServer 读到数据（scan 或 get 方式）后，按照数据格式进行简单的拼接，直接返回给前端使用。当然，如果对于响应时间要求一般，或者业务特点需要，也可以在读端进行一些计算逻辑。
 
+h2. Part5 总结
 
+作为一个 Key-Value 存储系统，HBase 并不是万能的，它有自己独特的地方。因此，基于它来做应用时，我们往往需要从多方面进行优化改进（表设计、读表操作、写表操作、数据计算等），有时甚至还需要从系统级对 HBase 进行配置调优，更甚至可以对 HBase 本身进行优化。这属于不同的层次范畴。
 
+总之，概括来讲，对系统进行优化时，首先定位到影响你的程序运行性能的瓶颈之处，然后有的放矢进行针对行的优化。如果优化后满足你的期望，那么就可以停止优化；否则继续寻找新的瓶颈之处，开始新的优化，直到满足性能要求。
 
 <a href="http://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section1.html" target="_blank"> >>HBase性能优化方法总结（一）：表的设计</a>
 <a href="http://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section2.html" target="_blank"> >>HBase性能优化方法总结（二）：写表操作</a>
