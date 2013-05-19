@@ -206,17 +206,17 @@ public class DataReaderServer {
         ConcurrentHashMap<String, String> hashRet = new ConcurrentHashMap<String, String>();
         int parallel = 3;
         List<List<String>> lstBatchKeys  = null;
-        if (lstKeys.size() < parallel ) {
+        if (lstKeys.size() < parallel) {
             lstBatchKeys  = new ArrayList<List<String>>(1);
             lstBatchKeys.add(lstKeys);
         } else {
             lstBatchKeys  = new ArrayList<List<String>>(parallel);
-            for(int i = 0; i < parallel; i++  ){
+            for(int i = 0; i < parallel; i++){
                 List<String> lst = new ArrayList<String>();
                 lstBatchKeys.add(lst);
             }
 
-            for(int i = 0 ; i < lstKeys.size() ; i ++ ) {
+            for(int i = 0 ; i < lstKeys.size(); i ++) {
                 lstBatchKeys.get(i%parallel).add(lstKeys.get(i));
             }
         }
@@ -321,7 +321,7 @@ public class DataReaderServer {
 class BatchMinutePVCallable implements Callable<ConcurrentHashMap<String, String>> {
      private List<String> keys;
 
-     public BatchMinutePVCallable(List<String> lstKeys ) {
+     public BatchMinutePVCallable(List<String> lstKeys) {
          this.keys = lstKeys;
      }
 
@@ -347,9 +347,28 @@ HBase 上 Regionserver 的内存分为两个部分，一部分作为 Memstore，
 
 有关 BlockCache 机制，请参考这里: <a href="http://punishzhou.iteye.com/blog/1277141" target="_blank">HBase 的 Block cache</a>，<a href="http://www.cnblogs.com/raymondshiquan/archive/2011/07/24/2115397.html" target="_blank">HBase 的 blockcache 机制</a>，<a href="http://koven2049.iteye.com/blog/1002135" target="_blank">hbase 中的缓存的计算与使用</a>。
 
+h2. Part4 数据计算
+
+h3. p4-1 服务端计算
+
+<a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/coprocessor/package-summary.html" target="_blank">Coprocessor</a> 运行于 HBase RegionServer 服务端，各个 Regions 保持对与其相关的 coprocessor 实现类的引用，coprocessor 类可以通过 RegionServer 上 classpath 中的本地 jar 或 HDFS 的 classloader 进行加载。
+
+目前，已提供有几种 coprocessor:
+* Coprocessor: 提供对于 region 管理的钩子，例如 region 的 open/close/split/flush/compact 等；
+* RegionObserver: 提供用于从客户端监控表相关操作的钩子，例如表的 get/put/scan/delete 等；
+* Endpoint: 提供可以在 region 上执行任意函数的命令触发器。一个使用例子是 RegionServer 端的列聚合，这里有<a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/coprocessor/package-summary.html#commandtarget" target="_blank">代码示例</a>。
 
 
 
 
 
 
+
+
+
+
+
+<a href="http://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section1.html" target="_blank"> >>HBase性能优化方法总结（一）：表的设计</a>
+<a href="http://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section2.html" target="_blank"> >>HBase性能优化方法总结（二）：写表操作</a>
+<a href="http://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section3.html" target="_blank"> >>HBase性能优化方法总结（三）：读表操作</a>
+<a href="http://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section4.html" target="_blank"> >>HBase性能优化方法总结（四）：数据计算</a>
