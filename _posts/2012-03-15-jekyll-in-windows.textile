@@ -15,7 +15,7 @@ h2. Install Ruby
 Jekyll requires Ruby 1.9.1 or higher 
 
 * <a href="https://github.com/mojombo/jekyll/wiki/install" target="_blank">github.com/mojombo/jekyll/wiki/install</a>
-* <a href="http://rubyinstaller.org/" target="_blank">rubyinstaller.org</a>
+* <a href="http://jekyllrb.com/docs/installation/" target="_blank">rubyinstaller.org</a>
 
 h2. Install Python
 
