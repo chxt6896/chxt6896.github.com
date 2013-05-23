@@ -74,7 +74,6 @@ h2. Step6 MANIFEST.MF
 
 修改 META-INF/MANIFEST.MF
 
-<pre>
 Bundle-ClassPath: classes/,
  lib/hadoop-core.jar%{color:#a52713},%
  %{color:#a52713}lib/commons-cli-1.2.jar,%
@@ -83,5 +82,4 @@ Bundle-ClassPath: classes/,
  %{color:#a52713}lib/jackson-mapper-asl-1.8.8.jar,%
  %{color:#a52713}lib/commons-configuration-1.6.jar,%
  %{color:#a52713}lib/commons-lang-2.4.jar%
-</pre>
 
