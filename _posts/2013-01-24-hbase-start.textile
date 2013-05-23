@@ -1,13 +1,13 @@
 ---
 layout: post
-title: HBase0.94.4 集群配置
+title: HBase-0.94.4 集群配置
 category: hbase
 ---
 
 h2. 平台环境
 
 * CentOS 6.X
-* <a href="http://chxt6896.github.com/hadoop/2012/09/17/hadoop-start.html" target="_blank">Hadoop1.0.4 集群平台</a>  
+* <a href="http://chxt6896.github.com/hadoop/2012/09/17/hadoop-start.html" target="_blank">Hadoop-1.0.4 集群平台</a>  
 * 三台机器
 ** 192.168.1.111 node111 (NameNode, SecondaryNameNode, DataNode)
 ** 192.168.1.112 node112 (DataNode)

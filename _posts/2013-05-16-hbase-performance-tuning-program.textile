@@ -216,7 +216,7 @@ public class DataReaderServer {
                 lstBatchKeys.add(lst);
             }
 
-            for(int i = 0 ; i < lstKeys.size(); i ++) {
+            for(int i = 0 ; i < lstKeys.size(); i++) {
                 lstBatchKeys.get(i%parallel).add(lstKeys.get(i));
             }
         }

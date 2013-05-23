@@ -1,0 +1,32 @@
+---
+layout: post
+title: Hadoop-eclipse-plgin 自己编译这事儿不难
+category: hadoop
+---
+
+h3. 网上的教程让我有太多的眼泪，还是自己写一个吧，哈里路亚
+
+h2. 平台环境
+
+* Win7
+* Eclipse Helios
+* Hadoop-1.0.4 
+
+h2. Step1 安装 Ant
+
+<a href="http://ant.apache.org/bindownload.cgi" target="_blank">获取 apache-ant-1.9.1-bin.zip</a>
+
+解压缩到合适的目录，并将 bin 目录加入到环境变量 PATH 中
+
+h2. Step2 
+
+<a href="http://archive.apache.org/dist/hadoop/core/hadoop-1.0.4/" target="_blank">获取 hadoop-1.0.4.tar.gz</a>
+
+解压缩到 Eclipse workspace 目录下（如: F:\workspace）
+
+h2. Step3
+
+在 Eclipse 中选择 File-->Import-->Existing Projects into Workspace 导入已有项目，路径为: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin，其默认的项目名称是 MapReduceTools
+
+
+
