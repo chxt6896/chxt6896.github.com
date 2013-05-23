@@ -9,16 +9,10 @@ h3. 源代码中自带的 Hadoop-eclipse 插件无法正常使用，需要自己
 h2. 平台环境
 
 * Win7
-* Eclipse Helios
+* Eclipse Helios(include Ant-1.7)
 * Hadoop-1.0.4 
 
-h2. Step1 安装 Ant
-
-<a href="http://ant.apache.org/bindownload.cgi" target="_blank">获取 apache-ant-1.9.1-bin.zip</a>
-
-解压缩到合适的目录，并将 bin 目录加入到环境变量 PATH 中
-
-h2. Step2 导入 Hadoop-eclipse 插件工程
+h2. Step1 导入 Hadoop-eclipse 插件工程
 
 <a href="http://archive.apache.org/dist/hadoop/core/hadoop-1.0.4/" target="_blank">获取 hadoop-1.0.4.tar.gz</a>
 
@@ -26,11 +20,11 @@ h2. Step2 导入 Hadoop-eclipse 插件工程
 
 在 Eclipse 中选择 File-->Import-->Existing Projects into Workspace 导入已有项目，路径为: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin，其默认的项目名称是 MapReduceTools
 
-h2. Step3 导入所需 jar 包
+h2. Step2 导入所需 jar 包
 
 在项目 MapReduceTools 中新建 lib 目录，将 hadoop-1.0.4 下的 hadoop-core-1.0.4.jar（重命名为 hadoop.core.jar），及其 lib 目录下的 commons-cli-1.2.jar、commons-lang-2.4.jar、commons-configuration-1.6.jar、jackson-mapper-asl-1.8.8.jar、jackson-core-asl-1.8.8.jar、commons-httpclient-3.0.1.jar 拷贝到该目录。
 
-h2. Step4 build-contrib.xml
+h2. Step3 build-contrib.xml
 
 将 F:\workspace\hadoop-1.0.4\src\contrib\build-contrib.xml（与 eclipse-plugin 包在同一级目录）拷贝到 MapReduceTools 项目目录中。
 
@@ -45,7 +39,7 @@ h2. Step4 build-contrib.xml
 <property name="version" value="1.0.4"/>
 {% endhighlight %}
 
-h2. Step5 build.xml
+h2. Step4 build.xml
 
 修改 build.xml
 
@@ -70,16 +64,19 @@ h2. Step5 build.xml
 <copy file="${hadoop.root}/lib/commons-httpclient-3.0.1.jar" todir="${build.dir}/lib" verbose="true"/>
 {% endhighlight %}
 
-h2. Step6 MANIFEST.MF
+h2. Step5 MANIFEST.MF
 
 修改 META-INF/MANIFEST.MF
 
 Bundle-ClassPath: classes/,
- lib/hadoop-core.jar%{color:#a52713},%
- %{color:#a52713}lib/commons-cli-1.2.jar,%
- %{color:#a52713}lib/commons-httpclient-3.0.1.jar,%
- %{color:#a52713}lib/jackson-core-asl-1.8.8.jar,%
- %{color:#a52713}lib/jackson-mapper-asl-1.8.8.jar,%
- %{color:#a52713}lib/commons-configuration-1.6.jar,%
- %{color:#a52713}lib/commons-lang-2.4.jar%
+ &nbsp;&nbsp;lib/hadoop-core.jar %{color:#a52713},%
+ %{color:#a52713}&nbsp;&nbsp;lib/commons-cli-1.2.jar,%
+ %{color:#a52713}&nbsp;&nbsp;lib/commons-httpclient-3.0.1.jar,%
+ %{color:#a52713}&nbsp;&nbsp;lib/jackson-core-asl-1.8.8.jar,%
+ %{color:#a52713}&nbsp;&nbsp;lib/jackson-mapper-asl-1.8.8.jar,%
+ %{color:#a52713}&nbsp;&nbsp;lib/commons-configuration-1.6.jar,%
+ %{color:#a52713}&nbsp;&nbsp;lib/commons-lang-2.4.jar%
 
+h2. Step6 Ant 编译
+
+右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
