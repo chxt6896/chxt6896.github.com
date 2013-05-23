@@ -4,7 +4,7 @@ title: Hadoop-eclipse-plgin 自己编译这事儿不难
 category: hadoop
 ---
 
-h3. 网上的教程让我有太多的眼泪，还是自己写一个吧，哈里路亚
+h3. 源代码中自带的 Hadoop-eclipse 插件无法正常使用，需要自己进行编译。网上的教程让我有太多的眼泪，还是自己写一个吧，哈里路亚
 
 h2. 平台环境
 
@@ -18,21 +18,19 @@ h2. Step1 安装 Ant
 
 解压缩到合适的目录，并将 bin 目录加入到环境变量 PATH 中
 
-h2. Step2 
+h2. Step2 导入 Hadoop-eclipse 插件工程
 
 <a href="http://archive.apache.org/dist/hadoop/core/hadoop-1.0.4/" target="_blank">获取 hadoop-1.0.4.tar.gz</a>
 
 解压缩到 Eclipse workspace 目录下（如: F:\workspace）
 
-h2. Step3
-
 在 Eclipse 中选择 File-->Import-->Existing Projects into Workspace 导入已有项目，路径为: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin，其默认的项目名称是 MapReduceTools
 
-h2. Step4
+h2. Step3 导入所需 jar 包
 
 在项目 MapReduceTools 中新建 lib 目录，将 hadoop-1.0.4 下的 hadoop-core-1.0.4.jar（重命名为 hadoop.core.jar），及其 lib 目录下的 commons-cli-1.2.jar、commons-lang-2.4.jar、commons-configuration-1.6.jar、jackson-mapper-asl-1.8.8.jar、jackson-core-asl-1.8.8.jar、commons-httpclient-3.0.1.jar 拷贝到该目录。
 
-h2. Step5
+h2. Step4 build-contrib.xml
 
 将 F:\workspace\hadoop-1.0.4\src\contrib\build-contrib.xml（与 eclipse-plugin 包在同一级目录）拷贝到 MapReduceTools 项目目录中。
 
@@ -47,4 +45,43 @@ h2. Step5
 <property name="version" value="1.0.4"/>
 {% endhighlight %}
 
+h2. Step5 build.xml
+
+修改 build.xml
+
+{% highlight xml %}
+<!-- 1. 修改 build-contrib.xml 的位置，去掉"../"-->
+<import file="build-contrib.xml"/>
+<!-- 2. 添加如下，否则提示"软件包 org.apache.hadoop.fs 不存在"-->
+<path id="hadoop-jars">
+	<fileset dir="${hadoop.root}/">
+	  <include name="hadoop-*.jar" />
+	</fileset>
+</path>
+<!-- 3. 在 <path id="classpath"></path> 中添加-->
+<path refid="hadoop-jars"/>
+<!-- 4. 在 <target name="jar" depends="compile" unless="skip.contrib"></target> 中修改并添加-->
+<copy file="${hadoop.root}/hadoop-core-${version}.jar" tofile="${build.dir}/lib/hadoop-core.jar" verbose="true"/>
+<copy file="${hadoop.root}/lib/commons-cli-1.2.jar" todir="${build.dir}/lib" verbose="true"/>
+<copy file="${hadoop.root}/lib/commons-lang-2.4.jar" todir="${build.dir}/lib" verbose="true"/>
+<copy file="${hadoop.root}/lib/commons-configuration-1.6.jar" todir="${build.dir}/lib" verbose="true"/>
+<copy file="${hadoop.root}/lib/jackson-mapper-asl-1.8.8.jar" todir="${build.dir}/lib" verbose="true"/>
+<copy file="${hadoop.root}/lib/jackson-core-asl-1.8.8.jar" todir="${build.dir}/lib" verbose="true"/>
+<copy file="${hadoop.root}/lib/commons-httpclient-3.0.1.jar" todir="${build.dir}/lib" verbose="true"/>
+{% endhighlight %}
+
+h2. Step6 MANIFEST.MF
+
+修改 META-INF/MANIFEST.MF
+
+<pre>
+Bundle-ClassPath: classes/,
+ <red>lib/hadoop-core.jar,
+ lib/commons-cli-1.2.jar,
+ lib/commons-httpclient-3.0.1.jar,
+ lib/jackson-core-asl-1.8.8.jar,
+ lib/jackson-mapper-asl-1.8.8.jar,
+ lib/commons-configuration-1.6.jar,
+ lib/commons-lang-2.4.jar</red>
+</pre>
 
