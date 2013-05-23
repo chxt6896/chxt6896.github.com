@@ -34,11 +34,11 @@ h2. Step4
 
 h2. Step5
 
-将 F:\workspace\hadoop-1.0.4\src\contrib\build-contrib.xml（与 eclipse-plugin 包在同一级目录）拷贝到 MapReduceTools 项目目录中
+将 F:\workspace\hadoop-1.0.4\src\contrib\build-contrib.xml（与 eclipse-plugin 包在同一级目录）拷贝到 MapReduceTools 项目目录中。
 
 修改 build-contrib.xml，注意路径用 "/"
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <!-- 修改 hadoop 存放目录-->
 <property name="hadoop.root" location="F:/workspace/hadoop-1.0.4"/>
 <!-- 添加 eclipse 存放目录-->
