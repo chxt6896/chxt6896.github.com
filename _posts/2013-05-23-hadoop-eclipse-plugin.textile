@@ -54,9 +54,9 @@ h2. Step5 build.xml
 <import file="build-contrib.xml"/>
 <!-- 2. 添加如下，否则提示"软件包 org.apache.hadoop.fs 不存在"-->
 <path id="hadoop-jars">
-	<fileset dir="${hadoop.root}/">
-	  <include name="hadoop-*.jar" />
-	</fileset>
+    <fileset dir="${hadoop.root}/">
+        <include name="hadoop-*.jar" />
+    </fileset>
 </path>
 <!-- 3. 在 <path id="classpath"></path> 中添加-->
 <path refid="hadoop-jars"/>
@@ -76,12 +76,12 @@ h2. Step6 MANIFEST.MF
 
 <pre>
 Bundle-ClassPath: classes/,
- <red>lib/hadoop-core.jar,
- lib/commons-cli-1.2.jar,
- lib/commons-httpclient-3.0.1.jar,
- lib/jackson-core-asl-1.8.8.jar,
- lib/jackson-mapper-asl-1.8.8.jar,
- lib/commons-configuration-1.6.jar,
- lib/commons-lang-2.4.jar</red>
+ lib/hadoop-core.jar%{color:#a52713},%
+ %{color:#a52713}lib/commons-cli-1.2.jar,%
+ %{color:#a52713}lib/commons-httpclient-3.0.1.jar,%
+ %{color:#a52713}lib/jackson-core-asl-1.8.8.jar,%
+ %{color:#a52713}lib/jackson-mapper-asl-1.8.8.jar,%
+ %{color:#a52713}lib/commons-configuration-1.6.jar,%
+ %{color:#a52713}lib/commons-lang-2.4.jar%
 </pre>
 
