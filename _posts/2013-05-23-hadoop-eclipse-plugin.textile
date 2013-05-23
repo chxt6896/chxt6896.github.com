@@ -30,10 +30,8 @@ h2. Step3 build-contrib.xml
 
 修改 build-contrib.xml，注意路径用 "/"
 
-<pre>
 <!-- 修改 hadoop 存放目录-->
 %{color:#a52713}&lt;property name="123"/&gt;%
-</pre>
 
 h2. Step4 build.xml
 
