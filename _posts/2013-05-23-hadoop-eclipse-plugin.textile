@@ -28,5 +28,23 @@ h2. Step3
 
 在 Eclipse 中选择 File-->Import-->Existing Projects into Workspace 导入已有项目，路径为: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin，其默认的项目名称是 MapReduceTools
 
+h2. Step4
+
+在项目 MapReduceTools 中新建 lib 目录，将 hadoop-1.0.4 下的 hadoop-core-1.0.4.jar（重命名为 hadoop.core.jar），及其 lib 目录下的 commons-cli-1.2.jar、commons-lang-2.4.jar、commons-configuration-1.6.jar、jackson-mapper-asl-1.8.8.jar、jackson-core-asl-1.8.8.jar、commons-httpclient-3.0.1.jar 拷贝到该目录。
+
+h2. Step5
+
+将 F:\workspace\hadoop-1.0.4\src\contrib\build-contrib.xml（与 eclipse-plugin 包在同一级目录）拷贝到 MapReduceTools 项目目录中
+
+修改 build-contrib.xml，注意路径用 "/"
+
+{% highlight xml linenos %}
+<!-- 修改 hadoop 存放目录-->
+<property name="hadoop.root" location="F:/workspace/hadoop-1.0.4"/>
+<!-- 添加 eclipse 存放目录-->
+<property name="eclipse.home" location="F:/eclipse" />
+<!-- 添加 hadoop 版本-->
+<property name="version" value="1.0.4"/>
+{% endhighlight %}
 
 
