@@ -39,40 +39,7 @@ h2. Step3 build-contrib.xml
 
 h2. Step4 build.xml
 
-修改 build.xml
 
-<!-- 1.修改 build-contrib.xml 的位置，去掉"../"-->
-%{color:#a52713}<import file="build-contrib.xml"/>%
-
-<!-- 2.添加如下，否则提示"软件包 org.apache.hadoop.fs 不存在"-->
-%{color:#a52713}<path id="hadoop-jars">%
-%{color:#a52713}&nbsp;&nbsp;<fileset dir="${hadoop.root}/">%
-%{color:#a52713}&nbsp;&nbsp;&nbsp;&nbsp;<include name="hadoop-*.jar" />%
-%{color:#a52713}&nbsp;&nbsp;</fileset>%
-%{color:#a52713}</path>%
-
-<path id="classpath">
-&nbsp;&nbsp;<pathelement location="${build.classes}"/>
-&nbsp;&nbsp;<pathelement location="${hadoop.root}/build/classes"/>
-&nbsp;&nbsp;<path refid="eclipse-sdk-jars"/>
-%{color:#a52713}&nbsp;&nbsp;<path refid="hadoop-jars"/>%
-</path>
-
-<!-- 3.修改并添加 jar 包拷贝-->
-<target name="jar" depends="compile" unless="skip.contrib">
-&nbsp;&nbsp;<mkdir dir="${build.dir}/lib"/>
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/hadoop-core-${version}.jar" tofile="${build.dir}/lib/hadoop-core.jar" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/lib/commons-cli-1.2.jar" todir="${build.dir}/lib" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/lib/commons-lang-2.4.jar" todir="${build.dir}/lib" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/lib/commons-configuration-1.6.jar" todir="${build.dir}/lib" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/lib/jackson-mapper-asl-1.8.8.jar" todir="${build.dir}/lib" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/lib/jackson-core-asl-1.8.8.jar" todir="${build.dir}/lib" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<copy file="${hadoop.root}/lib/commons-httpclient-3.0.1.jar" todir="${build.dir}/lib" verbose="true"/>%
-%{color:#a52713}&nbsp;&nbsp;<jar jarfile="${build.dir}/hadoop-${name}-${version}.jar" manifest="${root}/META-INF/MANIFEST.MF">%
-%{color:#a52713}&nbsp;&nbsp;&nbsp;&nbsp;<fileset dir="${build.dir}" includes="classes/ lib/"/>%
-%{color:#a52713}&nbsp;&nbsp;&nbsp;&nbsp;<fileset dir="${root}" includes="resources/ plugin.xml"/>%
-%{color:#a52713}&nbsp;&nbsp;</jar>%
-</target>
 
 h2. Step5 MANIFEST.MF
 
@@ -90,3 +57,9 @@ Bundle-ClassPath: classes/,
 h2. Step6 Ant 编译
 
 右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
+
+tools_Builder-->Edit，*Name* : plugin_Builder，*Buildfile*: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin\build.xml
+
+Project-->Build Project
+
+
