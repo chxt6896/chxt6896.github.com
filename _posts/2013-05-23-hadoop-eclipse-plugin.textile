@@ -18,7 +18,7 @@ h2. Step1 导入 Hadoop-eclipse 插件工程
 
 解压缩到 Eclipse workspace 目录下（如: F:\workspace）
 
-在 Eclipse 中选择 File-->Import-->Existing Projects into Workspace 导入已有项目，路径为: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin，其默认的项目名称是 MapReduceTools
+在 Eclipse 中选择 File-->Import-->Existing Projects into Workspace 导入已有项目，路径为: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin，其默认的项目名称是 *MapReduceTools*
 
 h2. Step2 导入所需 jar 包
 
@@ -31,11 +31,7 @@ h2. Step3 build-contrib.xml
 修改 build-contrib.xml，注意路径用 "/"
 
 <!-- 修改 hadoop 存放目录-->
-%{color:#a52713}<property name="hadoop.root" location="F:/workspace/hadoop-1.0.4"/>%
-<!-- 添加 eclipse 存放目录-->
-%{color:#a52713}<property name="eclipse.home" location="F:/eclipse" />%
-<!-- 添加 hadoop 版本-->
-%{color:#a52713}<property name="version" value="1.0.4"/>%
+%{color:#a52713}<property name=/>%
 
 h2. Step4 build.xml
 
@@ -56,10 +52,24 @@ Bundle-ClassPath: classes/,
 
 h2. Step6 Ant 编译
 
-右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
+# 右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
+# tools_Builder-->Edit， *Name* : plugin_Builder， *Buildfile* : F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin\build.xml
+# Project-->Build Project
 
-tools_Builder-->Edit，*Name* : plugin_Builder，*Buildfile*: F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin\build.xml
+编译成功会输出 BUILD SUCCESSFUL ^^
 
-Project-->Build Project
+h2. Step7 安装插件
 
+编译结果在 F:\workspace\hadoop-1.0.4\build\contrib\eclipse-plugin 目录下
 
+将 hadoop-eclipse-plugin-1.0.4.jar 放入 F:\God - j2ee\eclipse-jee-helios-SR2-win32-x86_64(hadoop)\eclipse\plugins 目录下，重启 eclipse
+
+h2. Step7 配置插件
+
+# 打开 map/Reduce Locations
+# 右键 New Hadoop Location...，输入 Location Name（这个可以随意输入），修改 Map/Reduce Master 和 DFS Master，User name 设置为你启动 hadoop 的名称。
+# 设置 Advanced parameters
+** 修改 hadoop.tmp.dir 为你 hadoop 集群中设置的目录
+** 修改 dfs.permissions.supergroup 为 hadoop,hadoop
+** 修改 dfs.replication 为你 hdfs-site.xml 文件中配置的值
+# 重启 eclipse
