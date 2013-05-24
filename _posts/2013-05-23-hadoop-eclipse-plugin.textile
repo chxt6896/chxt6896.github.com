@@ -97,7 +97,7 @@ h2. Step7 安装插件
 
 编译结果在 F:\workspace\hadoop-1.0.4\build\contrib\eclipse-plugin 目录下
 
-将 hadoop-eclipse-plugin-1.0.4.jar 放入 F:\God - j2ee\eclipse-jee-helios-SR2-win32-x86_64(hadoop)\eclipse\plugins 目录下，重启 eclipse
+将 hadoop-eclipse-plugin-1.0.4.jar 放入 F:\eclipse\plugins 目录下，重启 eclipse
 
 h2. Step7 配置插件
 
@@ -105,6 +105,5 @@ h2. Step7 配置插件
 # 右键 New Hadoop Location...，输入 Location Name（这个可以随意输入），修改 Map/Reduce Master 和 DFS Master，User name 设置为你启动 hadoop 的名称。
 # 设置 Advanced parameters
 ** 修改 hadoop.tmp.dir 为你 hadoop 集群中设置的目录
-** 修改 dfs.permissions.supergroup 为 hadoop,hadoop
 ** 修改 dfs.replication 为你 hdfs-site.xml 文件中配置的值
 # 重启 eclipse
