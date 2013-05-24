@@ -30,19 +30,19 @@ h2. Step3 build-contrib.xml
 
 修改 build-contrib.xml，注意路径用 &quot;/&quot;
 
-<pre><!-- 修改 hadoop 存放目录--></pre>
+&lt;!-- 修改 hadoop 存放目录--&gt;
 %{color:#a52713}&lt;property name=&quot;hadoop.root&quot; location=&quot;F:/workspace/hadoop-1.0.4&quot;/&gt;%
-<pre><!-- 添加 eclipse 存放目录--></pre>
+&lt;!-- 添加 eclipse 存放目录--&gt;
 %{color:#a52713}&lt;property name=&quot;eclipse.home&quot; location=&quot;F:/eclipse&quot; /&gt;%
-<pre><!-- 添加 hadoop 版本--></pre>
+&lt;!-- 添加 hadoop 版本--&gt;
 %{color:#a52713}&lt;property name=&quot;version&quot; value=&quot;1.0.4&quot;/&gt;%
 
 h2. Step4 build.xml
 
-<pre><!-- 1.修改 build-contrib.xml 的位置，去掉"../"--></pre>
+&lt;!-- 1.修改 build-contrib.xml 的位置，去掉"../"--&gt;
 %{color:#a52713}&lt;import file=&quot;build-contrib.xml&quot;/&gt;%
 
-<pre><!-- 2.添加如下，否则提示"软件包 org.apache.hadoop.fs 不存在"--></pre>
+&lt;!-- 2.添加如下，否则提示"软件包 org.apache.hadoop.fs 不存在"--&gt;
 %{color:#a52713}&lt;path id=&quot;hadoop-jars&quot;&gt;%
 %{color:#a52713}&nbsp;&nbsp;&lt;fileset dir=&quot;${hadoop.root}/&quot;&gt;%
 %{color:#a52713}&nbsp;&nbsp;&nbsp;&nbsp;&lt;include name=&quot;hadoop-*.jar&quot;/&gt;%
@@ -56,7 +56,7 @@ h2. Step4 build.xml
 %{color:#a52713}&nbsp;&nbsp;&lt;path refid=&quot;hadoop-jars&quot;/&gt;%
 &lt;/path&gt;
 
-<pre><!-- 3.修改并添加 jar 包拷贝--></pre>
+&lt;!-- 3.修改并添加 jar 包拷贝--&gt;
 &lt;target name=&quot;jar&quot; depends=&quot;compile&quot; unless=&quot;skip.contrib&quot;&gt;
 &nbsp;&nbsp;&lt;mkdir dir=&quot;${build.dir}/lib&quot;/&gt;
 %{color:#a52713}&nbsp;&nbsp;&lt;copy file=&quot;${hadoop.root}/hadoop-core-${version}.jar&quot; tofile=&quot;${build.dir}/lib/hadoop-core.jar&quot; verbose="&quot;true&quot;/&gt;%
@@ -66,10 +66,10 @@ h2. Step4 build.xml
 %{color:#a52713}&nbsp;&nbsp;&lt;copy file=&quot;${hadoop.root}/lib/jackson-mapper-asl-1.8.8.jar&quot; todir=&quot;${build.dir}/lib&quot; verbose=&quot;true&quot;/&gt;%
 %{color:#a52713}&nbsp;&nbsp;&lt;copy file=&quot;${hadoop.root}/lib/jackson-core-asl-1.8.8.jar&quot; todir=&quot;${build.dir}/lib&quot; verbose=&quot;true&quot;/&gt;%
 %{color:#a52713}&nbsp;&nbsp;&lt;copy file=&quot;${hadoop.root}/lib/commons-httpclient-3.0.1.jar&quot; todir=&quot;${build.dir}/lib&quot; verbose=&quot;true&quot;/&gt;%
-%{color:#a52713}&nbsp;&nbsp;&lt;jar jarfile=&quot;${build.dir}/hadoop-${name}-${version}.jar&quot; manifest=&quot;${root}/META-INF/MANIFEST.MF&quot;&gt;%
-%{color:#a52713}&nbsp;&nbsp;&nbsp;&nbsp;&lt;fileset dir=&quot;${build.dir}&quot; includes=&quot;classes/ lib/&quot;/&gt;%
-%{color:#a52713}&nbsp;&nbsp;&nbsp;&nbsp;&lt;fileset dir=&quot;${root}&quot; includes=&quot;resources/ plugin.xml&quot;/&gt;%
-%{color:#a52713}&nbsp;&nbsp;&lt;/jar&gt;%
+&nbsp;&nbsp;&lt;jar jarfile=&quot;${build.dir}/hadoop-${name}-${version}.jar&quot; manifest=&quot;${root}/META-INF/MANIFEST.MF&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;fileset dir=&quot;${build.dir}&quot; includes=&quot;classes/ lib/&quot;/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;fileset dir=&quot;${root}&quot; includes=&quot;resources/ plugin.xml&quot;/&gt;
+&nbsp;&nbsp;&lt;/jar&gt;
 &lt;/target&gt;
 
 h2. Step5 MANIFEST.MF
