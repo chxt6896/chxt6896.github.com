@@ -14,8 +14,8 @@ h2. 平台环境
 
 h2. 目录结构
 
-* eclipse目录 F:\eclipse\
-* eclipse工程目录 F:\workspace\
+* eclipse目录 F:\eclipse
+* eclipse工程目录 F:\workspace
 
 h2. Step1 导入 Hadoop-eclipse 插件工程
 
@@ -107,7 +107,7 @@ h2. Step7 安装插件
 h2. Step7 配置插件
 
 # 打开 map/Reduce Locations
-# 右键 New Hadoop Location...，输入 Location Name（这个可以随意输入），修改 Map/Reduce Master 和 DFS Master，User name 设置为你启动 hadoop 的名称。
+# 右键 New Hadoop Location...，输入 Location Name(见名知意)，修改 Map/Reduce Master 和 DFS Master，User name 设置为你启动 hadoop 的名称。
 # 设置 Advanced parameters
 ** 修改 hadoop.tmp.dir 为你 hadoop 集群中设置的目录
 ** 修改 dfs.replication 为你 hdfs-site.xml 文件中配置的值
