@@ -1,0 +1,22 @@
+---
+layout: post
+title: Hadoop-1.0.4+Eclipse+Windows 远程连接
+category: hadoop
+---
+
+h3. Hadoop 部署在 Linux 下，在 Windows 下用 Eclipse 远程连接 Hadoop 进行开发
+
+h2. 平台环境
+
+* Win7
+* Eclipse Helios
+** <a href="http://chxt6896.github.io/hadoop/2013/05/23/hadoop-eclipse-plugin.html" target="">Hadoop-eclipse-plgin</a>
+* Hadoop-1.0.4 
+
+h2. 目录结构
+
+* eclipse目录 F:\eclipse
+* eclipse工程目录 F:\workspace
+* hadoop安装目录 F:\workspace\hadoop-1.0.4
+
+h2. Step1 
