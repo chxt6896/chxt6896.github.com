@@ -12,7 +12,7 @@ h3. p1-1 Pre-Creating Regions
 
 有关预分区，详情参见 <a href="http://hbase.apache.org/book.html#precreate.regions" target="_blank">Table Creation: Pre-Creating Regions</a>，下面是一个例子: 
 
-{% highlight java linenos %}
+{% highlight java %}
 public static boolean createTable(HBaseAdmin admin, HTableDescriptor table, byte[][] splits) throws IOException {
     try {
         admin.createTable(table, splits);
@@ -84,7 +84,7 @@ h3. p2-1 多 HTable 并发写
 
 创建多个 HTable 客户端用于写操作，提高写数据的吞吐量，一个例子: 
 
-{% highlight java linenos %}
+{% highlight java %}
 static final Configuration conf = HBaseConfiguration.create();
 static final String table_log_name = "user_log";
 wTableLog = new HTable[tableN];
@@ -121,7 +121,7 @@ h3. p2-4 多线程并发写
 
 在客户端开启多个 HTable 写线程，每个写线程负责一个 HTable 对象的 flush 操作，这样结合定时 flush 和写 buffer（writeBufferSize），可以既保证在数据量小的时候，数据可以在较短时间内被 flush（如1秒内），同时又保证在数据量大的时候，写 buffer 一满就及时进行 flush。下面给个具体的例子:
 
-{% highlight java linenos %}
+{% highlight java %}
 for (int i = 0; i < threadN; i++) {
     Thread th = new Thread() {
         public void run() {
@@ -152,7 +152,7 @@ h3. p3-1 多 HTable 并发读
 
 创建多个 HTable 客户端用于读操作，提高读数据的吞吐量，一个例子: 
 
-{% highlight java linenos %}
+{% highlight java %}
 static final Configuration conf = HBaseConfiguration.create();
 static final String table_log_name = “user_log”;
 rTableLog = new HTable[tableN];
@@ -187,7 +187,7 @@ h3. p3-4 多线程并发读
 
 在客户端开启多个 HTable 读线程，每个读线程负责通过 HTable 对象进行 get 操作。下面是一个多线程并发读取 HBase，获取店铺一天内各分钟 PV 值的例子: 
 
-{% highlight java linenos %}
+{% highlight java %}
 public class DataReaderServer {
     //获取店铺一天内各分钟PV值的入口函数
     public static ConcurrentHashMap<String, String> getUnitMinutePV(long uid, long startStamp, long endStamp) {

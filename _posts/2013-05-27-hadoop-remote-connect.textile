@@ -32,11 +32,20 @@ h3. 当运行示例 WordCount 时会遇到两个问题
 
 h2. Problem1
 
-<div style="overflow: auto">
-%{color:#a52713}13/05/26 20:18:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable% 
-%{color:#a52713}13/05/26 20:18:05 ERROR security.UserGroupInformation: PriviledgedActionException as:Administrator cause:java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700% 
-%{color:#a52713}Exception in thread "main" java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700%
-</div>
+{% highlight text %}
+13/05/26 20:18:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+13/05/26 20:18:05 ERROR security.UserGroupInformation: PriviledgedActionException as:Administrator cause:java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700
+Exception in thread "main" java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700
+{% endhighlight %}
 
+这个是 Windows 下文件权限问题，在 Linux 下可以正常运行，不存在这样的问题。
+
+<b>解决方案</b>: 注释掉 hadoop-1.0.4/src/core/org/apache/hadoop/fs/FileUtil.java 里面 checkReturnValue 函数的内容（有些粗暴，在 Window 下可以不用检查）。重新<a href="http://chxt6896.github.io/hadoop/2013/05/26/hadoop-source-build.html" target="_blank">编译 Hadoop 源码</a>，重命名 hadoop-core-1.0.4-SNAPSHOT.jar 替换掉 hadoop-1.0.4 根目录下的 hadoop-core-1.0.4.jar 即可。
+
+h2. Problem2
+
+{% highlight text %}
+org.apache.hadoop.security.AccessControlException:Permission denied:user=Administrator,access=WRITE,inode="tmp":root:supergroup:rwxr-xr-x
+{% endhighlight %}
 
 <a href="http://www.cnblogs.com/beanmoon/archive/2013/01/05/2845579.html" target="_blank"> >>Hadoop学习笔记（九）：如何在windows上使用eclipse远程连接hadoop进行程序开发</a>
