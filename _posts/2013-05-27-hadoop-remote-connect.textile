@@ -19,4 +19,23 @@ h2. 目录结构
 * eclipse工程目录 F:\workspace
 * hadoop安装目录 F:\workspace\hadoop-1.0.4
 
-h2. Step1 
+h2. Step1 配置 Map/Reduce Locations
+
+# 设置 Host 为要连接服务器的 IP 地址
+# 设置 Advanced parameters 
+** 修改 hadoop.tmp.dir 为连接 hadoop 服务器中设置的目录 
+** 修改 dfs.replication 为连接服务器中 hdfs-site.xml 配置的值 
+
+切换到 Map/Reduce 视图，查看是否已成功连接上服务器^^
+
+h3. 当运行示例 WordCount 时会遇到两个问题
+
+h2. Problem1
+
+%{color:#a52713}13/05/26 20:18:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable% 
+%{color:#a52713}13/05/26 20:18:05 ERROR security.UserGroupInformation: PriviledgedActionException as:Administrator cause:java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700% 
+%{color:#a52713}Exception in thread "main" java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700%
+
+
+
+<a href="http://www.cnblogs.com/beanmoon/archive/2013/01/05/2845579.html" target="_blank"> >>Hadoop学习笔记（九）：如何在windows上使用eclipse远程连接hadoop进行程序开发</a>
