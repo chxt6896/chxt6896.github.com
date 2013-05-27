@@ -94,8 +94,8 @@ h2. Step6 Ant 编译
 
 # 右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
 # New_Builder-->Edit: 
-** Name(见名知意): plugin_Builder
-** Buildfile(build.xml的位置): F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin\build.xml
+** Name (见名知意): plugin_Builder
+** Buildfile (build.xml的位置): F:\workspace\hadoop-1.0.4\src\contrib\eclipse-plugin\build.xml
 # Project-->Build Project
 
 编译成功会输出 BUILD SUCCESSFUL ^^

@@ -30,7 +30,7 @@ h3. 经验证，直接导入 hadoop-1.0.4.tar.gz 工程会有很多不必要的�
 h2. Step2 设置 eclipse 中 hadoop 安装目录
 
 Windows-->Preferences-->Hadoop Map/Reduce
-*Hadoop installation directory: F:\workspace\hadoop-1.0.4
+* Hadoop installation directory: F:\workspace\hadoop-1.0.4
 
 h2. Step3 build.xml
 
@@ -41,7 +41,7 @@ h3. 因为 Windows 无法在 cmd 中运行 shell 脚本（安装 cygwin 也没�
 %{color:#a52713}&nbsp;&nbsp;&lt;arg line=&quot;src/saveVersion.sh ${version} ${build.dir}&quot;/&gt;%
 %{color:#a52713}&lt;/exec&gt;%
 
-&lt;!-- 2.注释掉所有带 &quot;autoreconf&quot; 的 &lt;exec&gt; 标签，因为 Windows 下无法执行 autoreconf 命令（cygwin 中安装了 autoconf, automake, libtool也没用）&quot;--&gt;
+&lt;!-- 2.注释掉所有带 &quot;autoreconf&quot; 的 &lt;exec&gt; 标签，因为 Windows 下无法执行 autoreconf 命令（在 cygwin 中安装了 autoconf, automake, libtool也没用）&quot;--&gt;
 
 h2. Step4 Gridmix.java
 
@@ -53,8 +53,8 @@ h2. Step5 Ant 编译
 
 # 右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
 # New_Builder-->Edit: 
-** Name(见名知意): hadoop-1.0.4_Builder
-** Main-->Buildfile(build.xml的位置): F:\workspace\release-1.0.4\build.xml
+** Name (见名知意): hadoop-1.0.4_Builder
+** Main-->Buildfile (build.xml的位置): F:\workspace\release-1.0.4\build.xml
 ** Targets-->Manual Build: jar
 # Project-->Build Project
 
