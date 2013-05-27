@@ -32,7 +32,7 @@ h3. 当运行示例 WordCount 时会遇到两个问题
 
 h2. Problem1
 
-<div style="scroll:auto">
+<div style="overflow: auto">
 %{color:#a52713}13/05/26 20:18:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable% 
 %{color:#a52713}13/05/26 20:18:05 ERROR security.UserGroupInformation: PriviledgedActionException as:Administrator cause:java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700% 
 %{color:#a52713}Exception in thread "main" java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700%
