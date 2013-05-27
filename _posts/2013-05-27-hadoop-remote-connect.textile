@@ -54,7 +54,7 @@ org.apache.hadoop.security.AccessControlException: Permission denied: user=Chxt,
 </property>
 </pre>
 
-<b>解决方案2</b>: 修改 hadoop 目录的结构，执行 hadoop fs -chmod 777 /user/hadoop
+<b>解决方案2</b>: 修改 hadoop 目录的权限，执行 hadoop fs -chmod 777 /user/hadoop
 
 重启 Hadoop 服务^^
 
