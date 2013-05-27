@@ -33,19 +33,43 @@ h3. 当运行示例 WordCount 时会遇到两个问题
 h2. Problem1
 
 {% highlight text %}
-13/05/26 20:18:05 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-13/05/26 20:18:05 ERROR security.UserGroupInformation: PriviledgedActionException as:Administrator cause:java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700
-Exception in thread "main" java.io.IOException: Failed to set permissions of path: \tmp\hadoop-Administrator\mapred\staging\Administrator-519341271\.staging to 0700
+org.apache.hadoop.security.AccessControlException: Permission denied: user=Chxt, access=WRITE, inode="hadoop":hadoop:supergroup:rwxr-xr-x
 {% endhighlight %}
 
-这个是 Windows 下文件权限问题，在 Linux 下可以正常运行，不存在这样的问题。
+因为 Eclipse 使用 hadoop 插件提交作业时，会默认以 DrWho 身份去将作业写入 hdfs 文件系统中，对应 Windows 下即登录用户（此处我的登录用户为 Chxt）, 根据 rwxr-xr-x 知 DrWho 用户对 hadoop 目录并没有写入权限，所以导致异常的发生。
 
-<b>解决方案</b>: 注释掉 hadoop-1.0.4/src/core/org/apache/hadoop/fs/FileUtil.java 里面 checkReturnValue 函数的内容（有些粗暴，在 Window 下可以不用检查）。重新<a href="http://chxt6896.github.io/hadoop/2013/05/26/hadoop-source-build.html" target="_blank">编译 Hadoop 源码</a>，重命名 hadoop-core-1.0.4-SNAPSHOT.jar 替换掉 hadoop-1.0.4 根目录下的 hadoop-core-1.0.4.jar 即可。
+<b>解决方案1</b>: 到服务器上修改 hadoop 的配置文件 conf/hdfs-core.xml，设置 dfs.permissions 为 false
+
+<pre>
+<property>
+    <name>dfs.permissions</name>
+    <value>false</value>
+    <description>
+      If "true", enable permission checking in HDFS.
+      If "false", permission checking is turned off,
+      but all other behavior is unchanged.
+      Switching from one parameter value to the other does not change the mode,
+      owner or group of files or directories.
+    </description>
+</property>
+</pre>
+
+<b>解决方案2</b>: 修改 hadoop 目录的结构，执行 hadoop fs -chmod 777 /user/hadoop
+
+重启 Hadoop 服务^^
 
 h2. Problem2
 
 {% highlight text %}
-org.apache.hadoop.security.AccessControlException:Permission denied:user=Administrator,access=WRITE,inode="tmp":root:supergroup:rwxr-xr-x
+13/05/27 17:02:30 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+13/05/27 17:02:30 ERROR security.UserGroupInformation: PriviledgedActionException as:Chxt cause:java.io.IOException: Failed to set permissions of path: \home\hadoop\hadooptmp-1.0.4\mapred\staging\Chxt-4140978\.staging to 0700
+Exception in thread "main" java.io.IOException: Failed to set permissions of path: \home\hadoop\hadooptmp-1.0.4\mapred\staging\Chxt-4140978\.staging to 0700
 {% endhighlight %}
+
+这个是 Windows 下文件权限问题，在 Linux 下可以正常运行，不存在这样的问题。
+
+<b>解决方案</b>: 注释掉 hadoop-1.0.4/src/core/org/apache/hadoop/fs/FileUtil.java 里面 <b>checkReturnValue</b> 函数的内容（有些粗暴，在 Window 下可以不用检查）。<a href="http://chxt6896.github.io/hadoop/2013/05/26/hadoop-source-build.html" target="_blank">重新编译 Hadoop 源码</a>，重命名 hadoop-core-1.0.4-SNAPSHOT.jar 替换掉 hadoop-1.0.4 根目录下的 hadoop-core-1.0.4.jar 即可。
+
+至此可以正常远程连接 hadoop 服务器并运行 Map/Reduce 程序了^^
 
 <a href="http://www.cnblogs.com/beanmoon/archive/2013/01/05/2845579.html" target="_blank"> >>Hadoop学习笔记（九）：如何在windows上使用eclipse远程连接hadoop进行程序开发</a>
