@@ -1,0 +1,64 @@
+---
+layout: post
+title: Hadoop-1.0.4+Windows 源码编译
+category: hadoop
+---
+
+h3. 编译 Hadoop 源代码是每个接触 Hadoop 人的心愿吧
+
+h2. 平台环境
+
+* Win7
+* Eclipse Helios
+** Ant-1.7
+** <a href="http://chxt6896.github.io/eclipse/2012/09/18/eclipse-svn.html" target="_blank">SVN</a>)
+** <a href="http://chxt6896.github.io/hadoop/2013/05/23/hadoop-eclipse-plugin.html" target="">Hadoop-eclipse-plgin</a>
+* Hadoop-1.0.4 
+
+h2. 目录结构
+
+* eclipse目录 F:\eclipse
+* eclipse工程目录 F:\workspace
+* hadoop安装目录 F:\workspace\hadoop-1.0.4
+
+h2. Step1 导入工程
+
+h3. 经验证，直接导入 hadoop-1.0.4.tar.gz 工程会有很多不必要的麻烦，推荐从 SVN 上导入
+
+资源库 URL: http://svn.apache.org/repos/asf/hadoop/common/tags，选择 release-1.0.4 检出为项目 release-1.0.4 
+
+h2. Step2 设置 eclipse 中 hadoop 安装目录
+
+Windows-->Preferences-->Hadoop Map/Reduce，<b>Hadoop installation directory</b>: F:\workspace\hadoop-1.0.4
+
+h2. Step3 build.xml
+
+因为 Windows 无法在 cmd 中运行 shell 脚本（安装 cygwin 也没用），所以需要做一下注释
+
+&lt;!-- 1.注释掉下面，否则报错误&quot;package-info.java:5: 未结束的字符串字面值&quot;--&gt;
+%{color:#a52713}&lt;exec executable=&quot;sh&quot;&gt;%
+&nbsp;&nbsp;%{color:#a52713}&lt;arg line=&quot;src/saveVersion.sh ${version} ${build.dir}&quot;/&gt;%
+%{color:#a52713}&lt;/exec&gt;%
+
+&lt;!-- 2.注释掉所有带&quot;autoreconf&quot;的&lt;exec&gt;标签，因为Windows下无法执行autoreconf命令（cygwin中安装了autoconf,automake,libtool也没用）&quot;--&gt;
+
+h2. Step4 Gridmix.java
+
+修改 release-1.0.4/src/contrib/gridmix/src/java/org/apache/hadoop/mapred/gridmix/Gridmix.java: 
+
+将两处 Enum<? extends T> 改为 Enum<?>
+
+h2. Step5 Ant 编译
+
+# 右键 MapReduceTools 工程，Properties-->Builders-->New-->Ant Builder 
+# New_Builder-->Edit，<b>Name</b>(见名知意): hadoop-1.0.4_Builder，<b>Main-->Buildfile</b>(build.xml的位置): F:\workspace\release-1.0.4\build.xml，<b>Targets-->Manual Build: jar</b>
+# Project-->Build Project
+
+编译成功会输出 BUILD SUCCESSFUL ^^
+
+在 F:\workspace\release-1.0.4\build 文件夹下会生成三个开发 jar 包: 
+* hadoop-client-1.0.4-SNAPSHOT.jar
+* hadoop-core-1.0.4-SNAPSHOT.jar
+* hadoop-minicluster-1.0.4-SNAPSHOT.jar
+
+去掉"-SNAPSHOT"即可替换 F:\workspace\hadoop-1.0.4 下的同名 jar 包

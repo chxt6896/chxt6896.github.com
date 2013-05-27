@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hadoop1.x mapred-site.xml 参数设定
+title: Hadoop-1.x mapred-site.xml 参数设定
 category: hadoop
 ---
 

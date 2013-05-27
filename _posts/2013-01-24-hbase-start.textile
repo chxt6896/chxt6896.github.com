@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HBase-0.94.4 集群配置
+title: HBase-0.94.4+CentOS6.X 集群配置
 category: hbase
 ---
 

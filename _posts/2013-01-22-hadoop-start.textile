@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hadoop-1.0.4 集群配置
+title: Hadoop-1.0.4+CentOS6.X 集群配置
 category: hadoop
 ---
 
