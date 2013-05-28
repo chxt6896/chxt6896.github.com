@@ -19,7 +19,7 @@ h2. Step1 规划集群 hosts
 
 在 /etc/hosts 中加入：
 
-{% highlight text linenos %}
+{% highlight text %}
 192.168.1.111 node111
 192.168.1.112 node112
 192.168.1.113 node113
@@ -31,7 +31,7 @@ h2. Step2 安装 Hadoop (master)
 
 h3. Hadoop 使用最新稳定版 1.0.4
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # 官网 http://hadoop.apache.org/ 下载 Hadoop 项目
 $ wget http://www.apache.org/dist/hadoop/core/hadoop-1.0.4/hadoop-1.0.4.tar.gz
 # 自定义解压在 /home/hadoop/cluster/ 下
@@ -42,7 +42,7 @@ $ cd ~/cluster/hadoop-1.0.4
 
 在 /etc/profile 中加入环境变量：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
 export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
 export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin
@@ -61,7 +61,7 @@ h2. Step3-1 环境配置
 
 在 $HADOOP_HOME/conf/hadoop-env.sh 中定义了 Hadoop 启动时需要的环境变量设置，需要配置 JAVA_HOME（JDK的路径）变量:
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # The java implementation to use.  Required.
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
 {% endhighlight %} 
@@ -74,7 +74,7 @@ h3. Step3-2-1 core-site.xml 配置
 
 $HADOOP_HOME/conf/core-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 core-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
-{% highlight xml+cheetah linenos %}
+{% highlight xml %}
 <configuration>  
 	<property>   
 		<!-- 用于dfs命令模块中指定默认的文件系统协议 -->  
@@ -88,7 +88,7 @@ h3. Step3-2-2 hdfs-site.xml 配置
 
 $HADOOP_HOME/conf/hdfs-site.xml 是 HDFS 的配置文件，对应并覆盖 hdfs-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
-{% highlight xml+cheetah linenos %}
+{% highlight xml %}
 <configuration>
 	<property>    
 		<name>dfs.replication</name>   
@@ -110,7 +110,7 @@ h3. Step3-2-3 mapred-site.xml 配置
 
 $HADOOP_HOME/conf/mapred-site.xml 是 Map/Reduce 的配置文件，对应并覆盖 mapred-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
-{% highlight xml+cheetah linenos %}
+{% highlight xml %}
 <configuration>
 	<property>  
 		<!-- 用来作 JobTracker 的节点的(一般与 NameNode 保持一致) -->    
@@ -128,7 +128,7 @@ h3. Step3-3-1 masters 配置
 
 在 masters 中加入：
 
-{% highlight text linenos %}
+{% highlight text %}
 node111
 {% endhighlight %}
 
@@ -136,7 +136,7 @@ h3. Step3-3-2 slaves 配置
 
 在 slaves 中加入：
 
-{% highlight text linenos %}
+{% highlight text %}
 node111
 node112
 node113
@@ -154,7 +154,7 @@ h2. Step4 启动 Hadoop
 
 公钥生成的步骤如下：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ ssh-keygen -t rsa
 # 以下是生成一个为 id_rsa/id_rsa.pub 的无密码的公/私钥对(一路回车)
 Generating public/private rsa key pair.
@@ -166,7 +166,7 @@ Enter same passphrase again:
 
 然后将 id_rsa.pub 的内容复制到每个机器（也包括本机）的 ~/.ssh/authorized_keys 文件中。如果 authorized_keys 不存在，则使用 touch ~/.ssh/authorized_keys 生成一个；如果该文件已经存在，则追加内容进去就OK了，这里推荐使用如下命令：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 # 因为 ssh 服务对文件的权限有着非常严格的限制（authorized_keys 只能拥有指定用户的写权限）于是需要进行如下处理
 $ chmod 644 ~/.ssh/authorized_keys
@@ -174,7 +174,7 @@ $ chmod 644 ~/.ssh/authorized_keys
 
 经过以上步骤，我们的无密码访问就配置好了，接下来就可以正常启动 Hadoop 集群：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # 启动服务之前，我们需要做一件事情，非常重要，那就是格式化命名空间
 $ hadoop namenode -format
 # 启动 dfs 和 map/reduce 服务
@@ -185,7 +185,7 @@ h2. Step5 jps验证
 
 在 master 节点：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ jps
 # 3000 DataNode
 # 3238 JobTracker
@@ -197,7 +197,7 @@ $ jps
 
 在 slave 节点：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ jps
 # 32724 TaskTracker
 # 9800 Jps
@@ -219,7 +219,7 @@ h2. Problem1 Warning: $HADOOP_HOME is deprecated. (1.x 版本以后出现的)
 
 经查原因是 Hadoop 在 bin/hadoop-config.sh 中对 HADOOP_HOME 进行了判断:
 
-{% highlight bash linenos %}
+{% highlight bash %}
 if [ "$HADOOP_HOME_WARN_SUPPRESS" = "" ] && [ "$HADOOP_HOME" != "" ]; then
   echo "Warning: \$HADOOP_HOME is deprecated." 1>&2
   echo 1>&2
@@ -228,6 +228,6 @@ fi
 
 解决方案: 在 ~/.bash_profile 中添加一个全局环境变量
 
-{% highlight bash linenos %}
+{% highlight bash %}
 export HADOOP_HOME_WARN_SUPPRESS=1
 {% endhighlight %}

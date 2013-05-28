@@ -17,7 +17,7 @@ h2. Step1 规划集群 hosts
 
 在 /etc/hosts 中加入：
 
-{% highlight text linenos %}
+{% highlight text %}
 192.168.1.111 node111
 192.168.1.112 node112
 192.168.1.113 node113
@@ -29,7 +29,7 @@ h2. Step2 安装 HBase (master)
 
 h3. HBase 使用最新稳定版 0.94.4
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # 官网 http://hbase.apache.org/ 下载 HBase 项目
 $ wget http://apache.dataguru.cn/hbase/stable/hbase-0.94.4.tar.gz
 # 自定义解压在 /home/hadoop/cluster/ 下
@@ -39,7 +39,7 @@ $ cd ~/cluster/hbase-0.94.4
 
 在 ~/.bashrc 中加入环境变量：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 export JAVA_HOME=/home/hadoop/jdk1.7.0_07
 export HADOOP_HOME=/home/hadoop/cluster/hadoop-1.0.4
 export HBASE_HOME=/home/hadoop/cluster/hbase-0.94.4
@@ -62,7 +62,7 @@ export HBASE_CLASSPATH=/home/hadoop/cluster/hadoop-1.0.4/conf
 
 设置允许 HBase 管理 Zookeeper:
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # Tell HBase whether it should manage it's own instance of Zookeeper or not.
 export HBASE_MANAGES_ZK=true
 {% endhighlight %} 
@@ -75,7 +75,7 @@ h3. Step3-2-1 hbase-site.xml 配置
 
 $HBASE_HOME/conf/hbase-site.xml 是 Hadoop 的核心配置文件，对应并覆盖 hbase-default.xml 中的配置项。我们一般在这个文件中增加如下配置：
 
-{% highlight xml+cheetah linenos %}
+{% highlight xml %}
 <configuration>  
 	<property>   
 		<!-- hbase 的根目录 -->  
@@ -113,7 +113,7 @@ h2. Step3-3 主从配置
 
 修改 $HBASE_HOME/conf/regionservers 文件，把 DataNode 添加进去
 
-{% highlight text linenos %}
+{% highlight text %}
 node112
 node113
 {% endhighlight %}
@@ -126,7 +126,7 @@ h2. Step4 启动 HBase
 
 经过以上两个步骤，HBase 的安装和配置已经OK了，那么下面我们就来启动 HBase 集群:
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ start-hbase.sh
 {% endhighlight %}
 
@@ -134,7 +134,7 @@ h2. Step5 jps验证
 
 在 master 节点：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ jps
 # 23481 HMaster
 # 22925 TaskTracker
@@ -148,7 +148,7 @@ $ jps
 
 在 slave 节点：
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ jps
 # 12817 TaskTracker
 # 12920 HQuorumPeer

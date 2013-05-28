@@ -23,7 +23,7 @@ h2. Step1 配置 Map/Reduce Locations
 
 # 设置 Host 为要连接服务器的 IP 地址
 # 设置 Advanced parameters 
-** 修改 hadoop.tmp.dir 为连接 hadoop 服务器中设置的目录 
+** 修改 hadoop.tmp.dir 为本地 tmp 目录，&quot;/&quot; 为 hadoop 安装目录的盘符（比如 /hadooptmp-1.0.4 即 F:\hadooptemp-1.0.4）
 ** 修改 dfs.replication 为连接服务器中 hdfs-site.xml 配置的值 
 
 切换到 Map/Reduce 视图，查看是否已成功连接上服务器^^
