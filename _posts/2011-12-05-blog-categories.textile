@@ -6,6 +6,8 @@ category: blog
 
 想显示你的分类效果吗？跟我来吧～源代码 Fork 我就能看到
 
+h3. 现在分类名称不支持大写了，只能是全部小写
+
 h2. Step1
 
 在每一篇 post 博文里添加 yaml 语句，以明确这篇博文属于哪个分类，比如：category: blog
