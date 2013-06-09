@@ -40,7 +40,7 @@ org.apache.hadoop.security.AccessControlException: Permission denied: user=Chxt,
 
 <b>解决方案1</b>: 到服务器上修改 hadoop 的配置文件 conf/hdfs-core.xml，设置 dfs.permissions 为 false
 
-<pre>
+{% highlight xml %}
 <property>
     <name>dfs.permissions</name>
     <value>false</value>
@@ -52,7 +52,7 @@ org.apache.hadoop.security.AccessControlException: Permission denied: user=Chxt,
       owner or group of files or directories.
     </description>
 </property>
-</pre>
+{% endhighlight %}
 
 <b>解决方案2</b>: 修改 hadoop 目录的权限，执行 hadoop fs -chmod 777 /user/hadoop
 

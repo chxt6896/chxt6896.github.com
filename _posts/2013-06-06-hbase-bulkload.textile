@@ -23,11 +23,13 @@ h3. hadoop-env.sh
 
 配置 $HADOOP_HOME/conf/hadoop-env.sh 文件，修改 HADOOP_CLASSPATH:
 
+{% highlight bash %}
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HBASE_HOME/conf:$HBASE_HOME/hbase-0.94.4.jar:$HBASE_HOME/hbase-0.94.4-tests.jar:$HBASE_HOME/lib/guava-11.0.2.jar:$HBASE_HOME/lib/zookeeper-3.4.5.jar
+{% endhighlight %}
 
 h3. core-site.xml
 
-配置 $HADOOP_HOME/conf/core-site.xml，将 zookeeper 的配置写入 core-site.xml 中，内容与 $HADOOP_HOME/conf/hbase-site.xml 中一致:
+配置 $HADOOP_HOME/conf/core-site.xml，将 zookeeper 的配置写入 core-site.xml 中，内容与 $HADOOP_HOME/conf/hbase-site.xml 中保持一致:
 
 {% highlight xml %}
 <property>
@@ -36,4 +38,23 @@ h3. core-site.xml
     <value>hadoop-namenode,hadoop-datanode1,hadoop-datanode2</value>
 </property>
 {% endhighlight %}
+
+重启 hadoop 和 hbase
+
+h3. bulkload 导入分为两个步骤，也可以一次完成！！
+
+h2. Step2 准备文件
+
+文件格式是每条记录一行，默认以 \t 制表符隔开，例如生成文件 user 如下:
+
+<pre>
+100000001	张三	男	18
+100000002 李四	男	22
+100000003	王五	男	24
+</pre>
+
+
+
+
+
  
