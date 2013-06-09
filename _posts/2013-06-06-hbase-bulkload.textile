@@ -1,9 +1,18 @@
 ---
 layout: post
-title: Hbase-0.94.4+bulkload 大文件导库神计
+title: HBase-0.94.4+bulkload 大文件导库神计
 category: hbase
 ---
 
-h3. 我的应用环境: 将 Mysql 中一个5000万条数据的 tableA 插入到一个已存在的 hbase tableB 中，两个表在逻辑结构上需一致
+h2. 应用环境
+
+将 Mysql 中一个5000万条数据的 tableA 插入到一个已存在的 hbase tableB 中，两个表在逻辑结构上一致，具体字段有出入
+
+h2. 平台环境
+
+* Hadoop-1.0.4
+* HBase-0.94.4
+
+h2. 
 
  
