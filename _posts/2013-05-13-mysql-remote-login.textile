@@ -12,7 +12,7 @@ h2. 使用 root 账户远程登录
 
 h3. 方法一
 
-{% highlight mysql linenos %}
+{% highlight mysql %}
 # 使用通配符，授与 root 用户从任何其它主机发起访问
 # mysql -u hadoop -h 192.168.1.1 -p
 mysql> GRANT ALL PRIVILEGES ON *.* TO root@"%" IDENTIFIED BY 'xxx' WITH GRANT OPTION;
@@ -32,7 +32,7 @@ h2. 新建其他账户远程登录
 
 h3. 使用 grant 语句，grant 总是创建新用户
 
-{% highlight mysql linenos %}
+{% highlight mysql %}
 # 创建一个 hadoop 账户，只能从 192.168.1.111 主机通过密码 xxx 登录
 mysql> GRANT ALL PRIVILEGES ON *.* TO hadoop@192.168.1.111 IDENTIFIED BY 'xxx' WITH GRANT OPTION;
 {% endhighlight %}

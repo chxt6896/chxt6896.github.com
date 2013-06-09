@@ -15,6 +15,25 @@ h2. 平台环境
 * Hadoop-1.0.4
 * HBase-0.94.4
 
-h2. 
+h2. Step1 配置
 
+h3. 因为 bulkload 是运行 hadoop 程序，不会自动查找 hbase 的 conf 路径，因此找不到 hbase 的环境变量。需要做如下配置: 
+
+h3. hadoop-env.sh
+
+配置 $HADOOP_HOME/conf/hadoop-env.sh 文件，修改 HADOOP_CLASSPATH:
+
+export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:$HBASE_HOME/conf:$HBASE_HOME/hbase-0.94.4.jar:$HBASE_HOME/hbase-0.94.4-tests.jar:$HBASE_HOME/lib/guava-11.0.2.jar:$HBASE_HOME/lib/zookeeper-3.4.5.jar
+
+h3. core-site.xml
+
+配置 $HADOOP_HOME/conf/core-site.xml，将 zookeeper 的配置写入 core-site.xml 中，内容与 $HADOOP_HOME/conf/hbase-site.xml 中一致:
+
+{% highlight xml %}
+<property>
+    <name>hbase.zookeeper.quorum</name>
+    <!--value值按照$HADOOP_HOME/conf/hbase-site.xml中配置的写 -->
+    <value>hadoop-namenode,hadoop-datanode1,hadoop-datanode2</value>
+</property>
+{% endhighlight %}
  
