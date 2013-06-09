@@ -4,6 +4,8 @@ title: HBase-0.94.4+bulkload 大文件导库神计
 category: hbase
 ---
 
+h3. bulkload 是以 Mapreduce 的方式将制定格式文件装载到 hbase 中，采用线程池，对于海量数据装载入 hbase 非常有用
+
 h2. 应用环境
 
 将 Mysql 中一个5000万条数据的 tableA 插入到一个已存在的 hbase tableB 中，两个表在逻辑结构上一致，具体字段有出入
