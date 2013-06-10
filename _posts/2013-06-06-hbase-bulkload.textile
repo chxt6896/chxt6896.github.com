@@ -6,6 +6,8 @@ category: hbase
 
 h3. bulkload 是以 Mapreduce 的方式将制定格式文件装载到 hbase 中，采用线程池，对于海量数据装载入 hbase 非常有用
 
+h3. bulkload 可以导入已存在的 hbase 表中(更新数据)，若存在和已有表中相同 rowkey 的记录，会更新表中此 rowkey 记录的数据
+
 h2. 应用环境
 
 将 Mysql 中一个5000万条数据的 tableA 插入到一个已存在的 hbase tableB 中，两个表在逻辑结构上一致，具体字段有出入
@@ -41,17 +43,50 @@ h3. core-site.xml
 
 重启 hadoop 和 hbase
 
-h3. bulkload 导入分为两个步骤，也可以一次完成！！
-
 h2. Step2 准备文件
 
-文件格式是每条记录一行，默认以 \t 制表符隔开，例如生成文件 user 如下:
+文件格式是每条记录一行，默认以 \t 制表符隔开，例如生成文件 ~/user 如下:
 
 <pre>
-100000001	张三	男	18
-100000002 李四	男	22
-100000003	王五	男	24
+100000001	张三	18
+100000002	李四	22
+100000003	王五	24
 </pre>
+
+h2. Step3 上传文件
+
+将文件 user 上传至 HDFS 上，目录为 /bulkload
+
+{% highlight bash %}
+$ hadoop fs -put ~/user /bulkload
+{% endhighlight %}
+
+h2. Step4 将文件包装成 HFile
+
+{% highlight bash %}
+$ hadoop jar $HBASE_HOME/hbase-0.94.4.jar  importtsv \
+> -Dimporttsv.separator=";"  #指定输入文件的分隔符为; \
+> -Dimporttsv.bulk.output=/output   # 输出hfile到/output，/output必须不存在 \
+> -Dimporttsv.columns=HBASE_ROW_KEY,cf:USER_NAME,cf:AGE #源文件的第一列为rowkey，第二列为cf:USER_NAMEM，第三列为cf:AGE \
+> user /bulkload   #导入hbase的user表中，输入文件存放在/bulkload \
+{% endhighlight %}
+
+h3. 此处可以分为两个步骤，也可以一次完成
+
+h2. Style1 两步走
+
+按照上面指定 Dimporttsv.bulk.output=/output，此时只是将 HFile 输出到了 /output 下。还需要将 HFile 转移到对应的 region 中，这一步只是 mv，所以相当快
+
+{% highlight bash %}
+# 将
+$hadoop jar $HBASE_HOME/hbase-0.94.4.jar completebulkload output user
+{% endhighlight %}
+
+h2. Style1 一步走
+
+
+
+h3. 若指定了 Dimporttsv.bulk.output=/output，此时只是将 HFile 输出到了 /output 下。若不指定，则可以一步将数据输入到 user 表中
 
 
 
