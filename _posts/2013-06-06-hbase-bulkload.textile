@@ -90,7 +90,7 @@ h2. Problem1
 
 若你指定的分隔符 Dimporttsv.separator 为多字节，则会报错，默认分隔符是 \t:
 
-{% highlight test %}
+{% highlight text %}
 java.lang.IllegalArgumentException: TsvParser only supports single-byte separators
         at com.google.common.base.Preconditions.checkArgument(Preconditions.java:88)
         at org.apache.hadoop.hbase.mapreduce.ImportTsv$TsvParser.<init>(ImportTsv.java:88)
@@ -105,7 +105,7 @@ h2. Problem2
 
 如果你像我一样使用的是 hbase-0.94.* 版本，在 <b>Style1</b> 中执行 completebulkload 命令时会报错，这是 hbase-0.94.* 的一个 bug:
 
-{% highlight test %}
+{% highlight text %}
 java.util.concurrent.ExecutionException: java.lang.IllegalStateException: The value of the hbase.metrics.showTableName conf option has not been specified in SchemaMetrics
         at java.util.concurrent.FutureTask$Sync.innerGet(FutureTask.java:252)
         at java.util.concurrent.FutureTask.get(FutureTask.java:111)
@@ -137,7 +137,7 @@ java.util.concurrent.ExecutionException: java.lang.IllegalStateException: The va
 
 <b>解决方案2:</b> 更新 hbase
 
-{% highlight test %}
+{% highlight text %}
 $ cd $HBASE_HOME/
 # 下载 HBASE-4802.patch
 $ wget https://issues.apache.org/jira/secure/attachment/12503953/HBASE-4802.patch
@@ -148,3 +148,7 @@ $ mvn package -Dmaven.test.skip.exec=true
 
 然后再执行 completebulkload 命令通过^^
 
+<a href="http://blog.sina.com.cn/s/blog_618985870101p45z.html" target="_blank"> >>利用BulkLoad向Hbase插入数据过程详解</a>
+<a href="http://chcearth.blog.51cto.com/2179839/971059" target="_blank"> >>hbase bulk-load</a>
+<a href="http://koven2049.iteye.com/blog/982831" target="_blank"> >>bulk-load装载hdfs数据到hbase小结</a>
+<a href="http://www.cnblogs.com/lijun4017/archive/2011/08/17/2143226.html" target="_blank"> >>使用HBASE的BULK LOAD</a>
