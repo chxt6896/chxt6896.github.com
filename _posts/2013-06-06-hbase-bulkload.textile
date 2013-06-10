@@ -84,7 +84,7 @@ $hadoop jar $HBASE_HOME/hbase-0.94.4.jar completebulkload /output user
 
 h2. Style2 一步走
 
-可以在上面的命令中不指定 Dimporttsv.bulk.output=/output，则会一步将数据导入到 user 表
+可以在上面的命令中不指定 Dimporttsv.bulk.output=/output，则会一步将数据导入到 user 表中
 
 h2. Problem1
 
@@ -137,7 +137,7 @@ java.util.concurrent.ExecutionException: java.lang.IllegalStateException: The va
 
 <b>解决方案2:</b> 更新 hbase
 
-{% highlight text %}
+{% highlight bash %}
 $ cd $HBASE_HOME/
 # 下载 HBASE-4802.patch
 $ wget https://issues.apache.org/jira/secure/attachment/12503953/HBASE-4802.patch
