@@ -65,31 +65,86 @@ h2. Step4 将文件包装成 HFile
 
 {% highlight bash %}
 $ hadoop jar $HBASE_HOME/hbase-0.94.4.jar  importtsv \
-> -Dimporttsv.separator=";"  #指定输入文件的分隔符为; \
-> -Dimporttsv.bulk.output=/output   # 输出hfile到/output，/output必须不存在 \
-> -Dimporttsv.columns=HBASE_ROW_KEY,cf:USER_NAME,cf:AGE #源文件的第一列为rowkey，第二列为cf:USER_NAMEM，第三列为cf:AGE \
-> user /bulkload   #导入hbase的user表中，输入文件存放在/bulkload \
+> -Dimporttsv.separator=";" \  #指定输入文件的分隔符为;，分隔符只能为单字节
+> -Dimporttsv.bulk.output=/output \   # 输出hfile到/output，/output必须不存在
+> -Dimporttsv.columns=HBASE_ROW_KEY,cf:USER_NAME,cf:AGE \ #源文件的第一列为rowkey，第二列为cf:USER_NAMEM，第三列为cf:AGE
+> user /bulkload   #导入hbase的user表中，输入文件存放在/bulkload
 {% endhighlight %}
 
-h3. 此处可以分为两个步骤，也可以一次完成
+h3. 下面可以分为两个步骤，也可以一次完成
 
 h2. Style1 两步走
 
-按照上面指定 Dimporttsv.bulk.output=/output，此时只是将 HFile 输出到了 /output 下。还需要将 HFile 转移到对应的 region 中，这一步只是 mv，所以相当快
+按照上面指定 Dimporttsv.bulk.output=/output，此时只是将 HFile 输出到了 HDFS 上的 /output 下。还需要将 HFile 转移到对应的 region 中，这一步只是 mv，所以相当快
 
 {% highlight bash %}
-# 将
-$hadoop jar $HBASE_HOME/hbase-0.94.4.jar completebulkload output user
+# 将/output下的HFile刷入user表中，若user表不存在则会被新建
+$hadoop jar $HBASE_HOME/hbase-0.94.4.jar completebulkload /output user
 {% endhighlight %}
 
-h2. Style1 一步走
+h2. Style2 一步走
 
+可以在上面的命令中不指定 Dimporttsv.bulk.output=/output，则会一步将数据导入到 user 表
 
+h2. Problem1
 
-h3. 若指定了 Dimporttsv.bulk.output=/output，此时只是将 HFile 输出到了 /output 下。若不指定，则可以一步将数据输入到 user 表中
+若你指定的分隔符 Dimporttsv.separator 为多字节，则会报错，默认分隔符是 \t:
 
+{% highlight test %}
+java.lang.IllegalArgumentException: TsvParser only supports single-byte separators
+        at com.google.common.base.Preconditions.checkArgument(Preconditions.java:88)
+        at org.apache.hadoop.hbase.mapreduce.ImportTsv$TsvParser.<init>(ImportTsv.java:88)
+        at org.apache.hadoop.hbase.mapreduce.ImportTsv$TsvImporter.setup(ImportTsv.java:218)
+        at org.apache.hadoop.mapreduce.Mapper.run(Mapper.java:142)
+        at org.apache.hadoop.mapred.MapTask.runNewMapper(MapTask.java:621)
+        at org.apache.hadoop.mapred.MapTask.run(MapTask.java:305)
+        at org.apache.hadoop.mapred.Child.main(Child.java:170)
+{% endhighlight %}
 
+h2. Problem2
 
+如果你像我一样使用的是 hbase-0.94.* 版本，在 <b>Style1</b> 中执行 completebulkload 命令时会报错，这是 hbase-0.94.* 的一个 bug:
 
+{% highlight test %}
+java.util.concurrent.ExecutionException: java.lang.IllegalStateException: The value of the hbase.metrics.showTableName conf option has not been specified in SchemaMetrics
+        at java.util.concurrent.FutureTask$Sync.innerGet(FutureTask.java:252)
+        at java.util.concurrent.FutureTask.get(FutureTask.java:111)
+        at org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles.groupOrSplitPhase(LoadIncrementalHFiles.java:333)
+        at org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles.doBulkLoad(LoadIncrementalHFiles.java:232)
+        at org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles.run(LoadIncrementalHFiles.java:699)
+        at org.apache.hadoop.util.ToolRunner.run(ToolRunner.java:65)
+        at org.apache.hadoop.util.ToolRunner.run(ToolRunner.java:79)
+        at org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles.main(LoadIncrementalHFiles.java:704)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:601)
+        at org.apache.hadoop.util.ProgramDriver$ProgramDescription.invoke(ProgramDriver.java:68)
+        at org.apache.hadoop.util.ProgramDriver.driver(ProgramDriver.java:139)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:601)
+        at org.apache.hadoop.hbase.mapreduce.Driver.main(Driver.java:51)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:601)
+        at org.apache.hadoop.util.RunJar.main(RunJar.java:156)
+{% endhighlight %}
 
- 
+<b>解决方案1:</b> 采用 <b>Style2</b>，这样会跳过这个 bug
+
+<b>解决方案2:</b> 更新 hbase
+
+{% highlight test %}
+$ cd $HBASE_HOME/
+# 下载 HBASE-4802.patch
+$ wget https://issues.apache.org/jira/secure/attachment/12503953/HBASE-4802.patch
+$ patch -p0 < HBASE-4802.patch
+# 用maven重新进行编译
+$ mvn package -Dmaven.test.skip.exec=true
+{% endhighlight %}
+
+然后再执行 completebulkload 命令通过^^
+
