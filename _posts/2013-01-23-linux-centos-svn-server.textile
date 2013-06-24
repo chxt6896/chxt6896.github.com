@@ -46,7 +46,7 @@ h3. 系统环境: CentOS 6.3 最小化安装(关闭 iptables 和 selinux) + ssh 
 
 h2. Step1 安装必须软件包
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ yum install subversion mysql-server httpd mod_dav_svn mod_perl sendmail wget gcc-c++ make unzip perl* ntsysv vim-enhanced
 {% endhighlight %}
 
@@ -61,19 +61,19 @@ h2. Step2 SVN Server 配置
 
 h3. Step2-1 新建用于存储 SVN 文件的目录
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ mkdir /home/hadoop/svn
 {% endhighlight %}
 
 h3. Step2-2 新建一个版本仓库
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ svnadmin create /home/hadoop/svn/project
 {% endhighlight %}
 
 h3. Step2-3 初始化版本仓库中的目录
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # 建立临时目录
 $ mkdir project project/server project/client project/test
 $ svn import project/ file:///home/hadoop/svn/project -m “初始化SVN目录”
@@ -85,7 +85,7 @@ h3. Step2-4 添加用户
 
 添加 SVN 用户非常简单，只需在 /home/hadoop/svn/project/conf/passwd 文件添加一个形如 "username = password" 的条目就可以了。
 
-{% highlight bash linenos %}
+{% highlight bash %}
 [users]
 # harry = harryssecret
 # sally = sallyssecret
@@ -99,7 +99,7 @@ h3. Step2-5 修改用户访问策略
 
 /home/hadoop/svn/project/conf/authz 记录用户的访问策略
 
-{% highlight bash linenos %}
+{% highlight bash %}
 [groups]
 project_p = pm
 project_s = server1,server2,server3
@@ -132,7 +132,7 @@ project_t = test1,test1,test1
 
 h3. Step2-6 修改 svnserve.conf 文件，使用户和策略配置生效
 
-{% highlight bash linenos %}
+{% highlight bash %}
 [general]
 # 定义非授权用户的访问权限，有三种方式: none(限制访问), read(只读), write(读写)，默认为 read 
 anon-access = none
@@ -148,7 +148,7 @@ realm = My First Repository
 
 h3. Step2-7 启动服务器
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ svnserve -d -r /home/hadoop/svn
 # -d表示以 daemon 方式（后台运行）运行
 # -r 指定根目录
@@ -156,7 +156,7 @@ $ svnserve -d -r /home/hadoop/svn
 
 如果修改了 svn 配置，需要重启 svn 服务，步骤如下:
 
-{% highlight bash linenos %}
+{% highlight bash %}
 # svn 服务端口号: 3690
 $ ps -aux|grep svnserve
 $ kill -9 ID号
@@ -165,7 +165,7 @@ $ svnserve -d -r /home/hadoop/svn
 
 h3. Step2-8 测试服务器
 
-{% highlight bash linenos %}
+{% highlight bash %}
 $ mkdir test
 $ cd test
 $ svn co svn://192.168.1.101/project
@@ -196,5 +196,12 @@ Transmitting file data .
 Committed revision 2.  ( 测试提交成功 )
 {% endhighlight %}
 
+h3. Step2-9 删除一个版本仓库
 
+svn delete 只会删除版本库中的文件，svnadmin 也没有提供删除版本库的子命令。只能在 SVN 服务器端强制删除文件:
+
+{% highlight bash %}
+# $REPOS_PATH 是创建版本仓库时使用的地址 svnadmin create $REPOS_PATH
+$ rm -rf $REPOS_PATH
+{% endhighlight %}
       
